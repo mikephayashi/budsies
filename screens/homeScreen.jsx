@@ -21,7 +21,12 @@ export default function Home({ item, navigation }) {
         <Button
           style={"margin-top: 50px;"}
           title="Create Room"
-          onPress={() => navigation.navigate("General")}
+          onPress={() => navigation.navigate("CreateRoom")}
+        />
+        <Button
+          style={"margin-top: 50px;"}
+          title="Join Room"
+          onPress={() => navigation.navigate("JoinRoom")}
         />
       </ImageBackground>
     </View>

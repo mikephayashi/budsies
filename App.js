@@ -1,26 +1,27 @@
-import React from 'react';
-import { StyleSheet } from "react-native";
+import React, {useReducer} from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import StartScreen from "./screens/startScreen";
 import HomeScreen from "./screens/homeScreen";
-import GeneralScreen from "./screens/createRoom/generalScreen";
-import LocationScreen from "./screens/createRoom/locationScreen";
+import CreateRoomScreen from './screens/createRoomScreen';
+import JoinRoomScreen from './screens/joinRoomScreen';
 import testReducer from './state/TestReducer';
 import CustomContext from './state/CustomContext';
+import DropDownPicker from "react-native-dropdown-picker";
 
 export default function App() {
+  DropDownPicker.setMode("BADGE");
   const Stack = createStackNavigator();
 
-const [userState, usersDispatch] = React.useReducer(testReducer, false);
+// const [userState, usersDispatch] = useReducer(testReducer, false);
 
-  const providerState = {
-    userState,
-    usersDispatch,
-  };
+  // const providerState = {
+  //   userState,
+  //   usersDispatch,
+  // };
 
   return (
-    <CustomContext.Provider value={providerState}>
+    // <CustomContext.Provider value={providerState}>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
@@ -34,26 +35,17 @@ const [userState, usersDispatch] = React.useReducer(testReducer, false);
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="General"
-            component={GeneralScreen}
+            name="CreateRoom"
+            component={CreateRoomScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="Location"
-            component={LocationScreen}
+            name="JoinRoom"
+            component={JoinRoomScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </CustomContext.Provider>
+    // </CustomContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
