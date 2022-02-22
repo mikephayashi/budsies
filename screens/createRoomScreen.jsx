@@ -45,11 +45,14 @@ export default function CreateRoomScreen({ item, navigation }) {
         color="white"
         title="Submit"
         onPress={async () => {
-            await setDoc(doc(db, "rooms", uuid.v4()), 
+          const id = uuid.v4();
+            await setDoc(doc(db, "rooms", id), 
             {
+                id: id,
                 name: name,
                 numBuds: numBuds,
                 interests: interests,
+                players: [],
             }
             );
         }}

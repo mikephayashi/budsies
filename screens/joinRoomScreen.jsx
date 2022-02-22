@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, Button, ScrollView } from "react-native";
 import { db } from "../firebase";
-import { getDocs, query, where, collection } from "firebase/firestore";
+import { doc, getDocs, query, where, collection, updateDoc, arrayUnion } from "firebase/firestore";
 import DropDownPicker from "react-native-dropdown-picker";
 
 export default function JoinRoomScreen({ item, navigation }) {
@@ -42,18 +42,29 @@ export default function JoinRoomScreen({ item, navigation }) {
           querySnapshot.forEach((doc) => {
             docs.push(doc.data());
           });
-          console.log(docs);
           setRooms(docs);
         }}
       />
       <ScrollView>
         {rooms.map((room) => {
           return (
-            <View>
-              <Text>Test</Text>
+            <View key={room.id}>
               <Text>{room.name}</Text>
               <Text>{room.numBuds}</Text>
               <Text>{room.interests.toString()}</Text>
+              <Button 
+                title="Join Room"
+                onPress={async () => {
+                  await updateDoc(doc(db, "rooms", room.id), 
+                  {
+                    players: arrayUnion("Me"),
+                  }
+                  );
+                  navigation.navigate("VideoRoom", {
+                    room: room,
+                  });
+                }}
+              />
             </View>
           );
         })}

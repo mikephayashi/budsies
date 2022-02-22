@@ -5,6 +5,7 @@ import StartScreen from "./screens/startScreen";
 import HomeScreen from "./screens/homeScreen";
 import CreateRoomScreen from './screens/createRoomScreen';
 import JoinRoomScreen from './screens/joinRoomScreen';
+import VideoRoomScreen from './screens/videoRoomScreen';
 import testReducer from './state/TestReducer';
 import CustomContext from './state/CustomContext';
 import DropDownPicker from "react-native-dropdown-picker";
@@ -42,6 +43,11 @@ export default function App() {
           <Stack.Screen
             name="JoinRoom"
             component={JoinRoomScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="VideoRoom"
+            component={VideoRoomScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
