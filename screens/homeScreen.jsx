@@ -1,10 +1,20 @@
 /**
  * This source code is exported from pxCode, you can get more document from https://www.pxcode.io
  */
-import React from "react";
-import { StyleSheet, View, Text, Button, ImageBackground } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  Button,
+  ImageBackground,
+} from "react-native";
+import {getRoom, navigateToVideoRoom} from '../FirebaseCalls';
 
 export default function Home({ item, navigation }) {
+  const [findCode, onChangeFindCode] = useState("");
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -27,6 +37,18 @@ export default function Home({ item, navigation }) {
           style={"margin-top: 50px;"}
           title="Join Room"
           onPress={() => navigation.navigate("JoinRoom")}
+        />
+        <TextInput
+          placeholder="Comment"
+          onChangeText={onChangeFindCode}
+          value={findCode}
+        />
+        <Button
+          title="Find Room"
+          onPress={async () => {
+            const docSnap = await getRoom(findCode);
+            navigateToVideoRoom(docSnap.data(), navigation);
+          }}
         />
       </ImageBackground>
     </View>

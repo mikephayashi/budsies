@@ -1,16 +1,19 @@
-import React, { useState } from "react";
-import { View, Button, StyleSheet, TextInput, ScrollView } from "react-native";
-import { db } from "../firebase";
-import { doc, setDoc, updateDoc, arrayRemove, onSnapshot } from "firebase/firestore";
-import uuid from "react-native-uuid";
+import React, { useState, useEffect } from "react";
+import { View, Button, StyleSheet, TextInput, ScrollView, Text } from "react-native";
+import {uploadComment, removePlayer, addCommentsListener} from '../FirebaseCalls';
 
 export default function VideoRoomScreen({ navigation, route }) {
   const room = route.params.room;
   const [comment, onChangeComment] = useState("");
   const [comments, updateComments] = useState([]);
-  const unsub = onSnapshot(doc(db, "rooms", room.id, "comments"), (doc) => {
-    updateComments([doc.data(), ...comments]);
-  });
+
+  useEffect(() => {
+    const unsubscribe = addCommentsListener(roomId, updateComments);
+    return function cleanup() {
+      unsubscribe();
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
       <Button
@@ -21,12 +24,7 @@ export default function VideoRoomScreen({ navigation, route }) {
       <Button
         style={"margin-top: 50px;"}
         title="Exit"
-        onPress={async () => {
-          await updateDoc(doc(db, "rooms", room.id), {
-            players: arrayRemove("Me"),
-          });
-          navigation.popToTop();
-        }}
+        onPress={()=>removePlayer(room.id, navigation)}
       />
       <TextInput
         placeholder="Comment"
@@ -35,20 +33,15 @@ export default function VideoRoomScreen({ navigation, route }) {
       />
       <Button
         title="Submit"
-        onPress={async () => {
-          const commentId = uuid.v4();
-          await setDoc(doc(db, "rooms", room.id, "comments", commentId), {
-            id: commentId,
-            comment: comment,
-          });
-          onChangeComment("");
-        }}
+        onPress={()=>uploadComment(room.id, comment, onChangeComment)}
       />
       <ScrollView>
         {comments.map((comment) => {
-          return <Text key={comment.id}>
-            {comment.comment}
-          </Text>
+          return (
+            <div>
+            <Text key={comment.id}>{comment.name}: {comment.comment}</Text>
+            </div>
+          );
         })}
       </ScrollView>
     </View>

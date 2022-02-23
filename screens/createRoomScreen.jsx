@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { View, Button, StyleSheet, TextInput, Text } from "react-native";
-import { db } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
-import uuid from "react-native-uuid";
 import DropDownPicker from "react-native-dropdown-picker";
+import {createRoom} from '../FirebaseCalls';
 
 export default function CreateRoomScreen({ item, navigation }) {
   const [name, onChangeName] = useState("");
@@ -45,16 +43,7 @@ export default function CreateRoomScreen({ item, navigation }) {
         color="white"
         title="Submit"
         onPress={async () => {
-          const id = uuid.v4();
-            await setDoc(doc(db, "rooms", id), 
-            {
-                id: id,
-                name: name,
-                numBuds: numBuds,
-                interests: interests,
-                players: [],
-            }
-            );
+          await createRoom(name, numBuds, interests);
         }}
       />
     </View>
