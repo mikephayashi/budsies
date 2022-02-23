@@ -1,6 +1,7 @@
 import { db } from "./firebase";
 import {
   doc,
+  getDoc,
   setDoc,
   updateDoc,
   arrayUnion,
@@ -53,11 +54,16 @@ export async function uploadComment(roomId, comment, onChangeComment) {
   onChangeComment("");
 }
 
-export async function removePlayer(roomId, navigation) {
+export async function removePlayer(toTop, roomId, navigation) {
   await updateDoc(doc(db, ROOMS_COLLECTION, roomId), {
     players: arrayRemove(NAME_PLACEHOLDER),
   });
-  navigation.popToTop();
+  if (toTop){
+    navigation.popToTop();
+  } else {
+    navigation.pop();
+  }
+  
 }
 
 export function addCommentsListener(roomId, updateComments) {
@@ -69,7 +75,8 @@ export function addCommentsListener(roomId, updateComments) {
     querySnapshot.forEach((doc) => {
       newComments.push(doc.data());
     });
-    updateComments([...comments, ...newComments]);
+    // updateComments([...comments, ...newComments]);
+    updateComments(newComments);
   });
   return unsubscribe;
 }

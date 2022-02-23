@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import {getRoom, navigateToVideoRoom} from '../FirebaseCalls';
 
-export default function Home({ item, navigation }) {
+export default function Home({ navigation }) {
   const [findCode, onChangeFindCode] = useState("");
 
   return (
@@ -39,7 +39,7 @@ export default function Home({ item, navigation }) {
           onPress={() => navigation.navigate("JoinRoom")}
         />
         <TextInput
-          placeholder="Comment"
+          placeholder="Room Code"
           onChangeText={onChangeFindCode}
           value={findCode}
         />
@@ -62,6 +62,5 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    // justifyContent: "center"
   },
 });

@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { View, Button, StyleSheet, TextInput, ScrollView, Text } from "react-native";
-import {uploadComment, removePlayer, addCommentsListener} from '../FirebaseCalls';
+import {
+  View,
+  Button,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  Text,
+} from "react-native";
+import YoutubePlayer from "react-native-youtube-iframe";
+import {
+  uploadComment,
+  removePlayer,
+  addCommentsListener,
+} from "../FirebaseCalls";
+
 
 export default function VideoRoomScreen({ navigation, route }) {
   const room = route.params.room;
   const [comment, onChangeComment] = useState("");
   const [comments, updateComments] = useState([]);
+  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = addCommentsListener(roomId, updateComments);
+    const unsubscribe = addCommentsListener(room.id, (newComments)=>updateComments([...comments, ...newComments]));
     return function cleanup() {
       unsubscribe();
     };
@@ -19,12 +33,12 @@ export default function VideoRoomScreen({ navigation, route }) {
       <Button
         style={"margin-top: 50px;"}
         title="Back"
-        onPress={() => navigation.pop()}
+        onPress={() => removePlayer(true, room.id, navigation)}
       />
       <Button
         style={"margin-top: 50px;"}
         title="Exit"
-        onPress={()=>removePlayer(room.id, navigation)}
+        onPress={() => removePlayer(false, room.id, navigation)}
       />
       <TextInput
         placeholder="Comment"
@@ -33,17 +47,26 @@ export default function VideoRoomScreen({ navigation, route }) {
       />
       <Button
         title="Submit"
-        onPress={()=>uploadComment(room.id, comment, onChangeComment)}
+        onPress={() => uploadComment(room.id, comment, onChangeComment)}
       />
       <ScrollView>
         {comments.map((comment) => {
           return (
             <div>
-            <Text key={comment.id}>{comment.name}: {comment.comment}</Text>
+              <Text key={comment.id}>
+                {comment.name}: {comment.comment}
+              </Text>
             </div>
           );
         })}
       </ScrollView>
+      <YoutubePlayer
+        height={300}
+        play={playing}
+        videoId={"fYup-t_2yGc"}
+        // onChangeState={onStateChange} 
+      />
+      {/* <Button title={playing ? "pause" : "play"} onPress={togglePlaying} /> */}
     </View>
   );
 }
