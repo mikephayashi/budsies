@@ -1,30 +1,11 @@
 import React from "react";
-import { StyleSheet, Image, View, ImageBackground, Button } from "react-native";
+import BackgroundView from '../components/BackgroundView';
+import StartButton from '../components/StartButton';
 
-export default function StartScreen({ item, navigation }) {
+export default function StartScreen({ navigation }) {
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require("../assets/start_background.png")}
-        resizeMode="contain"
-        style={styles.image}
-      >
-        <Image source={require("../assets/logo.png")} />
-        <Button
-          color="white"
-          title="Avatar"
-          onPress={() => navigation.navigate("AvatarScreen")}
-        />
-      </ImageBackground>
-    </View>
+    <BackgroundView>
+      <StartButton navigation={navigation}/>
+    </BackgroundView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  image: {
-    flex: 1,
-  },
-});
