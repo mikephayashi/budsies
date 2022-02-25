@@ -5,7 +5,7 @@ import {createRoom} from '../FirebaseCalls';
 
 export default function CreateRoomScreen({ item, navigation }) {
   const [name, onChangeName] = useState("");
-  const [numBuds, onChangeNumBuds] = useState("");
+  const [maxBuds, onChangeMaxBuds] = useState("");
   const [interests, setInterests] = useState([]);
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
@@ -25,9 +25,9 @@ export default function CreateRoomScreen({ item, navigation }) {
       />
       <TextInput
         placeholder="Max # of buds"
-        onChangeText={onChangeNumBuds}
+        onChangeText={onChangeMaxBuds}
         keyboardType="numeric"
-        value={numBuds}
+        value={maxBuds}
       />
       <DropDownPicker
             value={interests}
@@ -43,7 +43,7 @@ export default function CreateRoomScreen({ item, navigation }) {
         color="white"
         title="Submit"
         onPress={async () => {
-          await createRoom(name, numBuds, interests);
+          await createRoom(name, maxBuds, interests);
         }}
       />
     </View>
@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flex: 1,
-    backgroundColor: "red",
     paddingTop: 50,
   },
 });

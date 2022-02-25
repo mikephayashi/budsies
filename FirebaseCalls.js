@@ -9,6 +9,7 @@ import {
   query,
   collection,
   onSnapshot,
+  increment,
 } from "firebase/firestore";
 import uuid from "react-native-uuid";
 
@@ -26,6 +27,7 @@ export async function getRoom(findCode) {
 export async function navigateToVideoRoom(room, navigation) {
   await updateDoc(doc(db, ROOMS_COLLECTION, room.id), {
     players: arrayUnion(NAME_PLACEHOLDER),
+    numBuds: increment(1),
   });
   navigation.navigate(VIDEO_ROOM, {
     room: room,
@@ -40,12 +42,13 @@ export async function togglePlay(isPlaying, currentTime, room, name) {
   });
 }
 
-export async function createRoom(name, numBuds, interests) {
+export async function createRoom(name, maxBuds, interests) {
   const id = uuid.v4();
   await setDoc(doc(db, ROOMS_COLLECTION, id), {
     id: id,
     name: name,
-    numBuds: numBuds,
+    maxBuds: maxBuds,
+    numBuds: 0,
     interests: interests,
     players: [],
   });
@@ -71,6 +74,7 @@ export async function uploadComment(roomId, comment, onChangeComment) {
 export async function removePlayer(toTop, roomId, navigation) {
   await updateDoc(doc(db, ROOMS_COLLECTION, roomId), {
     players: arrayRemove(NAME_PLACEHOLDER),
+    numBuds: increment(-1),
   });
   if (toTop){
     navigation.popToTop();
@@ -79,6 +83,10 @@ export async function removePlayer(toTop, roomId, navigation) {
   }
   
 }
+
+
+
+//LISTENERS
 
 export function addYoutubeListener(roomId, setPlaying, setByOutsideCall, seekTo, name){
   const unsubscribe = onSnapshot(doc(db, "rooms", roomId, YT_COLLECTION, YT_DOC), (doc) => {

@@ -1,20 +1,26 @@
-import React, {useReducer} from 'react';
+import React, { useReducer } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+
 import StartScreen from "./screens/startScreen";
 import HomeScreen from "./screens/homeScreen";
-import CreateRoomScreen from './screens/createRoomScreen';
-import JoinRoomScreen from './screens/joinRoomScreen';
-import VideoRoomScreen from './screens/videoRoomScreen';
-import testReducer from './state/TestReducer';
-import CustomContext from './state/CustomContext';
+import CreateRoomScreen from "./screens/createRoomScreen";
+import JoinRoomScreen from "./screens/joinRoomScreen";
+import VideoRoomScreen from "./screens/videoRoomScreen";
+import AvatarScreen from "./screens/avatarScreen";
+import NameScreen from "./screens/nameScreen";
+import ShowScreen from "./screens/showScreen";
+import GameScreen from "./screens/gameScreen";
+
+import testReducer from "./state/TestReducer";
+import CustomContext from "./state/CustomContext";
 import DropDownPicker from "react-native-dropdown-picker";
 
 export default function App() {
   DropDownPicker.setMode("BADGE");
   const Stack = createStackNavigator();
 
-const [userState, usersDispatch] = useReducer(testReducer, false);
+  const [userState, usersDispatch] = useReducer(testReducer, false);
 
   const providerState = {
     userState,
@@ -26,12 +32,12 @@ const [userState, usersDispatch] = useReducer(testReducer, false);
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name="Start"
+            name="StartScreen"
             component={StartScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="Home"
+            name="HomeScreen"
             component={HomeScreen}
             options={{ headerShown: false }}
           />
@@ -48,6 +54,26 @@ const [userState, usersDispatch] = useReducer(testReducer, false);
           <Stack.Screen
             name="VideoRoom"
             component={VideoRoomScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="AvatarScreen"
+            component={AvatarScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="NameScreen"
+            component={NameScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ShowScreen"
+            component={ShowScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="GameScreen"
+            component={GameScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

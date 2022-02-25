@@ -59,12 +59,14 @@ export default function JoinRoomScreen({ item, navigation }) {
           return (
             <View key={room.id}>
               <Text>{room.name}</Text>
-              <Text>{room.numBuds}</Text>
+              <Text>{room.numBuds}/{room.maxBuds}</Text>
               <Text>{room.interests.toString()}</Text>
               <Button
                 title="Join Room"
                 onPress={async () => {
-                  navigateToVideoRoom(room, navigation);
+                  if (room.numBuds < room.maxBuds) {
+                    navigateToVideoRoom(room, navigation);
+                  }
                 }}
               />
             </View>
@@ -79,7 +81,6 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flex: 1,
-    backgroundColor: "red",
     paddingTop: 50,
   },
 });
