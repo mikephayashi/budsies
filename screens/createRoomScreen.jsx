@@ -2,18 +2,14 @@ import React, { useState } from "react";
 import { View, Button, StyleSheet, TextInput, Text } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import {createRoom} from '../FirebaseCalls';
+import {roomTypes} from '../shared/rooms';
 
 export default function CreateRoomScreen({ item, navigation }) {
   const [name, onChangeName] = useState("");
   const [maxBuds, onChangeMaxBuds] = useState("");
   const [interests, setInterests] = useState([]);
   const [open, setOpen] = useState(false);
-  const [items, setItems] = useState([
-    { label: "TV", value: "tv" },
-    { label: "Games", value: "games" },
-    { label: "Sports", value: "sports" },
-    { label: "Music", value: "music" },
-  ]);
+  const [items, setItems] = useState(roomTypes);
 
   return (
     <View style={styles.container}>

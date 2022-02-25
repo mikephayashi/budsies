@@ -41,7 +41,7 @@ export default function ShowScreen({navigation, route}){
         <View>
             <YoutubePlayer
                 ref={playerRef}
-                height={300}
+                height={700}
                 play={playing}
                 videoId={"fYup-t_2yGc"}
                 onChangeState={(state) => {

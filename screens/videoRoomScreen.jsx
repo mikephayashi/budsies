@@ -24,7 +24,6 @@ export default function VideoRoomScreen({ navigation, route }) {
   const [comments, updateComments] = useState([]);
 
   useEffect(() => {
-    console.log(userState);
     const unsubscribeCommments = addCommentsListener(room.id, (newComments) =>
       updateComments([...comments, ...newComments])
     );
@@ -37,13 +36,8 @@ export default function VideoRoomScreen({ navigation, route }) {
     <View style={styles.container}>
       <Button
         style={"margin-top: 50px;"}
-        title="Back"
-        onPress={() => removePlayer(true, room.id, navigation)}
-      />
-      <Button
-        style={"margin-top: 50px;"}
         title="Exit"
-        onPress={() => removePlayer(false, room.id, navigation)}
+        onPress={() => removePlayer(false, room.id, navigation, userState.name)}
       />
       <Button
         title="Youtube"
@@ -53,7 +47,6 @@ export default function VideoRoomScreen({ navigation, route }) {
         title="Game"
         onPress={() => navigation.navigate("GameScreen")}
       />
-      {/* <Image source={getAvatar(userState.avatarIndex)} style={{ width: 100, height: 100 }} /> */}
       <Image source={getAvatar(userState.avatarIndex)} style={{ width: 100, height: 100 }} />
       <TextInput
         placeholder="Comment"
@@ -62,7 +55,7 @@ export default function VideoRoomScreen({ navigation, route }) {
       />
       <Button
         title="Submit"
-        onPress={() => uploadComment(room.id, comment, onChangeComment)}
+        onPress={() => uploadComment(room.id, comment, onChangeComment, userState.name)}
       />
       <ScrollView>
         {comments.map((comment) => {

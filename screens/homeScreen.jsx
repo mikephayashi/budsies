@@ -11,10 +11,12 @@ import {
   ImageBackground,
 } from "react-native";
 import { getRoom, navigateToVideoRoom } from "../FirebaseCalls";
+import { useCustomContext } from "../state/CustomContext";
 
 
 export default function Home({ navigation }) {
   const [findCode, onChangeFindCode] = useState("");
+  const { userState, usersDispatch } = useCustomContext();
 
   return (
     <View style={styles.container}>
@@ -48,7 +50,7 @@ export default function Home({ navigation }) {
           title="Find Room"
           onPress={async () => {
             const docSnap = await getRoom(findCode);
-            navigateToVideoRoom(docSnap.data(), navigation);
+            navigateToVideoRoom(docSnap.data(), navigation, userState.name);
           }}
         />
       </ImageBackground>

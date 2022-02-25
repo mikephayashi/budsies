@@ -1,28 +1,16 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, Button, ScrollView } from "react-native";
-import { db } from "../firebase";
-import {
-  doc,
-  getDocs,
-  query,
-  where,
-  collection,
-  updateDoc,
-  arrayUnion,
-} from "firebase/firestore";
 import DropDownPicker from "react-native-dropdown-picker";
-import { navigateToVideoRoom } from "../FirebaseCalls";
+import { navigateToVideoRoom, filterRooms } from "../FirebaseCalls";
+import { useCustomContext } from "../state/CustomContext";
+import {roomTypes} from '../shared/rooms';
 
-export default function JoinRoomScreen({ item, navigation }) {
+export default function JoinRoomScreen({ navigation }) {
   const [interests, setInterests] = useState([]);
   const [open, setOpen] = useState(false);
-  const [items, setItems] = useState([
-    { label: "TV", value: "tv" },
-    { label: "Games", value: "games" },
-    { label: "Sports", value: "sports" },
-    { label: "Music", value: "music" },
-  ]);
+  const [items, setItems] = useState(roomTypes);
   const [rooms, setRooms] = useState([]);
+  const { userState, usersDispatch } = useCustomContext();
 
   return (
     <View style={styles.container}>
@@ -40,32 +28,22 @@ export default function JoinRoomScreen({ item, navigation }) {
       <Button
         style={"margin-top: 50px;"}
         title="Search Rooms"
-        onPress={async () => {
-          let roomsRef = collection(db, "rooms");
-          const q = query(
-            roomsRef,
-            where("interests", "array-contains-any", interests)
-          );
-          const querySnapshot = await getDocs(q);
-          const docs = [];
-          querySnapshot.forEach((doc) => {
-            docs.push(doc.data());
-          });
-          setRooms(docs);
-        }}
+        onPress={() => filterRooms(interests, (docs) => setRooms(docs))}
       />
       <ScrollView>
         {rooms.map((room) => {
           return (
             <View key={room.id}>
               <Text>{room.name}</Text>
-              <Text>{room.numBuds}/{room.maxBuds}</Text>
+              <Text>
+                {room.numBuds}/{room.maxBuds}
+              </Text>
               <Text>{room.interests.toString()}</Text>
               <Button
                 title="Join Room"
                 onPress={async () => {
                   if (room.numBuds < room.maxBuds) {
-                    navigateToVideoRoom(room, navigation);
+                    navigateToVideoRoom(room, navigation, userState.name);
                   }
                 }}
               />

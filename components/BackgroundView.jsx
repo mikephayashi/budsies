@@ -4,8 +4,9 @@ import {
   View,
   ImageBackground,
 } from "react-native";
+import BackButton from "../components/BackButton";
 
-export default function BackgroundView({ children }) {
+export default function BackgroundView({ children, navigation }) {
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -13,6 +14,7 @@ export default function BackgroundView({ children }) {
         resizeMode="contain"
         style={styles.image}
       >
+      <BackButton navigation={navigation} />
       {children}
       </ImageBackground>
     </View>

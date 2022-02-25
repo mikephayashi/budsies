@@ -20,7 +20,7 @@ export default function App() {
   DropDownPicker.setMode("BADGE");
   const Stack = createStackNavigator();
 
-  const [userState, usersDispatch] = useReducer(testReducer, false);
+  const [userState, usersDispatch] = useReducer(testReducer, {name: "", avatarIndex :0});
 
   const providerState = {
     userState,
