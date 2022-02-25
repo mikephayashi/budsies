@@ -20,7 +20,7 @@ export default function AvaNameScreentarScreen({ navigation }) {
       <Button
         title="Declare Name"
         onPress={() => {
-          usersDispatch({ type: "TEST", name: name });
+          usersDispatch({ type: "TEST", name: name, avatarIndex: userState.avatarIndex });
         }}
       />
     </PaddedView>

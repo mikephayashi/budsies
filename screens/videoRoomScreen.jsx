@@ -6,20 +6,25 @@ import {
   TextInput,
   ScrollView,
   Text,
+  Image,
 } from "react-native";
 import {
   uploadComment,
   removePlayer,
   addCommentsListener,
 } from "../FirebaseCalls";
+import { useCustomContext } from "../state/CustomContext";
+import getAvatar from '../shared/avatars';
 
 export default function VideoRoomScreen({ navigation, route }) {
   const room = route.params.room;
 
+  const { userState, usersDispatch } = useCustomContext();
   const [comment, onChangeComment] = useState("");
   const [comments, updateComments] = useState([]);
 
   useEffect(() => {
+    console.log(userState);
     const unsubscribeCommments = addCommentsListener(room.id, (newComments) =>
       updateComments([...comments, ...newComments])
     );
@@ -48,6 +53,8 @@ export default function VideoRoomScreen({ navigation, route }) {
         title="Game"
         onPress={() => navigation.navigate("GameScreen")}
       />
+      {/* <Image source={getAvatar(userState.avatarIndex)} style={{ width: 100, height: 100 }} /> */}
+      <Image source={getAvatar(userState.avatarIndex)} style={{ width: 100, height: 100 }} />
       <TextInput
         placeholder="Comment"
         onChangeText={onChangeComment}

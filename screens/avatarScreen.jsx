@@ -6,25 +6,20 @@ import Carousel from "react-native-snap-carousel";
 import { Image, View, StyleSheet } from "react-native";
 import BackgroundView from "../components/BackgroundView";
 import FadePressable from "../components/FadePressable";
+import {avatarImages} from '../shared/avatars';
+import { useCustomContext } from "../state/CustomContext";
 
 
 export default function AvatarScreen({ navigation }) {
-  const data = [
-    {
-      image: require("../assets/girl1.png"),
-    },
-    {
-      image: require("../assets/girl2.png"),
-    },
-    {
-      image: require("../assets/girl3.png"),
-    },
-  ];
+
+  const { userState, usersDispatch } = useCustomContext();
 
   const renderItem = ({ item, index }) => {
     return (
       <View style={styles.container}>
-        <FadePressable>
+        <FadePressable
+          onPress={()=>usersDispatch({ type: "TEST", name: userState.avatarIndex, avatarIndex: index })}
+        >
           <Image source={item.image} style={{ width: 100, height: 100 }} />
         </FadePressable>
       </View>
@@ -37,7 +32,7 @@ export default function AvatarScreen({ navigation }) {
         <BackButton navigation={navigation} />
         <NextButton navigation={navigation} screen="NameScreen" />
         <Carousel
-          data={data}
+          data={avatarImages}
           renderItem={renderItem}
           itemWidth={300}
           sliderWidth={400}
