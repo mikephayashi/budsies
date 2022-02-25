@@ -1,7 +1,7 @@
 /**
  * This source code is exported from pxCode, you can get more document from https://www.pxcode.io
  */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -10,10 +10,13 @@ import {
   Button,
   ImageBackground,
 } from "react-native";
-import {getRoom, navigateToVideoRoom} from '../FirebaseCalls';
+import { getRoom, navigateToVideoRoom } from "../FirebaseCalls";
+import { useCustomContext } from "../state/CustomContext";
 
 export default function Home({ navigation }) {
   const [findCode, onChangeFindCode] = useState("");
+  const [name, onChangeName] = useState("");
+  const { userState, usersDispatch } = useCustomContext();
 
   return (
     <View style={styles.container}>
@@ -48,6 +51,17 @@ export default function Home({ navigation }) {
           onPress={async () => {
             const docSnap = await getRoom(findCode);
             navigateToVideoRoom(docSnap.data(), navigation);
+          }}
+        />
+        <TextInput
+          placeholder="Enter Name"
+          onChangeText={onChangeName}
+          value={name}
+        />
+        <Button
+          title="Declare Name"
+          onPress={() => {
+            usersDispatch({ type: "TEST", name: name });
           }}
         />
       </ImageBackground>

@@ -1,9 +1,9 @@
-import React from 'react';
+import {useContext, createContext} from 'react';
 
-const CustomContext = React.createContext();
+const CustomContext = createContext();
 
 export function useCustomContext() {
-  return React.useContext(CustomContext);
+  return useContext(CustomContext);
 }
 
 export default CustomContext;

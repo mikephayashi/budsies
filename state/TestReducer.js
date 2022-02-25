@@ -1,7 +1,7 @@
-export default function testReducer(state = false, action) {
+export default function testReducer(state = "", action) {
     switch (action.type) {
         case 'TEST':
-            state = JSON.parse(JSON.stringify(action.payload));
+            state = JSON.parse(JSON.stringify(action.name));
             return state;
         default:
             return state

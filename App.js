@@ -14,15 +14,15 @@ export default function App() {
   DropDownPicker.setMode("BADGE");
   const Stack = createStackNavigator();
 
-// const [userState, usersDispatch] = useReducer(testReducer, false);
+const [userState, usersDispatch] = useReducer(testReducer, false);
 
-  // const providerState = {
-  //   userState,
-  //   usersDispatch,
-  // };
+  const providerState = {
+    userState,
+    usersDispatch,
+  };
 
   return (
-    // <CustomContext.Provider value={providerState}>
+    <CustomContext.Provider value={providerState}>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
@@ -52,6 +52,6 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    // </CustomContext.Provider>
+    </CustomContext.Provider>
   );
 }
