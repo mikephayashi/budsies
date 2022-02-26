@@ -12,18 +12,24 @@ import {
   uploadComment,
   removePlayer,
   addCommentsListener,
+  addPlayersListener,
 } from "../FirebaseCalls";
 import { useCustomContext } from "../state/CustomContext";
 import getAvatar from '../shared/avatars';
 
 export default function VideoRoomScreen({ navigation, route }) {
   const room = route.params.room;
+  const docId = route.params.docId;
 
   const { userState, usersDispatch } = useCustomContext();
   const [comment, onChangeComment] = useState("");
   const [comments, updateComments] = useState([]);
+  const [players, setPlayers] = useState([]);
 
   useEffect(() => {
+    const unsubscribePlayers = addPlayersListener(room.id, (newPlayers) => {
+      setPlayers(newPlayers);
+    });
     const unsubscribeCommments = addCommentsListener(room.id, (newComments) =>
       updateComments([...comments, ...newComments])
     );
@@ -37,7 +43,7 @@ export default function VideoRoomScreen({ navigation, route }) {
       <Button
         style={"margin-top: 50px;"}
         title="Exit"
-        onPress={() => removePlayer(false, room.id, navigation, userState.name)}
+        onPress={() => removePlayer(false, room.id, navigation, docId)}
       />
       <Button
         title="Youtube"
@@ -48,6 +54,15 @@ export default function VideoRoomScreen({ navigation, route }) {
         onPress={() => navigation.navigate("GameScreen")}
       />
       <Image source={getAvatar(userState.avatarIndex)} style={{ width: 100, height: 100 }} />
+      <ScrollView>
+        {players.map((player) => {
+          return (
+            <Text key={player.name}>
+              {player.name}: {player.avatarIndex}
+            </Text>
+          );
+        })}
+      </ScrollView>
       <TextInput
         placeholder="Comment"
         onChangeText={onChangeComment}

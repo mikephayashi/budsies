@@ -43,7 +43,7 @@ export default function JoinRoomScreen({ navigation }) {
                 title="Join Room"
                 onPress={async () => {
                   if (room.numBuds < room.maxBuds) {
-                    navigateToVideoRoom(room, navigation, userState.name);
+                    navigateToVideoRoom(room, navigation, userState.name, userState.avatarIndex);
                   }
                 }}
               />

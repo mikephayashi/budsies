@@ -50,7 +50,7 @@ export default function Home({ navigation }) {
           title="Find Room"
           onPress={async () => {
             const docSnap = await getRoom(findCode);
-            navigateToVideoRoom(docSnap.data(), navigation, userState.name);
+            navigateToVideoRoom(docSnap.data(), navigation, userState.name, userState.avatarIndex);
           }}
         />
       </ImageBackground>

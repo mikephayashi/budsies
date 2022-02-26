@@ -5,19 +5,19 @@ import {
   getDocs,
   setDoc,
   updateDoc,
-  arrayUnion,
-  arrayRemove,
   query,
   where,
   collection,
   onSnapshot,
   increment,
+  deleteDoc,
 } from "firebase/firestore";
 import uuid from "react-native-uuid";
 
 const ROOMS_COLLECTION = "rooms";
 const COMMENTS_COLLECTION = "comments";
 const YT_COLLECTION = "youtube";
+const PLAYERS_COLLECTION = "players";
 const YT_DOC = "youtube";
 const VIDEO_ROOM = "VideoRoom";
 
@@ -25,14 +25,31 @@ export async function getRoom(findCode) {
   return await getDoc(doc(db, ROOMS_COLLECTION, findCode));
 }
 
-export async function navigateToVideoRoom(room, navigation, name) {
+export async function navigateToVideoRoom(room, navigation, name, avatarIndex) {
   await updateDoc(doc(db, ROOMS_COLLECTION, room.id), {
-    players: arrayUnion(name),
     numBuds: increment(1),
+  });
+  const docId = uuid.v4();
+  await setDoc(doc(db, ROOMS_COLLECTION, room.id, PLAYERS_COLLECTION, docId), {
+    name: name,
+    avatarIndex: avatarIndex,
   });
   navigation.navigate(VIDEO_ROOM, {
     room: room,
+    docId: docId,
   });
+}
+
+export async function removePlayer(toTop, roomId, navigation, docId) {
+  await updateDoc(doc(db, ROOMS_COLLECTION, roomId), {
+    numBuds: increment(-1),
+  });
+  await deleteDoc(doc(db, ROOMS_COLLECTION, roomId, PLAYERS_COLLECTION, docId));
+  if (toTop) {
+    navigation.popToTop();
+  } else {
+    navigation.pop();
+  }
 }
 
 export async function togglePlay(isPlaying, currentTime, room, name) {
@@ -51,7 +68,6 @@ export async function createRoom(name, maxBuds, interests) {
     maxBuds: maxBuds,
     numBuds: 0,
     interests: interests,
-    players: [],
   });
   await setDoc(doc(db, ROOMS_COLLECTION, id, YT_COLLECTION, YT_DOC), {
     isPlaying: false,
@@ -72,19 +88,7 @@ export async function uploadComment(roomId, comment, onChangeComment, name) {
   onChangeComment("");
 }
 
-export async function removePlayer(toTop, roomId, navigation, name) {
-  await updateDoc(doc(db, ROOMS_COLLECTION, roomId), {
-    players: arrayRemove(name),
-    numBuds: increment(-1),
-  });
-  if (toTop) {
-    navigation.popToTop();
-  } else {
-    navigation.pop();
-  }
-}
-
-export async function filterRooms(interests, setRooms){
+export async function filterRooms(interests, setRooms) {
   let roomsRef = collection(db, ROOMS_COLLECTION);
   const q = query(
     roomsRef,
@@ -132,6 +136,18 @@ export function addCommentsListener(roomId, updateComments) {
       newComments.push(doc.data());
     });
     updateComments(newComments);
+  });
+  return unsubscribe;
+}
+
+export function addPlayersListener(roomId, updatePlayers) {
+  const q = query(collection(db, ROOMS_COLLECTION, roomId, PLAYERS_COLLECTION));
+  const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    const players = [];
+    querySnapshot.forEach((doc) => {
+      players.push(doc.data());
+    });
+    updatePlayers(players);
   });
   return unsubscribe;
 }
