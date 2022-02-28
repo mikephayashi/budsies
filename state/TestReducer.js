@@ -1,4 +1,4 @@
-export default function testReducer(state = {name: "", avatarIndex: 0}, action) {
+export default function testReducer(state = {name: "", avatarUri: ""}, action) {
     switch (action.type) {
         case 'TEST':
             return action;

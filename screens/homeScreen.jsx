@@ -40,7 +40,7 @@ export default function Home({ navigation }) {
               docSnap.data(),
               navigation,
               userState.name,
-              userState.avatarIndex
+              userState.avatarUri
             );
           }}
           title="CREATE BUDDIES"

@@ -11,7 +11,7 @@ export default function RoomButton({ navigation, room, userState }) {
             room,
             navigation,
             userState.name,
-            userState.avatarIndex
+            userState.avatarUri
           );
         }
       }}

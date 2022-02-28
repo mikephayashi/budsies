@@ -1,71 +1,150 @@
-import React from "react";
+import React, { useState } from "react";
 import NextButton from "../components/NextButton";
-import Carousel from "react-native-snap-carousel";
 import { Image, View, StyleSheet } from "react-native";
 import BackgroundView from "../components/BackgroundView";
 import FadePressable from "../components/FadePressable";
-import { avatarImages } from "../shared/avatars";
+import { jasperImages } from "../shared/avatarImages";
 import { useCustomContext } from "../state/CustomContext";
-
-const itemWidth = 300;
-const itemHeight = 400;
+import WhiteButton from "../components/WhiteButton";
 
 export default function AvatarScreen({ navigation }) {
   const { userState, usersDispatch } = useCustomContext();
+  const [glasses, setGlasses] = useState("None");
+  const [hat, setHat] = useState("Grey");
+  const [skin, setSkin] = useState("Tan");
+  const [shirt, setShirt] = useState("Blue");
 
-  const WEIRD_OFFSET = 3;
+  const handleGlasses = () => {
+    if (glasses === "None") {
+      setGlasses("Brown");
+    } else if (glasses === "Brown") {
+      setGlasses("None");
+    }
+  };
 
-  const renderItem = ({ item, index }) => {
+  const handleHat = () => {
+    if (hat === "None") {
+      setHat("Grey");
+    } else if (hat === "Grey") {
+      setHat("None");
+    }
+  };
+
+  const getAvatarUri = () => {
     return (
-      <View style={styles.container}>
-        <FadePressable
-          onPress={() =>
-            usersDispatch({
-              type: "TEST",
-              name: userState.avatarIndex,
-              avatarIndex: index - WEIRD_OFFSET,
-            })
-          }
-        >
-          <Image
-            source={item.image}
-            style={styles.avatarImg}
-            resizeMode="contain"
-          />
-        </FadePressable>
-      </View>
+      "Jasper_Hat-" +
+      hat +
+      "_Shirt-" +
+      shirt +
+      "_Skin-" +
+      skin +
+      "_Glasses-" +
+      glasses
     );
   };
 
   return (
     <BackgroundView navigation={navigation}>
       <NextButton navigation={navigation} screen="NameScreen" />
-      {/* <View styles={styles.smaller}> */}
-        <Carousel
-          data={avatarImages}
-          renderItem={renderItem}
-          itemWidth={itemWidth}
-          sliderWidth={1000}
-          itemHeight={itemHeight}
-          sliderHeight={10}
-          loop={true}
-        />
-      {/* </View> */}
+      <View style={styles.bigRow}>
+        <Image style={styles.avatar} source={jasperImages[getAvatarUri()]} />
+        <View style={styles.column}>
+          <View style={styles.row}>
+            <FadePressable onPress={() => handleGlasses()}>
+              <Image
+                style={styles.icon}
+                source={require("../assets/icons/Brown_Glasses_Icon.png")}
+              />
+            </FadePressable>
+            <FadePressable onPress={() => handleHat()}>
+              <Image
+                style={styles.icon}
+                source={require("../assets/icons/Grey_Hat_Icon.png")}
+              />
+            </FadePressable>
+          </View>
+          <View style={styles.row}>
+            <FadePressable onPress={() => setSkin("Light")}>
+              <Image
+                style={styles.icon}
+                source={require("../assets/icons/Light_Skin_Tone_Icon.png")}
+              />
+            </FadePressable>
+            <FadePressable onPress={() => setSkin("Tan")}>
+              <Image
+                style={styles.icon}
+                source={require("../assets/icons/Tan_Skin_Tone_Icon.png")}
+              />
+            </FadePressable>
+            <FadePressable onPress={() => setSkin("Golden")}>
+              <Image
+                style={styles.icon}
+                source={require("../assets/icons/Golden_Skin_Tone_Icon.png")}
+              />
+            </FadePressable>
+          </View>
+          <View style={styles.row}>
+            <FadePressable onPress={() => setShirt("White")}>
+              <Image
+                style={styles.icon}
+                source={require("../assets/icons/White_Shirt_Icon.png")}
+              />
+            </FadePressable>
+            <FadePressable onPress={() => setShirt("Blue")}>
+              <Image
+                style={styles.icon}
+                source={require("../assets/icons/Blue_Shirt_Icon.png")}
+              />
+            </FadePressable>
+            <FadePressable onPress={() => setShirt("Purple")}>
+              <Image
+                style={styles.icon}
+                source={require("../assets/icons/Purple_Shirt_Icon.png")}
+              />
+            </FadePressable>
+          </View>
+          <WhiteButton
+            title="Save"
+            style={styles.save}
+            onPress={() => {
+              usersDispatch({
+                type: "TEST",
+                name: userState.avatarIndex,
+                avatarUri: getAvatarUri(),
+              });
+            }}
+          />
+        </View>
+      </View>
     </BackgroundView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "red",
+  bigRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "75%",
   },
-  smaller: {
-    width: "100%",
+  row: {
+    flexDirection: "row",
+    marginTop: 5,
+  },
+  icon: {
+    width: 100,
+    height: 100,
+  },
+  avatar: {
+    width: 200,
     height: "100%",
+    resizeMode: "contain",
   },
-  avatarImg: {
-    width: itemWidth,
-    height: itemHeight,
+  column: {
+    flexDirection: "column",
+    alignItems: "center",
   },
+  save: {
+    height: 20,
+  }
 });

@@ -25,14 +25,15 @@ export async function getRoom(findCode) {
   return await getDoc(doc(db, ROOMS_COLLECTION, findCode));
 }
 
-export async function navigateToVideoRoom(room, navigation, name, avatarIndex) {
+export async function navigateToVideoRoom(room, navigation, name, avatarUri) {
   await updateDoc(doc(db, ROOMS_COLLECTION, room.id), {
     numBuds: increment(1),
   });
   const docId = uuid.v4();
   await setDoc(doc(db, ROOMS_COLLECTION, room.id, PLAYERS_COLLECTION, docId), {
+    id: docId,
     name: name,
-    avatarIndex: avatarIndex,
+    avatarUri: avatarUri,
   });
   navigation.navigate(VIDEO_ROOM, {
     room: room,
@@ -89,6 +90,9 @@ export async function uploadComment(roomId, comment, onChangeComment, name) {
 }
 
 export async function filterRooms(interests, setRooms) {
+  if (interests.length === 0) {
+    return;
+  }
   let roomsRef = collection(db, ROOMS_COLLECTION);
   const q = query(
     roomsRef,

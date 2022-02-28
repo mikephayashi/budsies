@@ -15,7 +15,7 @@ import {
   addPlayersListener,
 } from "../FirebaseCalls";
 import { useCustomContext } from "../state/CustomContext";
-import getAvatar from '../shared/avatars';
+import { jasperImages } from "../shared/avatarImages";
 
 export default function VideoRoomScreen({ navigation, route }) {
   const room = route.params.room;
@@ -31,9 +31,10 @@ export default function VideoRoomScreen({ navigation, route }) {
       setPlayers(newPlayers);
     });
     const unsubscribeCommments = addCommentsListener(room.id, (newComments) =>
-      updateComments([...comments, ...newComments])
+      updateComments(newComments)
     );
     return function cleanup() {
+      unsubscribePlayers();
       unsubscribeCommments();
     };
   }, []);
@@ -49,17 +50,24 @@ export default function VideoRoomScreen({ navigation, route }) {
         title="Youtube"
         onPress={() => navigation.navigate("ShowScreen", { room: room })}
       />
-      <Button
-        title="Game"
-        onPress={() => navigation.navigate("GameScreen")}
+      <Button title="Game" onPress={() => navigation.navigate("GameScreen")} />
+      <Image
+        source={jasperImages[userState.avatarUri]}
+        style={styles.avatarImg}
       />
-      <Image source={getAvatar(userState.avatarIndex)} style={{ width: 100, height: 100 }} />
-      <ScrollView>
+      <ScrollView style={styles.scroll}>
         {players.map((player) => {
+          if (player.name === userState.name) {
+            return;
+          }
           return (
-            <Text key={player.name}>
-              {player.name}: {player.avatarIndex}
-            </Text>
+            <View key={player.id}>
+              <Text key={player.name}>{player.name}</Text>
+              <Image
+                style={styles.avatarImg}
+                source={jasperImages[player.avatarUri]}
+              />
+            </View>
           );
         })}
       </ScrollView>
@@ -70,7 +78,9 @@ export default function VideoRoomScreen({ navigation, route }) {
       />
       <Button
         title="Submit"
-        onPress={() => uploadComment(room.id, comment, onChangeComment, userState.name)}
+        onPress={() =>
+          uploadComment(room.id, comment, onChangeComment, userState.name)
+        }
       />
       <ScrollView>
         {comments.map((comment) => {
@@ -91,4 +101,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 50,
   },
+  scroll: {
+    height: "30%",
+  },
+  avatarImg: { width: 100, height: 100 },
 });

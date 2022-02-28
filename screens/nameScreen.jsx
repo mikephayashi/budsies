@@ -34,7 +34,7 @@ export default function AvaNameScreentarScreen({ navigation }) {
             usersDispatch({
               type: "TEST",
               name: name,
-              avatarIndex: userState.avatarIndex,
+              avatarUri: userState.avatarUri,
             });
           }}
         />
