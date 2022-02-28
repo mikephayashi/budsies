@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, Button, ScrollView } from "react-native";
+import { Text, Button, ScrollView, StyleSheet, View } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { navigateToVideoRoom, filterRooms } from "../FirebaseCalls";
+import { filterRooms } from "../FirebaseCalls";
 import { useCustomContext } from "../state/CustomContext";
-import {roomTypes} from '../shared/rooms';
+import { roomTypes } from "../shared/rooms";
+import BackgroundView from "../components/BackgroundView";
+import RoomButton from "../components/RoomButton";
 
 export default function JoinRoomScreen({ navigation }) {
   const [interests, setInterests] = useState([]);
@@ -13,9 +15,9 @@ export default function JoinRoomScreen({ navigation }) {
   const { userState, usersDispatch } = useCustomContext();
 
   return (
-    <View style={styles.container}>
-      <Button color="white" title="Back" onPress={() => navigation.pop()} />
+    <BackgroundView navigation={navigation}>
       <DropDownPicker
+        style={styles.dropDown}
         value={interests}
         setValue={setInterests}
         open={open}
@@ -31,34 +33,16 @@ export default function JoinRoomScreen({ navigation }) {
         onPress={() => filterRooms(interests, (docs) => setRooms(docs))}
       />
       <ScrollView>
-        {rooms.map((room) => {
-          return (
-            <View key={room.id}>
-              <Text>{room.name}</Text>
-              <Text>
-                {room.numBuds}/{room.maxBuds}
-              </Text>
-              <Text>{room.interests.toString()}</Text>
-              <Button
-                title="Join Room"
-                onPress={async () => {
-                  if (room.numBuds < room.maxBuds) {
-                    navigateToVideoRoom(room, navigation, userState.name, userState.avatarIndex);
-                  }
-                }}
-              />
-            </View>
-          );
-        })}
+      {rooms.map(room => {
+        return <RoomButton key={room.id} navigation={navigation} room={room} userState={userState}/>;
+      })}
       </ScrollView>
-    </View>
+    </BackgroundView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    flex: 1,
-    paddingTop: 50,
+  dropDown: {
+    width: "20%",
   },
 });

@@ -4,7 +4,7 @@ import StartButton from '../components/StartButton';
 
 export default function StartScreen({ navigation }) {
   return (
-    <BackgroundView>
+    <BackgroundView showBack={false}>
       <StartButton navigation={navigation}/>
     </BackgroundView>
   );

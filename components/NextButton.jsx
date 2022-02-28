@@ -7,20 +7,26 @@ export default function NextButton({ screen, navigation }) {
     <FadePressable
       onPress={() => navigation.navigate(screen)}
     >
-      <View style={[styles.big_title_box, styles.block1, styles.block1_layout]}>
+    <View style={styles.position}>
+    <View style={[styles.big_title_box, styles.block1, styles.block1_layout]}>
         <Text style={styles.big_title} ellipsizeMode={"clip"}>
           {"Next"}
         </Text>
       </View>
+    </View>
+
     </FadePressable>
   );
 }
 
 const styles = StyleSheet.create({
+  position: {
+    position: "absolute",
+    right: "4%", 
+    bottom: -680,
+  },
   block1_layout: {
-    marginTop: 91,
     height: 52,
-    marginLeft: 186,
     width: 138,
     minWidth: 138
   },

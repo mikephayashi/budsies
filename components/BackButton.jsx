@@ -1,24 +1,26 @@
 import React from "react";
-import { StyleSheet, ImageBackground, Pressable } from 'react-native';
+import { StyleSheet, ImageBackground, Pressable } from "react-native";
 import FadePressable from "../components/FadePressable";
 
-export default function BackButton({ navigation }) {
-  return (
-    <FadePressable
-    onPress={() => navigation.pop()}
-  >
+export default function BackButton({ navigation, show }) {
+  return show ? (
+    <FadePressable onPress={() => navigation.pop()}>
       <ImageBackground
         style={[styles.image, styles.image_layout]}
         source={require("../assets/back_button.png")}
       />
     </FadePressable>
-  );
+  ) : null;
 }
+
+BackButton.defaultProps = {
+  show: true,
+};
 
 const styles = StyleSheet.create({
   block: {
-    backgroundColor: '#e93030ff',
-    overflow: 'hidden'
+    backgroundColor: "#e93030ff",
+    overflow: "hidden",
   },
   block_layout: {
     marginTop: 0,
@@ -27,17 +29,16 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     marginLeft: 0,
     flexGrow: 1,
-    marginRight: 0
+    marginRight: 0,
   },
   image: {
-    resizeMode: 'contain'
+    resizeMode: "contain",
   },
   image_layout: {
-    marginTop: 70,
+    marginTop: 35,
     height: 29,
-    marginLeft: 176,
+    marginLeft: 30,
     width: 17,
-    minWidth: 17
+    minWidth: 17,
   },
 });
-

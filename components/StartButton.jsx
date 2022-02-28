@@ -37,11 +37,12 @@ const styles = StyleSheet.create({
     borderWidth: 3,
   },
   block1_layout: {
-    marginTop: 86,
     height: 100,
-    marginLeft: 109,
     width: 478,
     minWidth: 478,
+    marginLeft: "auto",
+    marginRight: "auto",
+    bottom: -500,
   },
   hero_title: {
     color: "#273949ff",

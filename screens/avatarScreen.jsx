@@ -1,5 +1,4 @@
 import React from "react";
-import PaddedView from "../components/PaddedView";
 import NextButton from "../components/NextButton";
 import Carousel from "react-native-snap-carousel";
 import { Image, View, StyleSheet } from "react-native";
@@ -40,18 +39,18 @@ export default function AvatarScreen({ navigation }) {
 
   return (
     <BackgroundView navigation={navigation}>
-      <PaddedView>
-        <NextButton navigation={navigation} screen="NameScreen" />
+      <NextButton navigation={navigation} screen="NameScreen" />
+      {/* <View styles={styles.smaller}> */}
         <Carousel
           data={avatarImages}
           renderItem={renderItem}
           itemWidth={itemWidth}
           sliderWidth={1000}
           itemHeight={itemHeight}
-          sliderHeight={400}
+          sliderHeight={10}
           loop={true}
         />
-      </PaddedView>
+      {/* </View> */}
     </BackgroundView>
   );
 }
@@ -59,6 +58,11 @@ export default function AvatarScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "red",
+  },
+  smaller: {
+    width: "100%",
+    height: "100%",
   },
   avatarImg: {
     width: itemWidth,
