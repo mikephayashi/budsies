@@ -11,6 +11,7 @@ import AvatarScreen from "./screens/avatarScreen";
 import NameScreen from "./screens/nameScreen";
 import ShowScreen from "./screens/showScreen";
 import GameScreen from "./screens/gameScreen";
+import GameShowScreen from "./screens/gameShowScreen";
 
 import testReducer from "./state/TestReducer";
 import CustomContext from "./state/CustomContext";
@@ -20,7 +21,10 @@ export default function App() {
   DropDownPicker.setMode("BADGE");
   const Stack = createStackNavigator();
 
-  const [userState, usersDispatch] = useReducer(testReducer, {name: "", avatarUri: ""});
+  const [userState, usersDispatch] = useReducer(testReducer, {
+    name: "",
+    avatarUri: "",
+  });
 
   const providerState = {
     userState,
@@ -74,6 +78,11 @@ export default function App() {
           <Stack.Screen
             name="GameScreen"
             component={GameScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="GameShowScreen"
+            component={GameShowScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

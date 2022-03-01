@@ -12,6 +12,7 @@ import BackButton from "../components/BackButton";
 
 export default function ShowScreen({navigation, route}){
     const room = route.params.room;
+    const videoId = route.params.videoId;
     const [playing, setPlaying] = useState(false);
     const playerRef = useRef();
     const setByOutside = useRef(false);
@@ -43,7 +44,8 @@ export default function ShowScreen({navigation, route}){
                 ref={playerRef}
                 height={700}
                 play={playing}
-                videoId={"fYup-t_2yGc"}
+                // videoId={"fYup-t_2yGc"}
+                videoId={videoId}
                 onChangeState={(state) => {
                 if (!setByOutside.current) {
                     if (state === "playing") {
