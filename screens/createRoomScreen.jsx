@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, Text } from "react-native";
+import { Button, StyleSheet, Text, Pressable } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { createRoom } from "../FirebaseCalls";
 import { roomTypes } from "../shared/rooms";
@@ -15,44 +15,49 @@ export default function CreateRoomScreen({ item, navigation }) {
   const [items, setItems] = useState(roomTypes);
 
   return (
-    <BackgroundView navigation={navigation}>
-      <Header title="Create a Room" />
-      <WhiteInput
-        label="Room Name"
-        placeholder="Enter Name"
-        onChangeText={onChangeName}
-        value={name}
-      />
-      <WhiteInput
-        label="Max # of buds"
-        placeholder="Max # of buds"
-        onChangeText={onChangeMaxBuds}
-        value={maxBuds}
-      />
-      <DropDownPicker
-        style={styles.dropDown}
-        value={interests}
-        setValue={setInterests}
-        open={open}
-        setOpen={setOpen}
-        items={items}
-        setItems={setItems}
-        multiple={true}
-        renderBadgeItem={({ label }) => <Text>{label}</Text>}
-      />
-      <Button
-        color="white"
-        title="Submit"
-        onPress={async () => {
-          await createRoom(name, maxBuds, interests);
-        }}
-      />
-    </BackgroundView>
+    <Pressable style={styles.pressable} onPress={() => setOpen(false)}>
+      <BackgroundView navigation={navigation}>
+        <Header title="Create a Room" />
+        <WhiteInput
+          label="Room Name"
+          placeholder="Enter Name"
+          onChangeText={onChangeName}
+          value={name}
+        />
+        <WhiteInput
+          label="Max # of buds"
+          placeholder="Max # of buds"
+          onChangeText={onChangeMaxBuds}
+          value={maxBuds}
+        />
+        <DropDownPicker
+          style={styles.dropDown}
+          value={interests}
+          setValue={setInterests}
+          open={open}
+          setOpen={setOpen}
+          items={items}
+          setItems={setItems}
+          multiple={true}
+          renderBadgeItem={({ label }) => <Text>{label}</Text>}
+        />
+        <Button
+          color="white"
+          title="Submit"
+          onPress={async () => {
+            await createRoom(name, maxBuds, interests);
+          }}
+        />
+      </BackgroundView>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   dropDown: {
     width: "20%",
+  },
+  pressable: {
+    flex: 1,
   }
 });

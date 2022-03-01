@@ -1,5 +1,11 @@
-import React, { useState } from "react";
-import { Text, Button, ScrollView, StyleSheet, View } from "react-native";
+import React, { useState, useRef } from "react";
+import {
+  Text,
+  Button,
+  ScrollView,
+  StyleSheet,
+  Pressable,
+} from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { filterRooms } from "../FirebaseCalls";
 import { useCustomContext } from "../state/CustomContext";
@@ -15,29 +21,39 @@ export default function JoinRoomScreen({ navigation }) {
   const { userState, usersDispatch } = useCustomContext();
 
   return (
-    <BackgroundView navigation={navigation}>
-      <DropDownPicker
-        style={styles.dropDown}
-        value={interests}
-        setValue={setInterests}
-        open={open}
-        setOpen={setOpen}
-        items={items}
-        setItems={setItems}
-        multiple={true}
-        renderBadgeItem={({ label }) => <Text>{label}</Text>}
-      />
-      <Button
-        style={"margin-top: 50px;"}
-        title="Search Rooms"
-        onPress={() => filterRooms(interests, (docs) => setRooms(docs))}
-      />
-      <ScrollView>
-      {rooms.map(room => {
-        return <RoomButton key={room.id} navigation={navigation} room={room} userState={userState}/>;
-      })}
-      </ScrollView>
-    </BackgroundView>
+    <Pressable style={styles.pressable}onPress={() => setOpen(false)}>
+      <BackgroundView navigation={navigation}>
+        <DropDownPicker
+          style={styles.dropDown}
+          value={interests}
+          setValue={setInterests}
+          open={open}
+          setOpen={setOpen}
+          items={items}
+          setItems={setItems}
+          multiple={true}
+          renderBadgeItem={({ label }) => <Text>{label}</Text>}
+          controller={(instance) => (dropDownRef.current = instance)}
+        />
+        <Button
+          style={"margin-top: 50px;"}
+          title="Search Rooms"
+          onPress={() => filterRooms(interests, (docs) => setRooms(docs))}
+        />
+        <ScrollView>
+          {rooms.map((room) => {
+            return (
+              <RoomButton
+                key={room.id}
+                navigation={navigation}
+                room={room}
+                userState={userState}
+              />
+            );
+          })}
+        </ScrollView>
+      </BackgroundView>
+    </Pressable>
   );
 }
 
@@ -45,4 +61,7 @@ const styles = StyleSheet.create({
   dropDown: {
     width: "20%",
   },
+  pressable: {
+    flex: 1,
+  }
 });
