@@ -17,17 +17,15 @@ import CustomModal from "../components/CustomModal";
 import FadePressable from "../components/FadePressable";
 
 export default function VideoRoomScreen({ navigation, route }) {
-  // const room = route.params.room;
-  // const docId = route.params.docId;
-  const room = { id: "0c136655-43ae-40c0-bc7f-d754294a0eee" };
-  const docId = "";
-
-  // const { userState, usersDispatch } = useCustomContext();
-
-  const userState = {
-    name: "Mike",
-    avatarUri: "Jasper_Hat-Grey_Shirt-Blue_Skin-Golden_Glasses-Brown",
-  };
+  const room = route.params.room;
+  const docId = route.params.docId;
+  const { userState, usersDispatch } = useCustomContext();
+  // const room = { id: "0c136655-43ae-40c0-bc7f-d754294a0eee" };
+  // const docId = "";
+  // const userState = {
+  //   name: "Mike",
+  //   avatarUri: "Jasper_Hat-Grey_Shirt-Blue_Skin-Golden_Glasses-Brown",
+  // };
 
   const setMinSize = (numPeople) => {
     if (numPeople <= 4) {
@@ -115,6 +113,7 @@ export default function VideoRoomScreen({ navigation, route }) {
         <IconButton
           label={"Avatar"}
           image={require("../assets/video_icons/avatarSelector.png")}
+          onPress={() => navigation.navigate("AvatarScreen", {fromScreen: "videoScreen"})}
         />
         <IconButton
           label={"Play"}

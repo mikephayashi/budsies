@@ -7,7 +7,8 @@ import { jasperImages } from "../shared/avatarImages";
 import { useCustomContext } from "../state/CustomContext";
 import WhiteButton from "../components/WhiteButton";
 
-export default function AvatarScreen({ navigation }) {
+export default function AvatarScreen({ navigation, route }) {
+  const fromScreen = route.params.fromScreen;
   const { userState, usersDispatch } = useCustomContext();
   const [glasses, setGlasses] = useState("None");
   const [hat, setHat] = useState("Grey");
@@ -45,7 +46,17 @@ export default function AvatarScreen({ navigation }) {
 
   return (
     <BackgroundView navigation={navigation}>
-      <NextButton navigation={navigation} screen="NameScreen" />
+      <NextButton
+        navigation={navigation}
+        callBack={() => {
+          usersDispatch({
+            type: "TEST",
+            name: userState.avatarIndex,
+            avatarUri: getAvatarUri(),
+          });
+          navigation.navigate("NameScreen", { fromScreen: fromScreen });
+        }}
+      />
       <View style={styles.bigRow}>
         <Image style={styles.avatar} source={jasperImages[getAvatarUri()]} />
         <View style={styles.column}>
@@ -103,17 +114,6 @@ export default function AvatarScreen({ navigation }) {
               />
             </FadePressable>
           </View>
-          <WhiteButton
-            title="Save"
-            style={styles.save}
-            onPress={() => {
-              usersDispatch({
-                type: "TEST",
-                name: userState.avatarIndex,
-                avatarUri: getAvatarUri(),
-              });
-            }}
-          />
         </View>
       </View>
     </BackgroundView>
@@ -146,5 +146,5 @@ const styles = StyleSheet.create({
   },
   save: {
     height: 20,
-  }
+  },
 });

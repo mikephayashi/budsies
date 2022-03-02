@@ -2,12 +2,17 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import WhiteButton from "./WhiteButton";
 
-export default function NextButton({ screen, navigation }) {
+export default function NextButton({ screen, navigation, payload, callBack, title }) {
   return (
     <WhiteButton
       style={styles.position}
-      title="Next"
-      onPress={() => navigation.navigate(screen)}
+      title= {title ?? "Next"}
+      onPress={() => {
+        callBack();
+        if (callBack === undefined) {
+          navigation.navigate(screen, payload);
+        }
+      }}
     />
   );
 }

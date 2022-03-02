@@ -1,18 +1,32 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, View } from "react-native";
-import NextButton from "../components/NextButton";
+import { StyleSheet, View } from "react-native";
 import { useCustomContext } from "../state/CustomContext";
 import BackgroundView from "../components/BackgroundView";
 import WhiteInput from "../components/WhiteInput";
+import NextButton from "../components/NextButton";
 
-export default function AvaNameScreentarScreen({ navigation }) {
+export default function NameScreen({ navigation, route }) {
+  const fromScreen = route.params.fromScreen;
   const [name, onChangeName] = useState("");
   const [age, onChangeAge] = useState("");
   const { userState, usersDispatch } = useCustomContext();
   return (
     <BackgroundView navigation={navigation}>
-      <NextButton navigation={navigation} screen="HomeScreen" />
-
+      <NextButton
+        title="Save"
+        callBack={() => {
+          usersDispatch({
+            type: "TEST",
+            name: name,
+            avatarUri: userState.avatarUri,
+          });
+          if (fromScreen === "videoScreen") {
+            navigation.pop(2);
+          } else if (fromScreen === "startScreen") {
+            navigation.navigate("HomeScreen");
+          }
+        }}
+      />
       <View style={styles.column}>
         <WhiteInput
           label="NAME"
@@ -26,17 +40,6 @@ export default function AvaNameScreentarScreen({ navigation }) {
           placeholder="Enter Age"
           onChangeText={onChangeAge}
           value={age}
-        />
-
-        <Button
-          title="Declare Name"
-          onPress={() => {
-            usersDispatch({
-              type: "TEST",
-              name: name,
-              avatarUri: userState.avatarUri,
-            });
-          }}
         />
       </View>
     </BackgroundView>
