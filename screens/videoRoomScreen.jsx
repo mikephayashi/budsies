@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Image } from "react-native";
 import { FlatGrid } from "react-native-super-grid";
 import {
   removePlayer,
@@ -7,11 +7,14 @@ import {
   addPlayersListener,
 } from "../FirebaseCalls";
 import { useCustomContext } from "../state/CustomContext";
+import * as Clipboard from "expo-clipboard";
 import { jasperImages } from "../shared/avatarImages";
 import IconButton from "../components/IconButton";
 import BackgroundView from "../components/BackgroundView";
 import VideoRectangle from "../components/VideoRectangle";
 import ChatPane from "../components/ChatPane";
+import CustomModal from "../components/CustomModal";
+import FadePressable from "../components/FadePressable";
 
 export default function VideoRoomScreen({ navigation, route }) {
   // const room = route.params.room;
@@ -34,13 +37,14 @@ export default function VideoRoomScreen({ navigation, route }) {
     } else {
       return 200;
     }
-  }
+  };
 
   const [comments, updateComments] = useState([]);
   const [players, setPlayers] = useState([]);
   const [muted, setMuted] = useState(false);
   const [showChat, setShowChat] = useState(false);
   const [itemDimension, setItemDimension] = useState(setMinSize(players));
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const unsubscribePlayers = addPlayersListener(room.id, (newPlayers) => {
@@ -58,10 +62,20 @@ export default function VideoRoomScreen({ navigation, route }) {
 
   return (
     <BackgroundView showBack={false} showLogo={false}>
+      <CustomModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      >
+        <Text style={[styles.codeHeader, styles.code]}>Code</Text>
+        <Text style={[styles.codeText, styles.code]}>{room.id}</Text>
+        <FadePressable onPress={() => Clipboard.setString(room.id)}>
+          <Image style={styles.clipboard} source={require("../assets/clipboard.png")} />
+        </FadePressable>
+      </CustomModal>
       <View style={styles.bigRow}>
         <View style={styles.container}>
           <FlatGrid
-          style={styles.gridView}
+            style={styles.gridView}
             itemDimension={itemDimension}
             data={players}
             renderItem={({ item }) => {
@@ -110,6 +124,7 @@ export default function VideoRoomScreen({ navigation, route }) {
         <IconButton
           label={"Code"}
           image={require("../assets/video_icons/copyCode.png")}
+          onPress={() => setModalVisible(true)}
         />
         <IconButton
           label={"Exit"}
@@ -149,14 +164,21 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
   },
-  avatarRow: {
-    flexDirection: "row",
-    flex: 1,
-  },
-  avatarColumn: {
-    flex: 1,
-  },
   gridView: {
     top: 0,
+  },
+  code: {
+    color: "white",
+  },
+  codeHeader: {
+    fontSize: 40,
+  },
+  codeText: {
+    fontSize: 20,
+  },
+  clipboard: {
+    width: 20,
+    height: 20,
+    marginTop: 10,
   }
 });
