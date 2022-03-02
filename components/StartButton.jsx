@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     minWidth: 478,
     marginLeft: "auto",
     marginRight: "auto",
-    bottom: -500,
+    bottom: -600,
   },
   hero_title: {
     color: "#273949ff",
