@@ -20,8 +20,7 @@ export default function VideoRectangle({ avatarImg, name }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
-    height: 280,
+    aspectRatio: 1.5,
   },
   box: {
     width: "100%",
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
     height: "80%",
     overflow: "hidden",
     right: "2%",
-    bottom: "4.5%",
+    bottom: "10%",
     position: "absolute",
   },
   avatarImg: {

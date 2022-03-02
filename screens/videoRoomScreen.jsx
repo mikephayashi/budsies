@@ -30,7 +30,7 @@ export default function VideoRoomScreen({ navigation, route }) {
   const [players, setPlayers] = useState([]);
   const [muted, setMuted] = useState(false);
   const [showChat, setShowChat] = useState(false);
-  const [itemDimension, setItemDimension] = useState(400);
+  const [itemDimension, setItemDimension] = useState(200);
 
   useEffect(() => {
     const unsubscribePlayers = addPlayersListener(room.id, (newPlayers) => {
