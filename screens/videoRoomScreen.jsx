@@ -113,7 +113,7 @@ export default function VideoRoomScreen({ navigation, route }) {
         <IconButton
           label={"Avatar"}
           image={require("../assets/video_icons/avatarSelector.png")}
-          onPress={() => navigation.navigate("AvatarScreen", {fromScreen: "videoScreen"})}
+          onPress={() => navigation.navigate("AvatarScreen", {fromScreen: "VideoScreen"})}
         />
         <IconButton
           label={"Play"}

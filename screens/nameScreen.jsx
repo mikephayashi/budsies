@@ -20,9 +20,9 @@ export default function NameScreen({ navigation, route }) {
             name: name,
             avatarUri: userState.avatarUri,
           });
-          if (fromScreen === "videoScreen") {
+          if (fromScreen === "VideoScreen") {
             navigation.pop(2);
-          } else if (fromScreen === "startScreen") {
+          } else if (fromScreen === "StartScreen") {
             navigation.navigate("HomeScreen");
           }
         }}

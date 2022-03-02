@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
   },
   big_title_box: {
-    flexGrow: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",

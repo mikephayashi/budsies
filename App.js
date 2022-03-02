@@ -35,9 +35,9 @@ export default function App() {
     <CustomContext.Provider value={providerState}>
       <NavigationContainer>
         <Stack.Navigator>
-        <Stack.Screen
-            name="VideoRoom"
-            component={VideoRoomScreen}
+          <Stack.Screen
+            name="HomeScreen"
+            component={HomeScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
@@ -45,11 +45,11 @@ export default function App() {
             component={StartScreen}
             options={{ headerShown: false }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="HomeScreen"
             component={HomeScreen}
             options={{ headerShown: false }}
-          />
+          /> */}
           <Stack.Screen
             name="CreateRoom"
             component={CreateRoomScreen}
@@ -60,11 +60,11 @@ export default function App() {
             component={JoinRoomScreen}
             options={{ headerShown: false }}
           />
-          {/* <Stack.Screen
+          <Stack.Screen
             name="VideoRoom"
             component={VideoRoomScreen}
             options={{ headerShown: false }}
-          /> */}
+          />
           <Stack.Screen
             name="AvatarScreen"
             component={AvatarScreen}
