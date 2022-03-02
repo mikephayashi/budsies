@@ -26,15 +26,26 @@ export default function VideoRoomScreen({ navigation, route }) {
     avatarUri: "Jasper_Hat-Grey_Shirt-Blue_Skin-Golden_Glasses-Brown",
   };
 
+  const setMinSize = (numPeople) => {
+    if (numPeople <= 4) {
+      return 400;
+    } else if (numPeople <= 8) {
+      return 300;
+    } else {
+      return 200;
+    }
+  }
+
   const [comments, updateComments] = useState([]);
   const [players, setPlayers] = useState([]);
   const [muted, setMuted] = useState(false);
   const [showChat, setShowChat] = useState(false);
-  const [itemDimension, setItemDimension] = useState(200);
+  const [itemDimension, setItemDimension] = useState(setMinSize(players));
 
   useEffect(() => {
     const unsubscribePlayers = addPlayersListener(room.id, (newPlayers) => {
       setPlayers(newPlayers);
+      setItemDimension(setMinSize(newPlayers.length));
     });
     const unsubscribeCommments = addCommentsListener(room.id, (newComments) =>
       updateComments(newComments)
@@ -45,25 +56,14 @@ export default function VideoRoomScreen({ navigation, route }) {
     };
   }, []);
 
-  const people = [
-    { name: "Mike", avatarUri: userState.avatarUri },
-    { name: "Mike", avatarUri: userState.avatarUri },
-    { name: "Mike", avatarUri: userState.avatarUri },
-    { name: "Mike", avatarUri: userState.avatarUri },
-    { name: "Mike", avatarUri: userState.avatarUri },
-    { name: "Mike", avatarUri: userState.avatarUri },
-    { name: "Mike", avatarUri: userState.avatarUri },
-    { name: "Mike", avatarUri: userState.avatarUri },
-  ];
-
   return (
-    <BackgroundView showBack={false}>
+    <BackgroundView showBack={false} showLogo={false}>
       <View style={styles.bigRow}>
         <View style={styles.container}>
           <FlatGrid
           style={styles.gridView}
             itemDimension={itemDimension}
-            data={people}
+            data={players}
             renderItem={({ item }) => {
               return (
                 <VideoRectangle
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: "auto",
     marginBottom: "auto",
-    height: "74%",
+    height: "85%",
     marginTop: 0,
   },
   scroll: {
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   row: {
-    height: 120,
+    height: "15%",
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-evenly",

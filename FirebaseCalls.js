@@ -76,7 +76,7 @@ export async function createRoom(name, maxBuds, interests) {
   });
 }
 
-export async function uploadComment(roomId, comment, onChangeComment, name) {
+export async function uploadComment(roomId, comment, onChangeComment, name, avatarUri) {
   const commentId = uuid.v4();
   await setDoc(
     doc(db, ROOMS_COLLECTION, roomId, COMMENTS_COLLECTION, commentId),
@@ -84,6 +84,7 @@ export async function uploadComment(roomId, comment, onChangeComment, name) {
       id: commentId,
       comment: comment,
       name: name,
+      avatarUri: avatarUri,
     }
   );
   onChangeComment("");
