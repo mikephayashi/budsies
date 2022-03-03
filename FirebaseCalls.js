@@ -34,10 +34,17 @@ export async function navigateToVideoRoom(room, navigation, name, avatarUri) {
     id: docId,
     name: name,
     avatarUri: avatarUri,
+    isTalking: true,
   });
   navigation.navigate(VIDEO_ROOM, {
     room: room,
     docId: docId,
+  });
+}
+
+export async function updateIsTalking(isTalking, roomId, docId){
+  await updateDoc(doc(db, ROOMS_COLLECTION, roomId, PLAYERS_COLLECTION, docId), {
+    isTalking: isTalking
   });
 }
 

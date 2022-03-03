@@ -5,10 +5,11 @@ import {
   removePlayer,
   addCommentsListener,
   addPlayersListener,
+  updateIsTalking,
 } from "../FirebaseCalls";
 import { useCustomContext } from "../state/CustomContext";
 import * as Clipboard from "expo-clipboard";
-import { jasperImages } from "../shared/avatarImages";
+import { jasperImages, jasperGifs } from "../shared/avatarImages";
 import IconButton from "../components/IconButton";
 import BackgroundView from "../components/BackgroundView";
 import VideoRectangle from "../components/VideoRectangle";
@@ -17,15 +18,15 @@ import CustomModal from "../components/CustomModal";
 import FadePressable from "../components/FadePressable";
 
 export default function VideoRoomScreen({ navigation, route }) {
-  const room = route.params.room;
-  const docId = route.params.docId;
-  const { userState, usersDispatch } = useCustomContext();
   // const room = { id: "0c136655-43ae-40c0-bc7f-d754294a0eee" };
-  // const docId = "";
+  // const docId = "cjr0N8PmWRFwuzlkl7kk";
   // const userState = {
   //   name: "Mike",
   //   avatarUri: "Jasper_Hat-Grey_Shirt-Blue_Skin-Golden_Glasses-Brown",
   // };
+  const room = route.params.room;
+  const docId = route.params.docId;
+  const {userState, usersDispatch} = useCustomContext();
 
   const setMinSize = (numPeople) => {
     if (numPeople <= 4) {
@@ -67,7 +68,10 @@ export default function VideoRoomScreen({ navigation, route }) {
         <Text style={[styles.codeHeader, styles.code]}>Code</Text>
         <Text style={[styles.codeText, styles.code]}>{room.id}</Text>
         <FadePressable onPress={() => Clipboard.setString(room.id)}>
-          <Image style={styles.clipboard} source={require("../assets/clipboard.png")} />
+          <Image
+            style={styles.clipboard}
+            source={require("../assets/clipboard.png")}
+          />
         </FadePressable>
       </CustomModal>
       <View style={styles.bigRow}>
@@ -77,12 +81,11 @@ export default function VideoRoomScreen({ navigation, route }) {
             itemDimension={itemDimension}
             data={players}
             renderItem={({ item }) => {
-              return (
-                <VideoRectangle
-                  name={item.name}
-                  avatarImg={jasperImages[item.avatarUri]}
-                />
-              );
+              let img = jasperImages[item.avatarUri];
+              if (item.isTalking) {
+                img = jasperGifs[item.avatarUri];
+              }
+              return <VideoRectangle name={item.name} avatarImg={img} />;
             }}
           />
         </View>
@@ -103,7 +106,10 @@ export default function VideoRoomScreen({ navigation, route }) {
               ? require("../assets/video_icons/unmute.png")
               : require("../assets/video_icons/mute.png")
           }
-          onPress={() => setMuted(!muted)}
+          onPress={async () => {
+            await updateIsTalking(muted, room.id, docId);
+            setMuted(!muted);
+            }}
         />
         <IconButton
           label={"Chat"}
@@ -113,7 +119,9 @@ export default function VideoRoomScreen({ navigation, route }) {
         <IconButton
           label={"Avatar"}
           image={require("../assets/video_icons/avatarSelector.png")}
-          onPress={() => navigation.navigate("AvatarScreen", {fromScreen: "VideoScreen"})}
+          onPress={() =>
+            navigation.navigate("AvatarScreen", { fromScreen: "VideoScreen" })
+          }
         />
         <IconButton
           label={"Play"}
@@ -179,5 +187,5 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     marginTop: 10,
-  }
+  },
 });

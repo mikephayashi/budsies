@@ -11,7 +11,7 @@ export default function VideoRectangle({ avatarImg, name }) {
         <Image style={styles.avatarImg} source={avatarImg} />
       </View>
       <Text style={styles.big_title} ellipsizeMode={"clip"}>
-        {name} (You)
+        {name}
       </Text>
     </View>
   );
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingVertical: 0,
     position: "absolute",
-    bottom: "6%",
+    bottom: "10%",
     left: "10%",
   },
 });

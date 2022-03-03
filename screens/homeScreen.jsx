@@ -12,15 +12,15 @@ import WhiteButton from "../components/WhiteButton";
 
 export default function Home({ navigation }) {
   const [findCode, onChangeFindCode] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
+  const [codeModal, setCodeModal] = useState(false);
+  const [createModal, setCreateModal] = useState(false);
+  const [joinModal, setJoinModal] = useState(false);
+  const [findModal, setFindModal] = useState(false);
   const { userState, usersDispatch } = useCustomContext();
 
   return (
     <BackgroundView navigation={navigation}>
-      <CustomModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-      >
+      <CustomModal modalVisible={codeModal} setModalVisible={setCodeModal}>
         <Text style={styles.header}>Enter Code</Text>
         <TextInput
           style={styles.input}
@@ -42,26 +42,38 @@ export default function Home({ navigation }) {
           }}
         />
       </CustomModal>
+      <CustomModal modalVisible={createModal} setModalVisible={setCreateModal}>
+        <Text>Create Room</Text>
+      </CustomModal>
+      <CustomModal modalVisible={joinModal} setModalVisible={setJoinModal}>
+        <Text>Join Room</Text>
+      </CustomModal>
+      <CustomModal modalVisible={findModal} setModalVisible={setFindModal}>
+        <Text>Find Room</Text>
+      </CustomModal>
       <View style={styles.column}>
         <HomeItem
           onPress={() => navigation.navigate("CreateRoom")}
           title="FIND BUDDIES"
           buttonText="Create Room"
           image={require("../assets/find_room_icon.png")}
+          popQuestion={() => setCreateModal(true)}
         />
         <HomeItem
           onPress={() => navigation.navigate("JoinRoom")}
           title="JOIN BUDDIES"
           buttonText="Join Room"
           image={require("../assets/join_room_icon.png")}
+          popQuestion={() => setJoinModal(true)}
         />
         <HomeItem
           onPress={async () => {
-            setModalVisible(true);
+            setCodeModal(true);
           }}
           title="CREATE BUDDIES"
           buttonText="Find Room"
           image={require("../assets/join_room_icon.png")}
+          popQuestion={() => setFindModal(true)}
         />
       </View>
     </BackgroundView>
@@ -84,5 +96,5 @@ const styles = StyleSheet.create({
   header: {
     color: "white",
     fontSize: 30,
-  }
+  },
 });

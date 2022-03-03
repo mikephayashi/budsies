@@ -3,12 +3,12 @@ import { Text, Image, StyleSheet, View } from "react-native";
 import FadePressable from "../components/FadePressable";
 import Header from "../components/Header";
 
-export default function HomeItem({ onPress, title, buttonText, image }) {
+export default function HomeItem({ onPress, title, buttonText, image, popQuestion }) {
   return (
     <View style={styles.row}>
       <Image style={styles.icon} source={image} />
       <View style={styles.rest}>
-        <Header title={title} />
+        <Header title={title} popQuestion={popQuestion} />
         <FadePressable onPress={() => onPress()}>
           <View style={styles.block1}>
             <View style={styles.big_title_box}>
