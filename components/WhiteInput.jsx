@@ -26,7 +26,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "60%",
     justifyContent: "space-between",
-    marginBottom: "2%",
+    marginTop: "4%",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   input: {
     height: 40,
@@ -36,7 +38,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffffff",
   },
   big_title: {
-    color: "#ffffffff",
+    color: "#f9d6bf",
     textAlign: "center",
     letterSpacing: 0,
     lineHeight: 36,

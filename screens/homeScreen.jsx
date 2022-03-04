@@ -8,72 +8,57 @@ import { useCustomContext } from "../state/CustomContext";
 import BackgroundView from "../components/BackgroundView";
 import HomeItem from "../components/HomeItem";
 import CustomModal from "../components/CustomModal";
-import WhiteButton from "../components/WhiteButton";
+import HelpModal from "../components/HelpModal";
 
 export default function Home({ navigation }) {
-  const [findCode, onChangeFindCode] = useState("");
-  const [codeModal, setCodeModal] = useState(false);
   const [createModal, setCreateModal] = useState(false);
   const [joinModal, setJoinModal] = useState(false);
   const [findModal, setFindModal] = useState(false);
-  const { userState, usersDispatch } = useCustomContext();
 
   return (
     <BackgroundView navigation={navigation}>
-      <CustomModal modalVisible={codeModal} setModalVisible={setCodeModal}>
-        <Text style={styles.header}>Enter Code</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Room Code"
-          onChangeText={onChangeFindCode}
-          value={findCode}
-        />
-        <WhiteButton
-          title="Join Room"
-          onPress={async () => {
-            setModalVisible(false);
-            const docSnap = await getRoom(findCode);
-            navigateToVideoRoom(
-              docSnap.data(),
-              navigation,
-              userState.name,
-              userState.avatarUri
-            );
-          }}
-        />
-      </CustomModal>
-      <CustomModal modalVisible={createModal} setModalVisible={setCreateModal}>
-        <Text>Create Room</Text>
-      </CustomModal>
-      <CustomModal modalVisible={joinModal} setModalVisible={setJoinModal}>
-        <Text>Join Room</Text>
-      </CustomModal>
-      <CustomModal modalVisible={findModal} setModalVisible={setFindModal}>
-        <Text>Find Room</Text>
-      </CustomModal>
+      <HelpModal
+        modalVisible={createModal}
+        setModalVisible={setCreateModal}
+        title="No Buddies"
+        description={`Find Room: Use a code that \n a buddy gave to you to join a \n room directly!`}
+      />
+      <HelpModal
+        modalVisible={joinModal}
+        setModalVisible={setJoinModal}
+        title="Some Buddies"
+        description={`Join Room: Choose a room \n based on your interests!`}
+      />
+      <HelpModal
+        modalVisible={findModal}
+        setModalVisible={setFindModal}
+        title="Best Buddies"
+        description={`Create Room: Make a room \n based on your interests!`}
+      />
       <View style={styles.column}>
         <HomeItem
           onPress={() => navigation.navigate("CreateRoom")}
-          title="FIND BUDDIES"
+          title="NO BUDDIES"
           buttonText="Create Room"
           image={require("../assets/find_room_icon.png")}
           popQuestion={() => setCreateModal(true)}
+          color="#d39a8e"
         />
         <HomeItem
           onPress={() => navigation.navigate("JoinRoom")}
-          title="JOIN BUDDIES"
+          title="SOME BUDDIES"
           buttonText="Join Room"
           image={require("../assets/join_room_icon.png")}
           popQuestion={() => setJoinModal(true)}
+          color="#e2c3ae"
         />
         <HomeItem
-          onPress={async () => {
-            setCodeModal(true);
-          }}
-          title="CREATE BUDDIES"
+          onPress={() => navigation.navigate("FindRoom")}
+          title="BEST BUDDIES"
           buttonText="Find Room"
           image={require("../assets/join_room_icon.png")}
           popQuestion={() => setFindModal(true)}
+          color="#f1c0c0"
         />
       </View>
     </BackgroundView>

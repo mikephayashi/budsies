@@ -8,7 +8,6 @@ import NextButton from "../components/NextButton";
 export default function NameScreen({ navigation, route }) {
   const fromScreen = route.params.fromScreen;
   const [name, onChangeName] = useState("");
-  const [age, onChangeAge] = useState("");
   const { userState, usersDispatch } = useCustomContext();
   return (
     <BackgroundView navigation={navigation}>
@@ -33,13 +32,6 @@ export default function NameScreen({ navigation, route }) {
           placeholder="Enter Name"
           onChangeText={onChangeName}
           value={name}
-        />
-
-        <WhiteInput
-          label="AGE"
-          placeholder="Enter Age"
-          onChangeText={onChangeAge}
-          value={age}
         />
       </View>
     </BackgroundView>

@@ -1,9 +1,9 @@
 const roomTypes = [
-    { label: "TV", value: "tv" },
-    { label: "Games", value: "games" },
-    { label: "Sports", value: "sports" },
-    { label: "Music", value: "music" },
-    { label: "News", value: "news" },
-    { label: "Art", value: "art" },
+    { label: "Shows", value: "Shows" },
+    { label: "Games", value: "Games" },
+    { label: "Sports", value: "Sports" },
+    { label: "Music", value: "Music" },
+    { label: "News", value: "News" },
+    { label: "Food", value: "Food" },
   ];
 exports.roomTypes = roomTypes;

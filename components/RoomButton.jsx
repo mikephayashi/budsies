@@ -21,13 +21,11 @@ export default function RoomButton({ navigation, room, userState }) {
           style={styles.image}
           source={require("../assets/join_room_icon.png")}
         />
-        <View style={styles.rest}>
-          <Text style={styles.highlights}>{room.name}</Text>
-          <Text style={styles.highlights}>
-            {room.numBuds}/{room.maxBuds}
-          </Text>
-          <Text style={styles.highlights}>{room.interests.toString()}</Text>
-        </View>
+        <Text style={styles.highlights}>{room.name}</Text>
+        <Text style={styles.highlights}>
+          {room.numBuds}/{room.maxBuds} Buds
+        </Text>
+        <Text style={styles.highlights}>{room.interests.toString()}</Text>
       </View>
     </FadePressable>
   );
@@ -36,27 +34,22 @@ export default function RoomButton({ navigation, room, userState }) {
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
-    height: "100%",
-    width: "95%",
+    height: "50%",
+    width: "60%",
     marginLeft: "auto",
     marginRight: "auto",
-    marginBottom: 20,
-  },
-  rest: {
-    flex: 9,
-    flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
   },
   image: {
-    width: "100%",
+    width: "20%",
     height: "100%",
     resizeMode: "contain",
-    flex: 1,
+    padding: "auto",
   },
   block1: {
     width: "100%",
-    flexGrow: 1,
+    height: "20%",
     backgroundColor: "#ffffffff",
     borderRadius: 8,
     borderStyle: "solid",
@@ -72,15 +65,15 @@ const styles = StyleSheet.create({
     },
   },
   highlights: {
-    color: '#000000ff',
-    textAlign: 'left',
+    color: "#000000ff",
+    textAlign: "left",
     letterSpacing: 0,
     lineHeight: 20,
     fontSize: 20,
-    fontWeight: '500',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Fira Sans */,
+    fontWeight: "500",
+    fontStyle: "normal",
+    fontFamily: "BalsamiqSans_400Regular",
     paddingHorizontal: 0,
-    paddingVertical: 0
+    paddingVertical: 0,
   },
 });

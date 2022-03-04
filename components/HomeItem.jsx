@@ -9,6 +9,7 @@ export default function HomeItem({
   buttonText,
   image,
   popQuestion,
+  color
 }) {
   return (
     <View style={styles.row}>
@@ -16,7 +17,7 @@ export default function HomeItem({
       <View style={styles.rest}>
         <Header title={title} popQuestion={popQuestion} />
         <FadePressable onPress={() => onPress()}>
-          <View style={styles.block1}>
+          <View style={{backgroundColor: color, ...styles.block1}}>
             <View style={styles.big_title_box}>
               <Text style={styles.big_title} ellipsizeMode={"clip"}>
                 {buttonText}
@@ -46,7 +47,6 @@ const styles = StyleSheet.create({
   block1: {
     width: "40%",
     flexGrow: 1,
-    backgroundColor: "#f5f5fa00",
     borderRadius: 32,
     overflow: "hidden",
     borderStyle: "solid",

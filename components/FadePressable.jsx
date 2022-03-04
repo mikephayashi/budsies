@@ -1,11 +1,11 @@
 import {useState} from 'react';
 import { Pressable, StyleSheet } from "react-native";
 
-export default function FadePressable({ children, onPress }) {
+export default function FadePressable({ children, onPress, style }) {
   const [pressStyle, setPressStyle] = useState(styles.opaque);
   return (
     <Pressable
-      style={pressStyle}
+      style={{...style, ...pressStyle}}
       onPress={() => onPress()}
       onPressIn={() => setPressStyle(styles.transparent)}
       onPressOut={() => setPressStyle(styles.opaque)}

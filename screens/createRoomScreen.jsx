@@ -1,52 +1,43 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, Text, Pressable } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
+import { Button, StyleSheet, Pressable } from "react-native";
+import NextButton from "../components/NextButton";
 import { createRoom } from "../FirebaseCalls";
-import { roomTypes } from "../shared/rooms";
 import BackgroundView from "../components/BackgroundView";
-import Header from "../components/Header";
+import ScreenHeader from "../components/ScreenHeader";
 import WhiteInput from "../components/WhiteInput";
+import WhiteInterests from "../components/WhiteInterests";
+import WhiteNumBuds from "../components/WhiteNumBuds";
 
-export default function CreateRoomScreen({ item, navigation }) {
+export default function CreateRoomScreen({ navigation }) {
   const [name, onChangeName] = useState("");
-  const [maxBuds, onChangeMaxBuds] = useState("");
+  const [maxBuds, onChangeMaxBuds] = useState("4");
   const [interests, setInterests] = useState([]);
   const [open, setOpen] = useState(false);
-  const [items, setItems] = useState(roomTypes);
 
   return (
     <Pressable style={styles.pressable} onPress={() => setOpen(false)}>
       <BackgroundView navigation={navigation}>
-        <Header title="Create a Room" />
+        <NextButton
+          title="Create"
+          callBack={async () => await createRoom(name, maxBuds, interests)}
+        />
+        <ScreenHeader title="Create a Room" />
         <WhiteInput
           label="Room Name"
           placeholder="Enter Name"
           onChangeText={onChangeName}
           value={name}
         />
-        <WhiteInput
+        <WhiteNumBuds
           label="Max # of buds"
-          placeholder="Max # of buds"
-          onChangeText={onChangeMaxBuds}
-          value={maxBuds}
+          maxBuds={maxBuds}
+          onChangeMaxBuds={onChangeMaxBuds}
         />
-        <DropDownPicker
-          style={styles.dropDown}
-          value={interests}
-          setValue={setInterests}
+        <WhiteInterests
           open={open}
           setOpen={setOpen}
-          items={items}
-          setItems={setItems}
-          multiple={true}
-          renderBadgeItem={({ label }) => <Text>{label}</Text>}
-        />
-        <Button
-          color="white"
-          title="Submit"
-          onPress={async () => {
-            await createRoom(name, maxBuds, interests);
-          }}
+          interests={interests}
+          setInterests={setInterests}
         />
       </BackgroundView>
     </Pressable>
@@ -54,10 +45,7 @@ export default function CreateRoomScreen({ item, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  dropDown: {
-    width: "20%",
-  },
   pressable: {
     flex: 1,
-  }
+  },
 });
