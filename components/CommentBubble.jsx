@@ -1,16 +1,15 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import CommentAvatarIcon from "./CommentAvatarIcon";
-import { jasperImages } from "../shared/avatarImages";
+import { avatarImages } from "../shared/avatarImages";
 
 export default function CommentBubble({ comment }) {
   return (
     <View style={styles.row}>
-      <CommentAvatarIcon avatarImg={jasperImages[comment.avatarUri]} />
+      <CommentAvatarIcon avatarImg={avatarImages[comment.avatarUri]} />
       <View style={styles.bubble}>
         <Text style={styles.text}>{comment.comment}</Text>
       </View>
-
     </View>
   );
 }

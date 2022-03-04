@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Image, View, StyleSheet } from "react-native";
 import FadePressable from "../components/FadePressable";
-import { jasperImages } from "../shared/avatarImages";
+import { avatarImages } from "../shared/avatarImages";
 
 export default function JasperSelector({
   hat,
@@ -30,7 +30,7 @@ export default function JasperSelector({
 
   return (
     <View style={styles.bigRow}>
-      <Image style={styles.avatar} source={jasperImages[getAvatarUri()]} />
+      <Image style={styles.avatar} source={avatarImages[getAvatarUri()]} />
       <View style={styles.column}>
         <View style={styles.row}>
           <FadePressable onPress={() => handleGlasses()}>

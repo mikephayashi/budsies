@@ -56,6 +56,11 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+            name="AvatarScreen"
+            component={AvatarScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name="StartScreen"
             component={StartScreen}
             options={{ headerShown: false }}
@@ -85,11 +90,11 @@ export default function App() {
             component={VideoRoomScreen}
             options={{ headerShown: false }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="AvatarScreen"
             component={AvatarScreen}
             options={{ headerShown: false }}
-          />
+          /> */}
           <Stack.Screen
             name="NameScreen"
             component={NameScreen}

@@ -9,7 +9,7 @@ import {
 } from "../FirebaseCalls";
 import { useCustomContext } from "../state/CustomContext";
 import * as Clipboard from "expo-clipboard";
-import { jasperImages, jasperGifs } from "../shared/avatarImages";
+import { avatarImages, avatarGifs } from "../shared/avatarImages";
 import IconButton from "../components/IconButton";
 import BackgroundView from "../components/BackgroundView";
 import VideoRectangle from "../components/VideoRectangle";
@@ -26,7 +26,7 @@ export default function VideoRoomScreen({ navigation, route }) {
   // };
   const room = route.params.room;
   const docId = route.params.docId;
-  const {userState, usersDispatch} = useCustomContext();
+  const { userState, usersDispatch } = useCustomContext();
 
   const setMinSize = (numPeople) => {
     if (numPeople <= 4) {
@@ -81,9 +81,9 @@ export default function VideoRoomScreen({ navigation, route }) {
             itemDimension={itemDimension}
             data={players}
             renderItem={({ item }) => {
-              let img = jasperImages[item.avatarUri];
+              let img = avatarImages[item.avatarUri];
               if (item.isTalking) {
-                img = jasperGifs[item.avatarUri];
+                img = avatarGifs[item.avatarUri];
               }
               return <VideoRectangle name={item.name} avatarImg={img} />;
             }}
@@ -109,7 +109,7 @@ export default function VideoRoomScreen({ navigation, route }) {
           onPress={async () => {
             await updateIsTalking(muted, room.id, docId);
             setMuted(!muted);
-            }}
+          }}
         />
         <IconButton
           label={"Chat"}

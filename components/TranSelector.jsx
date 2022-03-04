@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { Image, View, StyleSheet } from "react-native";
 import FadePressable from "./FadePressable";
-import { jasperImages } from "../shared/avatarImages";
+import { avatarImages } from "../shared/avatarImages";
 
-export default function TranSelector({setSkin, setShirt, glasses, setGlasses, getAvatarUri}) {
-
+export default function TranSelector({
+  setSkin,
+  setShirt,
+  glasses,
+  setGlasses,
+  getAvatarUri,
+}) {
   const handleGlasses = () => {
     if (glasses === "None") {
       setGlasses("Brown");
@@ -15,7 +20,7 @@ export default function TranSelector({setSkin, setShirt, glasses, setGlasses, ge
 
   return (
     <View style={styles.bigRow}>
-      <Image style={styles.avatar} source={jasperImages[getAvatarUri()]} />
+      <Image style={styles.avatar} source={avatarImages[getAvatarUri()]} />
       <View style={styles.column}>
         <View style={styles.row}>
           <FadePressable onPress={() => handleGlasses()}>
