@@ -75,7 +75,7 @@ export async function removePlayer(toTop, roomId, navigation, docId) {
   if (toTop) {
     navigation.popToTop();
   } else {
-    navigation.pop();
+    navigation.pop(2);
   }
 }
 

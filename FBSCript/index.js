@@ -36,6 +36,34 @@ const VIDEO_ROOM = "VideoRoom";
 
 import { v4 as uuidv4 } from "uuid";
 
+const player1 = {
+  name: "Brita",
+  avatarUri: "Tran_Hat-None_Shirt-Pink_Skin-Golden_Glasses-Brown",
+};
+
+const player2 = {
+  name: "Bruno",
+  avatarUri: "Jasper_Hat-Grey_Shirt-White_Skin-Light_Glasses-None",
+};
+
+const player3 = {
+  name: "Spidey",
+  avatarUri: "Tran_Hat-None_Shirt-Blue_Skin-Tan_Glasses-Brown",
+};
+
+async function addPlayer(roomId, player) {
+  const playerId = uuidv4();
+  await setDoc(
+    doc(db, ROOMS_COLLECTION, roomId, PLAYERS_COLLECTION, playerId),
+    {
+      id: playerId,
+      name: player.name,
+      avatarUri: player.avatarUri,
+      isTalking: true,
+    }
+  );
+}
+
 async function createRoom(name, maxBuds, interests) {
   const id = uuidv4();
   const room = {
@@ -50,29 +78,38 @@ async function createRoom(name, maxBuds, interests) {
     isPlaying: false,
     currentTime: 0,
   });
-  const playerId = uuidv4();
-  await setDoc(
-    doc(db, ROOMS_COLLECTION, room.id, PLAYERS_COLLECTION, playerId),
-    {
-      id: playerId,
-      name: "Brita",
-      avatarUri: "Tran_Hat-None_Shirt-Pink_Skin-Golden_Glasses-Brown",
-      isTalking: true,
-    }
-  );
+  await addPlayer(room.id, player1);
+  await addPlayer(room.id, player2);
 
-  const playerId2 = uuidv4();
-  await setDoc(
-    doc(db, ROOMS_COLLECTION, room.id, PLAYERS_COLLECTION, playerId2),
-    {
-      id: playerId2,
-      name: "Bruno",
-      avatarUri: "Jasper_Hat-Grey_Shirt-White_Skin-Light_Glasses-None",
-      isTalking: true,
-    }
-  );
+  console.log("roomId: ", id);
   return room;
 }
 
-await createRoom("Codenames", 4, ["Shows", "Games"]);
-console.log("DONE");
+async function uploadComment(roomId, comment, player) {
+  const commentId = uuidv4();
+  await setDoc(
+    doc(db, ROOMS_COLLECTION, roomId, COMMENTS_COLLECTION, commentId),
+    {
+      id: commentId,
+      comment: comment,
+      name: player.name,
+      avatarUri: player.avatarUri,
+    }
+  );
+}
+
+const run = 3;
+const roomId = "8ef13f7b-5f5c-49e0-a751-6e3cec25807d";
+
+if (run === 1) {
+  const room = await createRoom("Codenames", 4, ["Shows", "Games"]);
+  await uploadComment(room.id, "Hi everyone!", player1);
+  await uploadComment(room.id, "I like spaghettios!!", player2);
+  console.log("DONE 1");
+} else if (run === 2) {
+  await addPlayer(roomId, player3);
+  console.log("DONE 2");
+} else if (run == 3) {
+  await uploadComment(roomId, "Excited to join the party!", player3);
+  console.log("DONE 3");
+}

@@ -9,7 +9,6 @@ import { navigateToVideoRoom } from "../FirebaseCalls";
 export default function NameScreen({ navigation, route }) {
   const fromScreen = route.params.fromScreen;
   const { userState, usersDispatch } = useCustomContext();
-  console.log("name: ", userState);
   const [name, onChangeName] = useState(userState.name ?? "");
   return (
     <BackgroundView navigation={navigation}>

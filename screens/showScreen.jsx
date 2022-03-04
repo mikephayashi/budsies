@@ -17,18 +17,18 @@ export default function ShowScreen({ navigation, route }) {
   const setByOutside = useRef(false);
   const { userState, usersDispatch } = useCustomContext();
 
-  // useEffect(() => {
-  //     const unsubscribeYoutube = addYoutubeListener(
-  //         room.id,
-  //         (isPlaying) => setPlaying(isPlaying),
-  //         (isOutside) => {setByOutside.current = isOutside},
-  //         (currentTime) => playerRef.current?.seekTo(currentTime),
-  //         userState,
-  //       );
-  //       return function cleanup(){
-  //         unsubscribeYoutube();
-  //       }
-  // }, []);
+  useEffect(() => {
+      const unsubscribeYoutube = addYoutubeListener(
+          room.id,
+          (isPlaying) => setPlaying(isPlaying),
+          (isOutside) => {setByOutside.current = isOutside},
+          (currentTime) => playerRef.current?.seekTo(currentTime),
+          userState,
+        );
+        return function cleanup(){
+          unsubscribeYoutube();
+        }
+  }, []);
 
   const ytTogglePlay = (isPlaying) => {
     playerRef.current?.getCurrentTime().then((currentTime) => {

@@ -6,12 +6,12 @@ import ScrollFrame from "../components/ScrollFrame";
 import { games, shows } from "../shared/gameShows";
 
 export default function GameShowScreen({ navigation, route }) {
-  //   const room = route.params.room;
-  const room = {
-    id: "0c136655-43ae-40c0-bc7f-d754294a0eee",
-    interests: ["tv", "games"],
-    name: "Roomime",
-  };
+    const room = route.params.room;
+  // const room = {
+  //   id: "0c136655-43ae-40c0-bc7f-d754294a0eee",
+  //   interests: ["tv", "games"],
+  //   name: "Roomime",
+  // };
   return (
     <BackgroundView navigation={navigation}>
       <View style={styles.column}>

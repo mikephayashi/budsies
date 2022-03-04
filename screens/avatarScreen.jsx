@@ -12,7 +12,6 @@ export default function AvatarScreen({ navigation, route }) {
   const { userState, usersDispatch } = useCustomContext();
   const room = route.params.room;
   const docId = route.params.docId;
-  console.log("avatar: ", userState);
 
   const genders = {
     boy: require("../assets/icons/Boy_Button.png"),
