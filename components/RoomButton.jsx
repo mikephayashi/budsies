@@ -34,12 +34,13 @@ export default function RoomButton({ navigation, room, userState }) {
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
-    height: "50%",
+    height: "100%",
     width: "60%",
     marginLeft: "auto",
     marginRight: "auto",
     justifyContent: "space-around",
     alignItems: "center",
+    marginTop: "1%",
   },
   image: {
     width: "20%",
