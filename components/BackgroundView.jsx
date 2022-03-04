@@ -12,7 +12,7 @@ export default function BackgroundView({
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={backgroundImg ?? require("../assets/background2.png")}
+        source={backgroundImg ?? require("../assets/background2-min.png")}
         resizeMode="contain"
         style={styles.backgroundImage}
       >

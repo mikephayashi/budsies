@@ -8,7 +8,7 @@ import NextButton from "../components/NextButton";
 export default function NameScreen({ navigation, route }) {
   const fromScreen = route.params.fromScreen;
   const { userState, usersDispatch } = useCustomContext();
-  const [name, onChangeName] = useState(userState.name);
+  const [name, onChangeName] = useState(userState.name ?? "");
   return (
     <BackgroundView navigation={navigation}>
       <NextButton
