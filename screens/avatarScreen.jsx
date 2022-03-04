@@ -10,6 +10,9 @@ import IconRow from "../components/IconRow";
 export default function AvatarScreen({ navigation, route }) {
   const fromScreen = route.params.fromScreen;
   const { userState, usersDispatch } = useCustomContext();
+  const room = route.params.room;
+  const docId = route.params.docId;
+  console.log("avatar: ", userState);
 
   const genders = {
     boy: require("../assets/icons/Boy_Button.png"),
@@ -90,10 +93,10 @@ export default function AvatarScreen({ navigation, route }) {
         callBack={() => {
           usersDispatch({
             type: "TEST",
-            name: userState.avatarIndex,
+            name: userState.name,
             avatarUri: getAvatarUri(),
           });
-          navigation.navigate("NameScreen", { fromScreen: fromScreen });
+          navigation.navigate("NameScreen", { fromScreen: fromScreen, room: room, docId: docId });
         }}
       />
       <View style={styles.bigRow}>

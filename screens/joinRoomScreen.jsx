@@ -6,6 +6,7 @@ import BackgroundView from "../components/BackgroundView";
 import RoomButton from "../components/RoomButton";
 import WhiteInterestsJoin from "../components/WhiteInterestsJoin";
 
+
 export default function JoinRoomScreen({ navigation }) {
   const [interests, setInterests] = useState([]);
   const [open, setOpen] = useState(false);

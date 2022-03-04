@@ -25,11 +25,30 @@ export async function getRoom(findCode) {
   return await getDoc(doc(db, ROOMS_COLLECTION, findCode));
 }
 
-export async function navigateToVideoRoom(room, navigation, name, avatarUri) {
-  await updateDoc(doc(db, ROOMS_COLLECTION, room.id), {
-    numBuds: increment(1),
-  });
-  const docId = uuid.v4();
+// export async function navigateToVideoRoom(room, navigation, name, avatarUri) {
+//   await updateDoc(doc(db, ROOMS_COLLECTION, room.id), {
+//     numBuds: increment(1),
+//   });
+//   const docId = uuid.v4();
+//   await setDoc(doc(db, ROOMS_COLLECTION, room.id, PLAYERS_COLLECTION, docId), {
+//     id: docId,
+//     name: name,
+//     avatarUri: avatarUri,
+//     isTalking: true,
+//   });
+//   navigation.navigate(VIDEO_ROOM, {
+//     room: room,
+//     docId: docId,
+//   });
+// }
+
+export async function navigateToVideoRoom(room, navigation, name, avatarUri, docId) {
+  if (docId === undefined){
+    await updateDoc(doc(db, ROOMS_COLLECTION, room.id), {
+      numBuds: increment(1),
+    });
+    docId = uuid.v4();
+  }
   await setDoc(doc(db, ROOMS_COLLECTION, room.id, PLAYERS_COLLECTION, docId), {
     id: docId,
     name: name,

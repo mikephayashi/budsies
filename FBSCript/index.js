@@ -42,7 +42,7 @@ async function createRoom(name, maxBuds, interests) {
     id: id,
     name: name,
     maxBuds: maxBuds,
-    numBuds: 0,
+    numBuds: 2,
     interests: interests,
   };
   await setDoc(doc(db, ROOMS_COLLECTION, id), room);

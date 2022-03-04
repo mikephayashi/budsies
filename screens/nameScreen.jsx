@@ -4,10 +4,12 @@ import { useCustomContext } from "../state/CustomContext";
 import BackgroundView from "../components/BackgroundView";
 import WhiteInput from "../components/WhiteInput";
 import NextButton from "../components/NextButton";
+import { navigateToVideoRoom } from "../FirebaseCalls";
 
 export default function NameScreen({ navigation, route }) {
   const fromScreen = route.params.fromScreen;
   const { userState, usersDispatch } = useCustomContext();
+  console.log("name: ", userState);
   const [name, onChangeName] = useState(userState.name ?? "");
   return (
     <BackgroundView navigation={navigation}>
@@ -20,7 +22,9 @@ export default function NameScreen({ navigation, route }) {
             avatarUri: userState.avatarUri,
           });
           if (fromScreen === "VideoScreen") {
-            navigation.pop(2);
+            const room = route.params.room;
+            const docId = route.params.docId;
+            navigateToVideoRoom(room, navigation, name, userState.avatarUri, docId);
           } else if (fromScreen === "StartScreen") {
             navigation.navigate("HomeScreen");
           }
