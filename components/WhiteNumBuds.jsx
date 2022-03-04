@@ -12,10 +12,19 @@ export default function WhiteNumBuds({ label, maxBuds, onChangeMaxBuds }) {
       {numBuds.map((num) => {
         return (
           <FadePressable
+            key={num}
             onPress={() => onChangeMaxBuds(num)}
             style={styles.fade}
           >
-            <Text style={num === maxBuds ? {...styles.number, ...styles.selected} : styles.number}>{num}</Text>
+            <Text
+              style={
+                num === maxBuds
+                  ? { ...styles.number, ...styles.selected }
+                  : styles.number
+              }
+            >
+              {num}
+            </Text>
           </FadePressable>
         );
       })}
@@ -26,7 +35,7 @@ export default function WhiteNumBuds({ label, maxBuds, onChangeMaxBuds }) {
 const styles = StyleSheet.create({
   selected: {
     borderWidth: 4,
-    borderColor: "#f9d6bf"
+    borderColor: "#f9d6bf",
   },
   row: {
     flexDirection: "row",
@@ -64,6 +73,5 @@ const styles = StyleSheet.create({
     fontSize: 30,
     textAlign: "center",
     paddingTop: "auto",
-
   },
 });

@@ -70,17 +70,19 @@ export async function togglePlay(isPlaying, currentTime, room, name) {
 
 export async function createRoom(name, maxBuds, interests) {
   const id = uuid.v4();
-  await setDoc(doc(db, ROOMS_COLLECTION, id), {
+  const room = {
     id: id,
     name: name,
     maxBuds: maxBuds,
     numBuds: 0,
     interests: interests,
-  });
+  };
+  await setDoc(doc(db, ROOMS_COLLECTION, id), room);
   await setDoc(doc(db, ROOMS_COLLECTION, id, YT_COLLECTION, YT_DOC), {
     isPlaying: false,
     currentTime: 0,
   });
+  return room;
 }
 
 export async function uploadComment(roomId, comment, onChangeComment, name, avatarUri) {

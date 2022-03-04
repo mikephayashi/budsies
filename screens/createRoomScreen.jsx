@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, StyleSheet, Pressable } from "react-native";
+import { useCustomContext } from "../state/CustomContext";
 import NextButton from "../components/NextButton";
 import { createRoom } from "../FirebaseCalls";
 import BackgroundView from "../components/BackgroundView";
@@ -7,6 +8,7 @@ import ScreenHeader from "../components/ScreenHeader";
 import WhiteInput from "../components/WhiteInput";
 import WhiteInterests from "../components/WhiteInterests";
 import WhiteNumBuds from "../components/WhiteNumBuds";
+import { navigateToVideoRoom } from "../FirebaseCalls";
 
 export default function CreateRoomScreen({ navigation }) {
   const [name, onChangeName] = useState("");
@@ -14,12 +16,22 @@ export default function CreateRoomScreen({ navigation }) {
   const [interests, setInterests] = useState([]);
   const [open, setOpen] = useState(false);
 
+  const { userState, usersDispatch } = useCustomContext();
+
   return (
     <Pressable style={styles.pressable} onPress={() => setOpen(false)}>
       <BackgroundView navigation={navigation}>
         <NextButton
           title="Create"
-          callBack={async () => await createRoom(name, maxBuds, interests)}
+          callBack={async () => {
+            const room = await createRoom(name, maxBuds, interests);
+            navigateToVideoRoom(
+              room,
+              navigation,
+              userState.name,
+              userState.avatarUri
+            );
+          }}
         />
         <ScreenHeader title="Create a Room" />
         <WhiteInput

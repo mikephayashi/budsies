@@ -20,8 +20,8 @@ export default function ScrollFrame({navigation, room, thumbnail, onPress}) {
 
 const styles = StyleSheet.create({
   container: {
-    width: 200,
-    height: 100,
+    width: 400,
+    height: 200,
   },
   thumbnail: {
     flex: 1,

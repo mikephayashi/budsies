@@ -74,5 +74,6 @@ const styles = StyleSheet.create({
     fontFamily: "BalsamiqSans_400Regular",
     paddingHorizontal: 0,
     paddingVertical: 0,
+    marginLeft: 10,
   },
 });

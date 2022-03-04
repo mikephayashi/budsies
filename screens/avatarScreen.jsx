@@ -8,8 +8,7 @@ import { avatarImages } from "../shared/avatarImages";
 import IconRow from "../components/IconRow";
 
 export default function AvatarScreen({ navigation, route }) {
-  // const fromScreen = route.params.fromScreen;
-  const fromScreen = "";
+  const fromScreen = route.params.fromScreen;
   const { userState, usersDispatch } = useCustomContext();
 
   const genders = {

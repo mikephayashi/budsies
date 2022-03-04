@@ -6,11 +6,11 @@ import { useCustomContext } from "../state/CustomContext";
 import BackButton from "../components/BackButton";
 
 export default function ShowScreen({ navigation, route }) {
-  // const room = route.params.room;
-  // const videoId = route.params.videoId;
+  const room = route.params.room;
+  const videoId = route.params.videoId;
 
-  const room = { id: "0c136655-43ae-40c0-bc7f-d754294a0eee" };
-  const videoId = "lNaWcPsMSiU";
+  // const room = { id: "0c136655-43ae-40c0-bc7f-d754294a0eee" };
+  // const videoId = "lNaWcPsMSiU";
 
   const [playing, setPlaying] = useState(false);
   const playerRef = useRef();
