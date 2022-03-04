@@ -3,7 +3,13 @@ import { Text, Image, StyleSheet, View } from "react-native";
 import FadePressable from "../components/FadePressable";
 import Header from "../components/Header";
 
-export default function HomeItem({ onPress, title, buttonText, image, popQuestion }) {
+export default function HomeItem({
+  onPress,
+  title,
+  buttonText,
+  image,
+  popQuestion,
+}) {
   return (
     <View style={styles.row}>
       <Image style={styles.icon} source={image} />
@@ -56,7 +62,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "700",
     fontStyle: "normal",
-    fontFamily: "System" /* Balsamiq Sans */,
+    fontFamily: "BalsamiqSans_400Regular",
     paddingHorizontal: 0,
     paddingVertical: 0,
   },

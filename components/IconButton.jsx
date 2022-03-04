@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "400",
     fontStyle: "normal",
-    fontFamily: "System" /* Balsamiq Sans */,
+    fontFamily: "BalsamiqSans_400Regular",
     paddingHorizontal: 0,
     paddingVertical: 0,
   },

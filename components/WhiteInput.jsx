@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "60%",
     justifyContent: "space-between",
-    marginBottom: "2%"
+    marginBottom: "2%",
   },
   input: {
     height: 40,
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "400",
     fontStyle: "normal",
-    fontFamily: "System" /* Balsamiq Sans */,
+    fontFamily: "BalsamiqSans_400Regular",
     paddingHorizontal: 0,
     paddingVertical: 0,
   },

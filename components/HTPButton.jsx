@@ -4,20 +4,20 @@ import {
   Text,
   View,
 } from "react-native";
-import FadePressable from "../components/FadePressable";
+import FadePressable from "./FadePressable";
 
-export default function StartButton({ navigation }) {
+export default function HTPButton({ navigation }) {
 
 
 
   return (
     <FadePressable
-      onPress={() => navigation.navigate("AvatarScreen", {fromScreen: "StartScreen"})}
+      onPress={() => console.log("Switch")}
     >
       <View style={[styles.block1, styles.block1_layout]}>
         <View style={[styles.hero_title_box]}>
           <Text style={styles.hero_title} ellipsizeMode={"clip"}>
-            {"Meet your buddies"}
+            {"How to Play"}
           </Text>
         </View>
       </View>
@@ -39,19 +39,19 @@ const styles = StyleSheet.create({
     borderWidth: 3,
   },
   block1_layout: {
-    height: 100,
-    width: 478,
-    minWidth: 478,
+    height: 70,
+    width: 200,
     marginLeft: "auto",
     marginRight: "auto",
     bottom: -600,
+    marginTop: 10,
   },
   hero_title: {
     color: "#273949ff",
     textAlign: "center",
     letterSpacing: 0,
     lineHeight: 40,
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: "700",
     fontStyle: "normal",
     fontFamily: 'BalsamiqSans_400Regular',

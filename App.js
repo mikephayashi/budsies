@@ -1,6 +1,14 @@
 import React, { useReducer } from "react";
+import {View} from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import {
+  useFonts,
+  BalsamiqSans_400Regular,
+  BalsamiqSans_400Regular_Italic,
+  BalsamiqSans_700Bold,
+  BalsamiqSans_700Bold_Italic,
+} from '@expo-google-fonts/balsamiq-sans';
 
 import StartScreen from "./screens/startScreen";
 import HomeScreen from "./screens/homeScreen";
@@ -31,25 +39,31 @@ export default function App() {
     usersDispatch,
   };
 
+  let [fontsLoaded] = useFonts({
+    BalsamiqSans_400Regular,
+    BalsamiqSans_400Regular_Italic,
+    BalsamiqSans_700Bold,
+    BalsamiqSans_700Bold_Italic,
+  });
+
+  if (!fontsLoaded){
+    return <View/>;
+  }
+
   return (
     <CustomContext.Provider value={providerState}>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name="HomeScreen"
-            component={HomeScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
             name="StartScreen"
             component={StartScreen}
             options={{ headerShown: false }}
           />
-          {/* <Stack.Screen
+          <Stack.Screen
             name="HomeScreen"
             component={HomeScreen}
             options={{ headerShown: false }}
-          /> */}
+          />
           <Stack.Screen
             name="CreateRoom"
             component={CreateRoomScreen}
