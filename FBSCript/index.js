@@ -99,7 +99,7 @@ async function uploadComment(roomId, comment, player) {
 }
 
 const run = 3;
-const roomId = "8ef13f7b-5f5c-49e0-a751-6e3cec25807d";
+const roomId = "c57ba05f-770f-4c35-b6a4-c58c5fc2b557";
 
 if (run === 1) {
   const room = await createRoom("Codenames", 4, ["Shows", "Games"]);
