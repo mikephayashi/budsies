@@ -59,6 +59,7 @@ export default Images = [
   require("./icons/Pink_Sweater_Icon.png"),
   require("./video_icons/black_unmuted.png"),
   require("./video_icons/black_muted.png"),
+  require("./chat_bubble.png"),
 ];
 
 for (let key in avatarImages) {

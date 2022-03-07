@@ -105,7 +105,7 @@ export default function AvatarScreen({ navigation, route }) {
             },
           });
           if (fromVideoScreen) {
-            updatePlayer(room, userState, userId);
+            await updatePlayer(room, {name: userState.name, avatarUri: getAvatarUri()}, userId);
             navigation.navigate("VideoRoom", { room: room, userId: userId });
           } else {
             const userIdNew = await addPlayer(room, {

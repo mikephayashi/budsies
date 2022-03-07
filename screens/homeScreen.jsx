@@ -37,7 +37,7 @@ export default function Home({ navigation }) {
       <View style={styles.column}>
         <HomeItem
           onPress={() => navigation.navigate("JoinRoom")}
-          title="SOME BUDDIES"
+          title="NO BUDDIES"
           buttonText="Join Room"
           image={Images[getImage("find_room")]}
           popQuestion={() => setJoinModal(true)}
@@ -45,7 +45,7 @@ export default function Home({ navigation }) {
         />
         <HomeItem
           onPress={() => navigation.navigate("FindRoom")}
-          title="NO BUDDIES"
+          title="SOME BUDDIES"
           buttonText="Find Room"
           image={Images[getImage("join_room")]}
           popQuestion={() => setFindModal(true)}

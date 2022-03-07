@@ -16,7 +16,7 @@ export default function LeaveButton({ text, onPress }) {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: "100%",
+    height: "130%",
     backgroundColor: "#F5F5FA",
     borderRadius: 20,
   },

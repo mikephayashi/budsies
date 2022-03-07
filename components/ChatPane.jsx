@@ -19,18 +19,19 @@ export default function ChatPane({
   setShowChat,
   muted,
   toggleMute,
+  fullHeight,
 }) {
   const Images = useContext(ImagesContext);
   const [comment, onChangeComment] = useState("");
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+    <KeyboardAvoidingView behavior="padding" style={{...styles.container, ...fullHeight}}>
       <ScrollView style={styles.scroll}>
         {comments
           .sort(function (x, y) {
             return x.timestamp - y.timestamp;
           })
           .map((comment) => (
-            <CommentBubble key={comment.id} comment={comment} />
+            <CommentBubble key={comment.id} isMe={comment.name === userState.name} comment={comment} />
           ))}
       </ScrollView>
       <View style={styles.newComment}>
@@ -86,16 +87,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 65,
+    marginBottom: 10,
   },
   commentInput: {
     flex: 1,
     backgroundColor: "#191919ff",
-    fontSize: 30,
+    fontSize: 20,
     color: "white",
     borderColor: "white",
     borderWidth: 2,
     borderRadius: 100,
     padding: 8,
+    height: "90%",
   },
   scroll: {
     flex: 1,

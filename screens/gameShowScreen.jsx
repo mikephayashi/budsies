@@ -8,6 +8,7 @@ import { ImagesContext, getImage } from "../state/ImagesContext";
 
 export default function GameShowScreen({ navigation, route }) {
     const room = route.params.room;
+    const userId = route.params.userId;
   // const room = {
   //   id: "0c136655-43ae-40c0-bc7f-d754294a0eee",
   //   interests: ["tv", "games"],
@@ -32,6 +33,7 @@ export default function GameShowScreen({ navigation, route }) {
                   navigation.navigate("ShowScreen", {
                     room: room,
                     videoId: show.videoId,
+                    userId: userId,
                   })
                 }
               />
@@ -50,7 +52,7 @@ export default function GameShowScreen({ navigation, route }) {
                 room={room}
                 thumbnail={Images[getImage(game.thumbnail)]}
                 onPress={() =>
-                  navigation.navigate("GameScreen", { uri: game.uri })
+                  navigation.navigate("GameScreen", { room: room, userId: userId, uri: game.uri })
                 }
               />
             );

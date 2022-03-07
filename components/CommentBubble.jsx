@@ -1,21 +1,27 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import CommentAvatarIcon from "./CommentAvatarIcon";
 import { ImagesContext, getImage } from "../state/ImagesContext";
 
-export default function CommentBubble({ comment }) {
+export default function CommentBubble({ comment, isMe }) {
   const Images = useContext(ImagesContext);
   return (
-    <View style={styles.row}>
-      <CommentAvatarIcon avatarImg={Images[getImage(comment.avatarUri)]} />
+    <View style={isMe ? { ...styles.row, ...styles.me } : styles.row}>
+      {isMe ? null : (
+        <CommentAvatarIcon avatarImg={Images[getImage(comment.avatarUri)]} />
+      )}
       <View style={styles.bubble}>
         <Text style={styles.text}>{comment.comment}</Text>
       </View>
+      {isMe ? (
+        <CommentAvatarIcon avatarImg={Images[getImage(comment.avatarUri)]} />
+      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  me: { alignSelf: "flex-end", marginRight: 10 },
   row: {
     flexDirection: "row",
     flex: 1,

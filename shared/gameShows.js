@@ -35,7 +35,7 @@ const shows = [
     videoId: "PDamqgSacTQ",
   },
   {
-    thumbnail: 'lofi_thumbnail.png"',
+    thumbnail: 'lofi_thumbnail',
     videoId: "5qap5aO4i9A",
   },
 ];

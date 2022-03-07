@@ -9,7 +9,6 @@ import {
 } from "../FirebaseCalls";
 import { useCustomContext } from "../state/CustomContext";
 import * as Clipboard from "expo-clipboard";
-import { avatarImages, avatarGifs } from "../shared/avatarImages";
 import IconButton from "../components/IconButton";
 import BackgroundView from "../components/BackgroundView";
 import VideoRectangle from "../components/VideoRectangle";
@@ -90,7 +89,7 @@ export default function VideoRoomScreen({ navigation, route }) {
       >
         <View style={styles.leaveColumn}>
           <Text
-            style={[styles.codeHeader, styles.code]}
+            style={styles.leaveHeader}
           >{`Are you sure \nyou want to leave?`}</Text>
           <View style={styles.leaveRow}>
             <LeaveButton
@@ -108,7 +107,13 @@ export default function VideoRoomScreen({ navigation, route }) {
         </View>
       </CustomModal>
       <View style={styles.bigRow}>
-        <View style={styles.container}>
+        <View
+          style={
+            showChat
+              ? { ...styles.container, ...styles.fullHeight }
+              : styles.container
+          }
+        >
           <FlatGrid
             style={styles.gridView}
             itemDimension={itemDimension}
@@ -130,57 +135,65 @@ export default function VideoRoomScreen({ navigation, route }) {
             setShowChat={setShowChat}
             muted={muted}
             toggleMute={toggleMute}
+            fullHeight={showChat ? styles.fullHeight : {}}
           />
         ) : null}
       </View>
-      <View style={styles.row}>
-        <IconButton
-          label={"Microphone"}
-          image={muted ? Images[getImage("unmute")] : Images[getImage("mute")]}
-          onPress={() => toggleMute()}
-        />
-        <IconButton
-          label={"Chat"}
-          image={Images[getImage("chat")]}
-          onPress={() => setShowChat(!showChat)}
-        />
-        <IconButton
-          label={"Avatar"}
-          image={Images[getImage("avatarSelector")]}
-          onPress={() =>
-            navigation.navigate("NameScreen", {
-              fromVideoScreen: true,
-              room: room,
-              userId: userId,
-            })
-          }
-        />
-        <IconButton
-          label={"Play"}
-          image={Images[getImage("play")]}
-          onPress={() => navigation.navigate("GameShowScreen", { room: room })}
-        />
-        <IconButton
-          label={"Code"}
-          image={Images[getImage("copyCode")]}
-          onPress={() => setModalVisible(true)}
-        />
-        {/* <IconButton
-          label={"Leave"}
-          image={Images[getImage("exit")]}
-          onPress={() => removePlayer(false, room.id, navigation, userId)}
-        /> */}
-        <IconButton
-          label={"Leave"}
-          image={Images[getImage("exit")]}
-          onPress={() => setLeaveModalVisible(true)}
-        />
-      </View>
+      {showChat ? null : (
+        <View style={styles.row}>
+          <IconButton
+            label={"Microphone"}
+            image={
+              muted ? Images[getImage("unmute")] : Images[getImage("mute")]
+            }
+            onPress={() => toggleMute()}
+          />
+          <IconButton
+            label={"Chat"}
+            image={Images[getImage("chat")]}
+            onPress={() => setShowChat(!showChat)}
+          />
+          <IconButton
+            label={"Avatar"}
+            image={Images[getImage("avatarSelector")]}
+            onPress={() =>
+              navigation.navigate("NameScreen", {
+                fromVideoScreen: true,
+                room: room,
+                userId: userId,
+              })
+            }
+          />
+          <IconButton
+            label={"Play"}
+            image={Images[getImage("play")]}
+            onPress={() =>
+              navigation.navigate("GameShowScreen", {
+                room: room,
+                userId: userId,
+              })
+            }
+          />
+          <IconButton
+            label={"Code"}
+            image={Images[getImage("copyCode")]}
+            onPress={() => setModalVisible(true)}
+          />
+          <IconButton
+            label={"Leave"}
+            image={Images[getImage("exit")]}
+            onPress={() => setLeaveModalVisible(true)}
+          />
+        </View>
+      )}
     </BackgroundView>
   );
 }
 
 const styles = StyleSheet.create({
+  fullHeight: {
+    height: "100%",
+  },
   container: {
     display: "flex",
     flex: 1,
@@ -213,10 +226,17 @@ const styles = StyleSheet.create({
   },
   code: {
     color: "white",
+    fontFamily: "BalsamiqSans_400Regular",
   },
   codeHeader: {
     fontSize: 40,
     textAlign: "center",
+  },
+  leaveHeader: {
+    color: "white",
+    fontSize: 30,
+    textAlign: "center",
+    fontFamily: "BalsamiqSans_400Regular",
   },
   codeText: {
     fontSize: 20,
@@ -228,8 +248,8 @@ const styles = StyleSheet.create({
   },
   leaveColumn: {
     flexDirection: "column",
-    height: "90%",
-    marginTop: "2%"
+    height: "60%",
+    marginTop: "2%",
   },
   leaveRow: {
     flexDirection: "row",

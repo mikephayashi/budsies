@@ -12,7 +12,7 @@ export default function NameScreen({ navigation, route }) {
   const { userState, usersDispatch } = useCustomContext();
   const [name, onChangeName] = useState(userState.name ?? "");
   return (
-    <BackgroundView navigation={navigation}>
+    <BackgroundView navigation={navigation} showBack={fromVideoScreen ? false: true}>
       <NextButton
         title="Next"
         callBack={() => {
