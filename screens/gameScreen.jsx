@@ -86,9 +86,8 @@ const styles = StyleSheet.create({
   yt: {
     marginTop: "auto",
     marginBottom: "auto",
-    paddingTop: 50,
-    height: "85%",
-    bottom: 30
+    height: "80%",
+    backgroundColor: "red",
   },
   smallYt: {
     width: "50%",

@@ -98,7 +98,7 @@ export async function uploadComment(roomId, comment, onChangeComment, name, avat
       comment: comment,
       name: name,
       avatarUri: avatarUri,
-      timeStamp: Date.now(),
+      timestamp: Date.now(),
     }
   );
   onChangeComment("");

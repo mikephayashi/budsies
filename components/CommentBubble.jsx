@@ -26,6 +26,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     marginTop: "2%",
+    backgroundColor: "red",
+    // width: "100%",
   },
   bubble: {
     backgroundColor: "#ECEDF7ff",
