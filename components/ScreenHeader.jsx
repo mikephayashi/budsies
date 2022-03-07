@@ -1,14 +1,17 @@
+import {useContext} from 'react';
 import { Text, StyleSheet, View, Image } from "react-native";
 import FadePressable from "./FadePressable";
+import { ImagesContext, getImage } from "../state/ImagesContext";
 
 export default function Header({ title, popQuestion }) {
+  const Images = useContext(ImagesContext);
   return (
     <>
       <View style={styles.column}>
         <Text style={styles.hero_title} ellipsizeMode={"clip"}>
           {title}
         </Text>
-        <Image style={styles.characters} source={require("../assets/Characters_For_Screens.png")}/>
+        <Image style={styles.characters} source={Images[getImage('Characters_For_Screens')]}/>
       </View>
 
       <View style={styles.box} />

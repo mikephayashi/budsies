@@ -1,5 +1,5 @@
-import React, { useReducer } from "react";
-import { View } from "react-native";
+import React, { useState, useEffect, useReducer } from "react";
+import { View, ActivityIndicator } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
@@ -9,6 +9,9 @@ import {
   BalsamiqSans_700Bold,
   BalsamiqSans_700Bold_Italic,
 } from "@expo-google-fonts/balsamiq-sans";
+import { Asset } from "expo-asset";
+import Images from "./assets";
+import { ImagesContext } from "./state/ImagesContext";
 
 import StartScreen from "./screens/startScreen";
 import HomeScreen from "./screens/homeScreen";
@@ -47,71 +50,88 @@ export default function App() {
     BalsamiqSans_700Bold_Italic,
   });
 
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+  useEffect(() => {
+    const loadImages = async () => {
+      // asset from Expo expects an array - check assets/index.js to see an example
+      await Asset.loadAsync(Images);
+      setImagesLoaded(true);
+    };
+
+    loadImages();
+  }, []);
+
   if (!fontsLoaded) {
     return <View />;
   }
 
+  if (!imagesLoaded) {
+    return <ActivityIndicator />;
+  }
+
   return (
     <CustomContext.Provider value={providerState}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="StartScreen"
-            component={StartScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="HomeScreen"
-            component={HomeScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="CreateRoom"
-            component={CreateRoomScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="JoinRoom"
-            component={JoinRoomScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="FindRoom"
-            component={FindRoomScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="VideoRoom"
-            component={VideoRoomScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="AvatarScreen"
-            component={AvatarScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="NameScreen"
-            component={NameScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="ShowScreen"
-            component={ShowScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="GameScreen"
-            component={GameScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="GameShowScreen"
-            component={GameShowScreen}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ImagesContext.Provider value={Images}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="StartScreen"
+              component={StartScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="HomeScreen"
+              component={HomeScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="CreateRoom"
+              component={CreateRoomScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="JoinRoom"
+              component={JoinRoomScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="FindRoom"
+              component={FindRoomScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="VideoRoom"
+              component={VideoRoomScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="AvatarScreen"
+              component={AvatarScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="NameScreen"
+              component={NameScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ShowScreen"
+              component={ShowScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="GameScreen"
+              component={GameScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="GameShowScreen"
+              component={GameShowScreen}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ImagesContext.Provider>
     </CustomContext.Provider>
   );
 }

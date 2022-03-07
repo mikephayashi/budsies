@@ -1,49 +1,50 @@
-import React, { useState } from "react";
-import { Button, Image, View, StyleSheet } from "react-native";
-import FadePressable from "../components/FadePressable";
+import React, { useState, useEffect, useContext } from "react";
+import { Image, View, StyleSheet } from "react-native";
 import NextButton from "../components/NextButton";
 import BackgroundView from "../components/BackgroundView";
 import { useCustomContext } from "../state/CustomContext";
-import { avatarImages } from "../shared/avatarImages";
 import IconRow from "../components/IconRow";
+import { ImagesContext, getImage } from "../state/ImagesContext";
 
 export default function AvatarScreen({ navigation, route }) {
+  const Images = useContext(ImagesContext);
   const fromScreen = route.params.fromScreen;
   const { userState, usersDispatch } = useCustomContext();
   const room = route.params.room;
   const docId = route.params.docId;
 
-  const genders = {
-    boy: require("../assets/icons/Boy_Button.png"),
-    girl: require("../assets/icons/Girl_Button.png"),
-  };
 
+  const genders = {
+    boy: Images[getImage('Boy_Button')],
+    girl: Images[getImage('Girl_Button')],
+  };
+  
   const skins = {
-    Light: require("../assets/icons/Light_Skin_Tone_Icon.png"),
-    Tan: require("../assets/icons/Tan_Skin_Tone_Icon.png"),
-    Golden: require("../assets/icons/Golden_Skin_Tone_Icon.png"),
+    Light: Images[getImage('Light_Skin_Tone_Icon')],
+    Tan: Images[getImage('Tan_Skin_Tone_Icon')],
+    Golden: Images[getImage('Golden_Skin_Tone_Icon')],
   };
 
   const shirts = {
-    White: require("../assets/icons/White_Shirt_Icon.png"),
-    Blue: require("../assets/icons/Blue_Shirt_Icon.png"),
-    Purple: require("../assets/icons/Purple_Shirt_Icon.png"),
+    White: Images[getImage('White_Shirt_Icon')],
+    Blue: Images[getImage('Blue_Shirt_Icon')],
+    Purple: Images[getImage('Purple_Shirt_Icon')],
   };
 
   const sweaters = {
-    Pink: require("../assets/icons/Pink_Sweater_Icon.png"),
-    Blue: require("../assets/icons/Blue_Sweater_Icon.png"),
-    Grey: require("../assets/icons/Grey_Sweater_Icon.png"),
+    Pink: Images[getImage('Pink_Sweater_Icon')],
+    Blue: Images[getImage('Blue_Sweater_Icon')],
+    Grey: Images[getImage('Grey_Sweater_Icon')],
   };
 
   const glasseses = {
-    Brown: require("../assets/icons/Brown_Glasses_Icon.png"),
-    None: require("../assets/icons/No_Glasses_Icon.png"),
+    Brown: Images[getImage('Brown_Glasses_Icon')],
+    None: Images[getImage('No_Glasses_Icon')],
   };
 
   const hats = {
-    Grey: require("../assets/icons/Grey_Hat_Icon.png"),
-    None: require("../assets/icons/No_Hat_Icon.png"),
+    Grey: Images[getImage('Grey_Hat_Icon')],
+    None: Images[getImage('No_Hat_Icon')],
   };
 
   const [gender, setGender] = useState("boy");
@@ -59,6 +60,12 @@ export default function AvatarScreen({ navigation, route }) {
   const [expandSweater, setExpandSweater] = useState(false);
   const [expandGlasses, setExpandGlasses] = useState(false);
   const [expandHat, setExpandHat] = useState(false);
+
+  useEffect(()=> {
+    // console.log("triggered?");
+    // console.log(getAvatarUri());
+    // console.log(Images[getImage(getAvatarUri()]);
+  });
 
   const getAvatarUri = () => {
     if (gender === "boy") {
@@ -148,7 +155,7 @@ export default function AvatarScreen({ navigation, route }) {
             />
           ) : null}
         </View>
-        <Image style={styles.avatar} source={avatarImages[getAvatarUri()]} />
+        <Image style={styles.avatar} source={Images[getImage(getAvatarUri())]} />
       </View>
     </BackgroundView>
   );

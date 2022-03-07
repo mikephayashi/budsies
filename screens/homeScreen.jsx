@@ -1,7 +1,7 @@
 /**
  * This source code is exported from pxCode, you can get more document from https://www.pxcode.io
  */
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, TextInput, StyleSheet, Text, Button } from "react-native";
 import { getRoom, navigateToVideoRoom } from "../FirebaseCalls";
 import { useCustomContext } from "../state/CustomContext";
@@ -9,11 +9,13 @@ import BackgroundView from "../components/BackgroundView";
 import HomeItem from "../components/HomeItem";
 import CustomModal from "../components/CustomModal";
 import HelpModal from "../components/HelpModal";
+import { ImagesContext, getImage } from "../state/ImagesContext";
 
 export default function Home({ navigation }) {
   const [createModal, setCreateModal] = useState(false);
   const [joinModal, setJoinModal] = useState(false);
   const [findModal, setFindModal] = useState(false);
+  const Images = useContext(ImagesContext);
 
   return (
     <BackgroundView navigation={navigation}>
@@ -40,7 +42,7 @@ export default function Home({ navigation }) {
           onPress={() => navigation.navigate("CreateRoom")}
           title="NO BUDDIES"
           buttonText="Create Room"
-          image={require("../assets/find_room_icon.png")}
+          image={Images[getImage('create_room')]}
           popQuestion={() => setCreateModal(true)}
           color="#d39a8e"
         />
@@ -48,7 +50,7 @@ export default function Home({ navigation }) {
           onPress={() => navigation.navigate("JoinRoom")}
           title="SOME BUDDIES"
           buttonText="Join Room"
-          image={require("../assets/join_room_icon.png")}
+          image={Images[getImage('find_room')]}
           popQuestion={() => setJoinModal(true)}
           color="#e2c3ae"
         />
@@ -56,7 +58,7 @@ export default function Home({ navigation }) {
           onPress={() => navigation.navigate("FindRoom")}
           title="BEST BUDDIES"
           buttonText="Find Room"
-          image={require("../assets/join_room_icon.png")}
+          image={Images[getImage('join_room')]}
           popQuestion={() => setFindModal(true)}
           color="#f1c0c0"
         />

@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import FadePressable from "../components/FadePressable";
 import { navigateToVideoRoom } from "../FirebaseCalls";
+import { ImagesContext, getImage } from "../state/ImagesContext";
 
 export default function RoomButton({ navigation, room, userState }) {
+  const Images = useContext(ImagesContext);
   return (
     <FadePressable
       onPress={async () => {
@@ -19,7 +22,7 @@ export default function RoomButton({ navigation, room, userState }) {
       <View style={[styles.block1, styles.row]}>
         <Image
           style={styles.image}
-          source={require("../assets/join_room_icon.png")}
+          source={Images[getImage("join_room_icon")]}
         />
         <Text style={styles.highlights}>{room.name}</Text>
         <Text style={styles.highlights}>

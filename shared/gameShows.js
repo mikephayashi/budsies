@@ -1,41 +1,41 @@
 const games = [
   {
-    thumbnail: require("../assets/thumbnails/4_in_a_row_thumbnail.png"),
+    thumbnail: '4_in_a_row_thumbnail',
     uri: "https://www.coolmathgames.com/0-four-in-a-row#immersiveModal",
   },
   {
-    thumbnail: require("../assets/thumbnails/codenames_thumbnail.png"),
+    thumbnail: 'codenames_thumbnail',
     uri: "https://www.horsepaste.com/qld-luxury",
   },
   {
-    thumbnail: require("../assets/thumbnails/tic_tac_toe_thumbnail.png"),
+    thumbnail: 'tic_tac_toe_thumbnail',
     uri: "https://www.coolmathgames.com/0-tic-tac-toe",
   },
   {
-    thumbnail: require("../assets/thumbnails/checkers_thumbnail.png"),
+    thumbnail: 'checkers_thumbnail',
     uri: "https://www.coolmathgames.com/0-checkers",
   },
 ];
 
 const shows = [
   {
-    thumbnail: require("../assets/thumbnails/ted_thumbnail.png"),
+    thumbnail: 'ted_thumbnail',
     videoId: "lNaWcPsMSiU",
   },
   {
-    thumbnail: require("../assets/thumbnails/harlow_thumbnail.png"),
+    thumbnail: 'harlow_thumbnail',
     videoId: "fYup-t_2yGc",
   },
   {
-    thumbnail: require("../assets/thumbnails/veritasium_thumbnail.png"),
+    thumbnail: 'veritasium_thumbnail',
     videoId: "GVsUOuSjvcg",
   },
   {
-    thumbnail: require("../assets/thumbnails/angelou_thumbnail.png"),
+    thumbnail: 'angelou_thumbnail',
     videoId: "PDamqgSacTQ",
   },
   {
-    thumbnail: require("../assets/thumbnails/lofi_thumbnail.png"),
+    thumbnail: 'lofi_thumbnail.png"',
     videoId: "5qap5aO4i9A",
   },
 ];

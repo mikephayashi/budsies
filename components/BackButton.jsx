@@ -1,13 +1,15 @@
-import React from "react";
-import { StyleSheet, ImageBackground, Pressable } from "react-native";
+import React, {useContext} from "react";
+import { StyleSheet, ImageBackground } from "react-native";
 import FadePressable from "../components/FadePressable";
+import { ImagesContext, getImage } from "../state/ImagesContext";
 
 export default function BackButton({ navigation, show }) {
+  const Images = useContext(ImagesContext);
   return show ? (
     <FadePressable onPress={() => navigation.pop()}>
       <ImageBackground
         style={[styles.image, styles.image_layout]}
-        source={require("../assets/back_button.png")}
+        source={Images[getImage('back_button')]}
       />
     </FadePressable>
   ) : null;

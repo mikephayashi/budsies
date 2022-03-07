@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import BackgroundView from "../components/BackgroundView";
 import ScrollFrame from "../components/ScrollFrame";
 import { games, shows } from "../shared/gameShows";
+import { ImagesContext, getImage } from "../state/ImagesContext";
 
 export default function GameShowScreen({ navigation, route }) {
     const room = route.params.room;
@@ -12,6 +13,7 @@ export default function GameShowScreen({ navigation, route }) {
   //   interests: ["tv", "games"],
   //   name: "Roomime",
   // };
+  const Images = useContext(ImagesContext);
   return (
     <BackgroundView navigation={navigation}>
       <View style={styles.column}>
@@ -25,7 +27,7 @@ export default function GameShowScreen({ navigation, route }) {
                 key={show.videoId}
                 navigation={navigation}
                 room={room}
-                thumbnail={show.thumbnail}
+                thumbnail={Images[getImage(show.thumbnail)]}
                 onPress={() =>
                   navigation.navigate("ShowScreen", {
                     room: room,
@@ -46,7 +48,7 @@ export default function GameShowScreen({ navigation, route }) {
                 key={game.uri}
                 navigation={navigation}
                 room={room}
-                thumbnail={game.thumbnail}
+                thumbnail={Images[getImage(game.thumbnail)]}
                 onPress={() =>
                   navigation.navigate("GameScreen", { uri: game.uri })
                 }

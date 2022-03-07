@@ -1,11 +1,14 @@
+import {useContext} from 'react';
 import { Image, View, StyleSheet, Text } from "react-native";
+import { ImagesContext, getImage } from "../state/ImagesContext";
 
 export default function VideoRectangle({ avatarImg, name }) {
+  const Images = useContext(ImagesContext);
   return (
     <View style={styles.container}>
       <Image
         style={styles.box}
-        source={require("../assets/video_icons/avatarBox.png")}
+        source={Images[getImage('avatarBox')]}
       />
       <View style={styles.avatarBox}>
         <Image style={styles.avatarImg} source={avatarImg} />

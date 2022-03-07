@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import { FlatGrid } from "react-native-super-grid";
 import {
@@ -16,6 +16,7 @@ import VideoRectangle from "../components/VideoRectangle";
 import ChatPane from "../components/ChatPane";
 import CustomModal from "../components/CustomModal";
 import FadePressable from "../components/FadePressable";
+import { ImagesContext, getImage } from "../state/ImagesContext";
 
 export default function VideoRoomScreen({ navigation, route }) {
   // const room = { id: "0c136655-43ae-40c0-bc7f-d754294a0eee" };
@@ -27,6 +28,8 @@ export default function VideoRoomScreen({ navigation, route }) {
   const room = route.params.room;
   const docId = route.params.docId;
   const { userState, usersDispatch } = useCustomContext();
+
+  const Images = useContext(ImagesContext);
 
   const setMinSize = (numPeople) => {
     if (numPeople <= 4) {
@@ -70,7 +73,7 @@ export default function VideoRoomScreen({ navigation, route }) {
         <FadePressable onPress={() => Clipboard.setString(room.id)}>
           <Image
             style={styles.clipboard}
-            source={require("../assets/clipboard.png")}
+            source={Images[getImage('clipboard')]}
           />
         </FadePressable>
       </CustomModal>
@@ -81,9 +84,9 @@ export default function VideoRoomScreen({ navigation, route }) {
             itemDimension={itemDimension}
             data={players}
             renderItem={({ item }) => {
-              let img = avatarImages[item.avatarUri];
+              let img = Images[getImage(item.avatarUri)];
               if (item.isTalking) {
-                img = avatarGifs[item.avatarUri];
+                img = Images[getImage(item.avatarUri + 'gif')];
               }
               return <VideoRectangle name={item.name} avatarImg={img} />;
             }}
@@ -103,8 +106,8 @@ export default function VideoRoomScreen({ navigation, route }) {
           label={"Microphone"}
           image={
             muted
-              ? require("../assets/video_icons/unmute.png")
-              : require("../assets/video_icons/mute.png")
+              ? Images[getImage('unmute')]
+              : Images[getImage('mute')]
           }
           onPress={async () => {
             await updateIsTalking(muted, room.id, docId);
@@ -113,29 +116,29 @@ export default function VideoRoomScreen({ navigation, route }) {
         />
         <IconButton
           label={"Chat"}
-          image={require("../assets/video_icons/chat.png")}
+          image={Images[getImage('chat')]}
           onPress={() => setShowChat(!showChat)}
         />
         <IconButton
           label={"Avatar"}
-          image={require("../assets/video_icons/avatarSelector.png")}
+          image={Images[getImage('avatarSelector')]}
           onPress={() =>
             navigation.navigate("AvatarScreen", { fromScreen: "VideoScreen", room: room, docId: docId })
           }
         />
         <IconButton
           label={"Play"}
-          image={require("../assets/video_icons/play.png")}
+          image={Images[getImage('play')]}
           onPress={() => navigation.navigate("GameShowScreen", { room: room })}
         />
         <IconButton
           label={"Code"}
-          image={require("../assets/video_icons/copyCode.png")}
+          image={Images[getImage('copyCode')]}
           onPress={() => setModalVisible(true)}
         />
         <IconButton
           label={"Exit"}
-          image={require("../assets/video_icons/exit.png")}
+          image={Images[getImage('exit')]}
           onPress={() => removePlayer(false, room.id, navigation, docId)}
         />
       </View>

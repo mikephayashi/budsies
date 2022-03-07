@@ -1,7 +1,10 @@
+import {useContext} from 'react';
 import { Text, StyleSheet, View, Image } from "react-native";
 import FadePressable from "./FadePressable";
+import { ImagesContext, getImage } from "../state/ImagesContext";
 
 export default function Header({ title, popQuestion }) {
+  const Images = useContext(ImagesContext);
   return (
     <>
       <View style={styles.row}>
@@ -11,7 +14,7 @@ export default function Header({ title, popQuestion }) {
         <FadePressable onPress={() => popQuestion()}>
           <Image
             style={styles.question}
-            source={require("../assets/question.png")}
+            source={Images[getImage('question')]}
           />
         </FadePressable>
       </View>

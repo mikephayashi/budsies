@@ -1,12 +1,13 @@
-import React from "react";
+import React, {useContext} from "react";
 import { View, Text, StyleSheet } from "react-native";
 import CommentAvatarIcon from "./CommentAvatarIcon";
-import { avatarImages } from "../shared/avatarImages";
+import { ImagesContext, getImage } from "../state/ImagesContext";
 
 export default function CommentBubble({ comment }) {
+  const Images = useContext(ImagesContext);
   return (
     <View style={styles.row}>
-      <CommentAvatarIcon avatarImg={avatarImages[comment.avatarUri]} />
+      <CommentAvatarIcon avatarImg={Images[getImage(comment.avatarUri)]} />
       <View style={styles.bubble}>
         <Text style={styles.text}>{comment.comment}</Text>
       </View>

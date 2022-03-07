@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   TextInput,
@@ -10,15 +10,21 @@ import {
 import CommentBubble from "./CommentBubble";
 import { uploadComment } from "../FirebaseCalls";
 import FadePressable from "./FadePressable";
+import { ImagesContext, getImage } from "../state/ImagesContext.js";
 
 export default function ChatPane({ room, userState, comments, setShowChat }) {
+  const Images = useContext(ImagesContext);
   const [comment, onChangeComment] = useState("");
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <ScrollView style={styles.scroll}>
-        {comments.map((comment) => (
-          <CommentBubble key={comment.id} comment={comment} />
-        ))}
+        {comments
+          .sort(function (x, y) {
+            return x.timestamp - y.timestamp;
+          })
+          .map((comment) => (
+            <CommentBubble key={comment.id} comment={comment} />
+          ))}
       </ScrollView>
       <View style={styles.newComment}>
         <TextInput
@@ -39,13 +45,10 @@ export default function ChatPane({ room, userState, comments, setShowChat }) {
             )
           }
         >
-          <Image style={styles.expand} source={require("../assets/send.png")} />
+          <Image style={styles.expand} source={Images[getImage("send")]} />
         </FadePressable>
         <FadePressable onPress={() => setShowChat(false)}>
-          <Image
-            style={styles.expand}
-            source={require("../assets/expand.png")}
-          />
+          <Image style={styles.expand} source={Images[getImage("expand")]} />
         </FadePressable>
       </View>
     </KeyboardAvoidingView>

@@ -94,11 +94,12 @@ async function uploadComment(roomId, comment, player) {
       comment: comment,
       name: player.name,
       avatarUri: player.avatarUri,
+      timestamp: Date.now(),
     }
   );
 }
 
-const run = 3;
+const run = 1;
 const roomId = "c57ba05f-770f-4c35-b6a4-c58c5fc2b557";
 
 if (run === 1) {

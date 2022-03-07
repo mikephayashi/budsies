@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useContext} from "react";
 import { StyleSheet, View, ImageBackground, Image } from "react-native";
 import BackButton from "../components/BackButton";
+import { ImagesContext, getImage } from "../state/ImagesContext";
 
 export default function BackgroundView({
   children,
@@ -9,10 +10,11 @@ export default function BackgroundView({
   backgroundImg,
   showLogo,
 }) {
+  const Images = useContext(ImagesContext);
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={backgroundImg ?? require("../assets/background2-min.png")}
+        source={backgroundImg ?? Images[getImage('background')]}
         resizeMode="contain"
         style={styles.backgroundImage}
       >
@@ -21,7 +23,7 @@ export default function BackgroundView({
           {(showLogo ?? true) ? (
             <Image
               style={styles.image}
-              source={require("../assets/white_logo.png")}
+              source={Images[getImage('white_logo')]}
             />
           ) : null}
         </View>
