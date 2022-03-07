@@ -12,7 +12,7 @@ export default function StartButton({ navigation }) {
 
   return (
     <FadePressable
-      onPress={() => navigation.navigate("AvatarScreen", {fromScreen: "StartScreen"})}
+      onPress={() => navigation.navigate("HomeScreen")}
     >
       <View style={[styles.block1, styles.block1_layout]}>
         <View style={[styles.hero_title_box]}>

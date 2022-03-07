@@ -19,46 +19,31 @@ const COMMENTS_COLLECTION = "comments";
 const YT_COLLECTION = "youtube";
 const PLAYERS_COLLECTION = "players";
 const YT_DOC = "youtube";
-const VIDEO_ROOM = "VideoRoom";
 
 export async function getRoom(findCode) {
   return await getDoc(doc(db, ROOMS_COLLECTION, findCode));
 }
 
-// export async function navigateToVideoRoom(room, navigation, name, avatarUri) {
-//   await updateDoc(doc(db, ROOMS_COLLECTION, room.id), {
-//     numBuds: increment(1),
-//   });
-//   const docId = uuid.v4();
-//   await setDoc(doc(db, ROOMS_COLLECTION, room.id, PLAYERS_COLLECTION, docId), {
-//     id: docId,
-//     name: name,
-//     avatarUri: avatarUri,
-//     isTalking: true,
-//   });
-//   navigation.navigate(VIDEO_ROOM, {
-//     room: room,
-//     docId: docId,
-//   });
-// }
-
-export async function navigateToVideoRoom(room, navigation, name, avatarUri, docId) {
-  if (docId === undefined){
-    await updateDoc(doc(db, ROOMS_COLLECTION, room.id), {
-      numBuds: increment(1),
-    });
-    docId = uuid.v4();
-  }
-  await setDoc(doc(db, ROOMS_COLLECTION, room.id, PLAYERS_COLLECTION, docId), {
-    id: docId,
-    name: name,
-    avatarUri: avatarUri,
+export async function addPlayer(room, userState){
+  await updateDoc(doc(db, ROOMS_COLLECTION, room.id), {
+    numBuds: increment(1),
+  });
+  const userId = uuid.v4();
+  await setDoc(doc(db, ROOMS_COLLECTION, room.id, PLAYERS_COLLECTION, userId), {
+    id: userId,
+    name: userState.name,
+    avatarUri: userState.avatarUri,
     isTalking: true,
   });
-  navigation.navigate(VIDEO_ROOM, {
-    room: room,
-    docId: docId,
+  return userId;
+}
+
+export async function updatePlayer(room, userState, userId){
+  await updateDoc(doc(db, ROOMS_COLLECTION, room.id, PLAYERS_COLLECTION, userId), {
+    name: userState.name,
+    avatarUri: userState.avatarUri,
   });
+  return userId;
 }
 
 export async function updateIsTalking(isTalking, roomId, docId){
@@ -75,7 +60,7 @@ export async function removePlayer(toTop, roomId, navigation, docId) {
   if (toTop) {
     navigation.popToTop();
   } else {
-    navigation.pop(2);
+    navigation.pop(4);
   }
 }
 

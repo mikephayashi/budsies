@@ -6,7 +6,7 @@ export default function IconButton({ label, image, onPress }) {
   return (
     <FadePressable onPress={() => onPress()}>
       <View style={styles.column}>
-        <Image source={image} />
+        <Image style={styles.icon} source={image} />
         <Text style={styles.small_text_body} ellipsizeMode={"clip"}>
           {label}
         </Text>
@@ -18,6 +18,11 @@ export default function IconButton({ label, image, onPress }) {
 const styles = StyleSheet.create({
   column: {
     flexDirection: "column",
+  },
+  icon: {
+    height: "40%",
+    width: "100%",
+    resizeMode: "contain"
   },
   small_text_body: {
     color: "#ffffffff",

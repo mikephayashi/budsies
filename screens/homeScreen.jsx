@@ -2,12 +2,9 @@
  * This source code is exported from pxCode, you can get more document from https://www.pxcode.io
  */
 import React, { useState, useContext } from "react";
-import { View, TextInput, StyleSheet, Text, Button } from "react-native";
-import { getRoom, navigateToVideoRoom } from "../FirebaseCalls";
-import { useCustomContext } from "../state/CustomContext";
+import { View, StyleSheet } from "react-native";
 import BackgroundView from "../components/BackgroundView";
 import HomeItem from "../components/HomeItem";
-import CustomModal from "../components/CustomModal";
 import HelpModal from "../components/HelpModal";
 import { ImagesContext, getImage } from "../state/ImagesContext";
 
@@ -20,46 +17,46 @@ export default function Home({ navigation }) {
   return (
     <BackgroundView navigation={navigation}>
       <HelpModal
-        modalVisible={createModal}
-        setModalVisible={setCreateModal}
-        title="No Buddies"
-        description={`Find Room: Use a code that \n a buddy gave to you to join a \n room directly!`}
-      />
-      <HelpModal
         modalVisible={joinModal}
         setModalVisible={setJoinModal}
-        title="Some Buddies"
+        title="No Buddies"
         description={`Join Room: Choose a room \n based on your interests!`}
       />
       <HelpModal
         modalVisible={findModal}
         setModalVisible={setFindModal}
+        title="Some Buddies"
+        description={`Find Room: Use a code that \n a buddy gave to you to join a \n room directly!`}
+      />
+      <HelpModal
+        modalVisible={createModal}
+        setModalVisible={setCreateModal}
         title="Best Buddies"
         description={`Create Room: Make a room \n based on your interests!`}
       />
       <View style={styles.column}>
         <HomeItem
-          onPress={() => navigation.navigate("CreateRoom")}
-          title="NO BUDDIES"
-          buttonText="Create Room"
-          image={Images[getImage('create_room')]}
-          popQuestion={() => setCreateModal(true)}
-          color="#d39a8e"
-        />
-        <HomeItem
           onPress={() => navigation.navigate("JoinRoom")}
           title="SOME BUDDIES"
           buttonText="Join Room"
-          image={Images[getImage('find_room')]}
+          image={Images[getImage("find_room")]}
           popQuestion={() => setJoinModal(true)}
-          color="#e2c3ae"
+          color="#d39a8e"
         />
         <HomeItem
           onPress={() => navigation.navigate("FindRoom")}
-          title="BEST BUDDIES"
+          title="NO BUDDIES"
           buttonText="Find Room"
-          image={Images[getImage('join_room')]}
+          image={Images[getImage("join_room")]}
           popQuestion={() => setFindModal(true)}
+          color="#e2c3ae"
+        />
+        <HomeItem
+          onPress={() => navigation.navigate("CreateRoom")}
+          title="BEST BUDDIES"
+          buttonText="Create Room"
+          image={Images[getImage("create_room")]}
+          popQuestion={() => setCreateModal(true)}
           color="#f1c0c0"
         />
       </View>

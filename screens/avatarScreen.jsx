@@ -5,54 +5,54 @@ import BackgroundView from "../components/BackgroundView";
 import { useCustomContext } from "../state/CustomContext";
 import IconRow from "../components/IconRow";
 import { ImagesContext, getImage } from "../state/ImagesContext";
+import { addPlayer, updatePlayer } from "../FirebaseCalls";
 
 export default function AvatarScreen({ navigation, route }) {
   const Images = useContext(ImagesContext);
-  const fromScreen = route.params.fromScreen;
+  const fromVideoScreen = route.params.fromVideoScreen;
   const { userState, usersDispatch } = useCustomContext();
   const room = route.params.room;
-  const docId = route.params.docId;
-
+  const userId = route.params.userId;
 
   const genders = {
-    boy: Images[getImage('Boy_Button')],
-    girl: Images[getImage('Girl_Button')],
+    boy: Images[getImage("Boy_Button")],
+    girl: Images[getImage("Girl_Button")],
   };
-  
+
   const skins = {
-    Light: Images[getImage('Light_Skin_Tone_Icon')],
-    Tan: Images[getImage('Tan_Skin_Tone_Icon')],
-    Golden: Images[getImage('Golden_Skin_Tone_Icon')],
+    Light: Images[getImage("Light_Skin_Tone_Icon")],
+    Tan: Images[getImage("Tan_Skin_Tone_Icon")],
+    Golden: Images[getImage("Golden_Skin_Tone_Icon")],
   };
 
   const shirts = {
-    White: Images[getImage('White_Shirt_Icon')],
-    Blue: Images[getImage('Blue_Shirt_Icon')],
-    Purple: Images[getImage('Purple_Shirt_Icon')],
+    White: Images[getImage("White_Shirt_Icon")],
+    Blue: Images[getImage("Blue_Shirt_Icon")],
+    Purple: Images[getImage("Purple_Shirt_Icon")],
   };
 
   const sweaters = {
-    Pink: Images[getImage('Pink_Sweater_Icon')],
-    Blue: Images[getImage('Blue_Sweater_Icon')],
-    Grey: Images[getImage('Grey_Sweater_Icon')],
+    Pink: Images[getImage("Pink_Sweater_Icon")],
+    Blue: Images[getImage("Blue_Sweater_Icon")],
+    Grey: Images[getImage("Grey_Sweater_Icon")],
   };
 
   const glasseses = {
-    Brown: Images[getImage('Brown_Glasses_Icon')],
-    None: Images[getImage('No_Glasses_Icon')],
+    Brown: Images[getImage("Brown_Glasses_Icon")],
+    None: Images[getImage("No_Glasses_Icon")],
   };
 
   const hats = {
-    Grey: Images[getImage('Grey_Hat_Icon')],
-    None: Images[getImage('No_Hat_Icon')],
+    Grey: Images[getImage("Grey_Hat_Icon")],
+    None: Images[getImage("No_Hat_Icon")],
   };
 
-  const [gender, setGender] = useState("boy");
-  const [hat, setHat] = useState("Grey");
-  const [skin, setSkin] = useState("Tan");
-  const [shirt, setShirt] = useState("White");
-  const [sweater, setSweater] = useState("Pink");
-  const [glasses, setGlasses] = useState("Brown");
+  const [gender, setGender] = useState(userState.avatarProps.gender);
+  const [hat, setHat] = useState(userState.avatarProps.hat);
+  const [skin, setSkin] = useState(userState.avatarProps.skin);
+  const [shirt, setShirt] = useState(userState.avatarProps.shirt);
+  const [sweater, setSweater] = useState(userState.avatarProps.sweater);
+  const [glasses, setGlasses] = useState(userState.avatarProps.glasses);
 
   const [expandGender, setExpandGender] = useState(false);
   const [expandSkin, setExpandSkin] = useState(false);
@@ -60,12 +60,6 @@ export default function AvatarScreen({ navigation, route }) {
   const [expandSweater, setExpandSweater] = useState(false);
   const [expandGlasses, setExpandGlasses] = useState(false);
   const [expandHat, setExpandHat] = useState(false);
-
-  useEffect(()=> {
-    // console.log("triggered?");
-    // console.log(getAvatarUri());
-    // console.log(Images[getImage(getAvatarUri()]);
-  });
 
   const getAvatarUri = () => {
     if (gender === "boy") {
@@ -96,13 +90,30 @@ export default function AvatarScreen({ navigation, route }) {
     <BackgroundView navigation={navigation}>
       <NextButton
         navigation={navigation}
-        callBack={() => {
-          usersDispatch({
+        callBack={async () => {
+          await usersDispatch({
             type: "TEST",
             name: userState.name,
             avatarUri: getAvatarUri(),
+            avatarProps: {
+              gender: gender,
+              hat: hat,
+              skin: skin,
+              shirt: shirt,
+              sweater: sweater,
+              glasses: glasses,
+            },
           });
-          navigation.navigate("NameScreen", { fromScreen: fromScreen, room: room, docId: docId });
+          if (fromVideoScreen) {
+            updatePlayer(room, userState, userId);
+            navigation.navigate("VideoRoom", { room: room, userId: userId });
+          } else {
+            const userIdNew = await addPlayer(room, {
+              name: userState.name,
+              avatarUri: getAvatarUri(),
+            });
+            navigation.navigate("VideoRoom", { room: room, userId: userIdNew });
+          }
         }}
       />
       <View style={styles.bigRow}>
@@ -155,7 +166,10 @@ export default function AvatarScreen({ navigation, route }) {
             />
           ) : null}
         </View>
-        <Image style={styles.avatar} source={Images[getImage(getAvatarUri())]} />
+        <Image
+          style={styles.avatar}
+          source={Images[getImage(getAvatarUri())]}
+        />
       </View>
     </BackgroundView>
   );
@@ -188,7 +202,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     width: 320,
-    marginLeft: 20
+    marginLeft: 20,
   },
   save: {
     height: 20,

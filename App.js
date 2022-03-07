@@ -36,6 +36,7 @@ export default function App() {
   const [userState, usersDispatch] = useReducer(testReducer, {
     name: "",
     avatarUri: "",
+    avatarProps: {gender: "boy", hat: "Grey", skin: "Tan", shirt: "White", sweater: "Pink", glasses: "Brown"}
   });
 
   const providerState = {

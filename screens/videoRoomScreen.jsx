@@ -17,16 +17,17 @@ import ChatPane from "../components/ChatPane";
 import CustomModal from "../components/CustomModal";
 import FadePressable from "../components/FadePressable";
 import { ImagesContext, getImage } from "../state/ImagesContext";
+import LeaveButton from "../components/LeaveButton";
 
 export default function VideoRoomScreen({ navigation, route }) {
   // const room = { id: "0c136655-43ae-40c0-bc7f-d754294a0eee" };
-  // const docId = "cjr0N8PmWRFwuzlkl7kk";
+  // const userId = "cjr0N8PmWRFwuzlkl7kk";
   // const userState = {
   //   name: "Mike",
   //   avatarUri: "Jasper_Hat-Grey_Shirt-Blue_Skin-Golden_Glasses-Brown",
   // };
   const room = route.params.room;
-  const docId = route.params.docId;
+  const userId = route.params.userId;
   const { userState, usersDispatch } = useCustomContext();
 
   const Images = useContext(ImagesContext);
@@ -47,6 +48,7 @@ export default function VideoRoomScreen({ navigation, route }) {
   const [showChat, setShowChat] = useState(false);
   const [itemDimension, setItemDimension] = useState(setMinSize(players));
   const [modalVisible, setModalVisible] = useState(false);
+  const [leaveModalVisible, setLeaveModalVisible] = useState(false);
 
   useEffect(() => {
     const unsubscribePlayers = addPlayersListener(room.id, (newPlayers) => {
@@ -62,6 +64,11 @@ export default function VideoRoomScreen({ navigation, route }) {
     };
   }, []);
 
+  const toggleMute = () => {
+    updateIsTalking(muted, room.id, userId);
+    setMuted(!muted);
+  };
+
   return (
     <BackgroundView showBack={false} showLogo={false}>
       <CustomModal
@@ -73,9 +80,32 @@ export default function VideoRoomScreen({ navigation, route }) {
         <FadePressable onPress={() => Clipboard.setString(room.id)}>
           <Image
             style={styles.clipboard}
-            source={Images[getImage('clipboard')]}
+            source={Images[getImage("clipboard")]}
           />
         </FadePressable>
+      </CustomModal>
+      <CustomModal
+        modalVisible={leaveModalVisible}
+        setModalVisible={setLeaveModalVisible}
+      >
+        <View style={styles.leaveColumn}>
+          <Text
+            style={[styles.codeHeader, styles.code]}
+          >{`Are you sure \nyou want to leave?`}</Text>
+          <View style={styles.leaveRow}>
+            <LeaveButton
+              text="Yes"
+              onPress={() => {
+                setLeaveModalVisible(false);
+                removePlayer(false, room.id, navigation, userId);
+              }}
+            />
+            <LeaveButton
+              text="No"
+              onPress={() => setLeaveModalVisible(false)}
+            />
+          </View>
+        </View>
       </CustomModal>
       <View style={styles.bigRow}>
         <View style={styles.container}>
@@ -86,7 +116,7 @@ export default function VideoRoomScreen({ navigation, route }) {
             renderItem={({ item }) => {
               let img = Images[getImage(item.avatarUri)];
               if (item.isTalking) {
-                img = Images[getImage(item.avatarUri + 'gif')];
+                img = Images[getImage(item.avatarUri + "gif")];
               }
               return <VideoRectangle name={item.name} avatarImg={img} />;
             }}
@@ -98,48 +128,52 @@ export default function VideoRoomScreen({ navigation, route }) {
             userState={userState}
             comments={comments}
             setShowChat={setShowChat}
+            muted={muted}
+            toggleMute={toggleMute}
           />
         ) : null}
       </View>
       <View style={styles.row}>
         <IconButton
           label={"Microphone"}
-          image={
-            muted
-              ? Images[getImage('unmute')]
-              : Images[getImage('mute')]
-          }
-          onPress={async () => {
-            await updateIsTalking(muted, room.id, docId);
-            setMuted(!muted);
-          }}
+          image={muted ? Images[getImage("unmute")] : Images[getImage("mute")]}
+          onPress={() => toggleMute()}
         />
         <IconButton
           label={"Chat"}
-          image={Images[getImage('chat')]}
+          image={Images[getImage("chat")]}
           onPress={() => setShowChat(!showChat)}
         />
         <IconButton
           label={"Avatar"}
-          image={Images[getImage('avatarSelector')]}
+          image={Images[getImage("avatarSelector")]}
           onPress={() =>
-            navigation.navigate("AvatarScreen", { fromScreen: "VideoScreen", room: room, docId: docId })
+            navigation.navigate("NameScreen", {
+              fromVideoScreen: true,
+              room: room,
+              userId: userId,
+            })
           }
         />
         <IconButton
           label={"Play"}
-          image={Images[getImage('play')]}
+          image={Images[getImage("play")]}
           onPress={() => navigation.navigate("GameShowScreen", { room: room })}
         />
         <IconButton
           label={"Code"}
-          image={Images[getImage('copyCode')]}
+          image={Images[getImage("copyCode")]}
           onPress={() => setModalVisible(true)}
         />
+        {/* <IconButton
+          label={"Leave"}
+          image={Images[getImage("exit")]}
+          onPress={() => removePlayer(false, room.id, navigation, userId)}
+        /> */}
         <IconButton
-          label={"Exit"}
-          image={Images[getImage('exit')]}
-          onPress={() => removePlayer(false, room.id, navigation, docId)}
+          label={"Leave"}
+          image={Images[getImage("exit")]}
+          onPress={() => setLeaveModalVisible(true)}
         />
       </View>
     </BackgroundView>
@@ -152,7 +186,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: "auto",
     marginBottom: "auto",
-    height: "85%",
+    height: "88%",
     marginTop: 0,
   },
   scroll: {
@@ -165,7 +199,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   row: {
-    height: "15%",
+    height: "12%",
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-evenly",
@@ -182,6 +216,7 @@ const styles = StyleSheet.create({
   },
   codeHeader: {
     fontSize: 40,
+    textAlign: "center",
   },
   codeText: {
     fontSize: 20,
@@ -190,5 +225,15 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     marginTop: 10,
+  },
+  leaveColumn: {
+    flexDirection: "column",
+    height: "90%",
+    marginTop: "2%"
+  },
+  leaveRow: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    marginTop: "2%",
   },
 });

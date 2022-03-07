@@ -4,7 +4,7 @@ import {
 } from "react-native";
 import { useCustomContext } from "../state/CustomContext";
 import BackgroundView from "../components/BackgroundView";
-import { getRoom, navigateToVideoRoom } from "../FirebaseCalls";
+import { getRoom } from "../FirebaseCalls";
 import WhiteButton from "../components/WhiteButton";
 import WhiteInput from "../components/WhiteInput";
 import ScreenHeader from "../components/ScreenHeader";
@@ -18,7 +18,7 @@ export default function FindRoomScreen({ navigation }) {
     <ScreenHeader title="Find a Room" />
       <WhiteInput
         label="Shareable Code"
-        placeholder="Enter NaCodeme"
+        placeholder="Enter Code"
         onChangeText={onChangeFindCode}
         value={findCode}
       />
@@ -27,12 +27,10 @@ export default function FindRoomScreen({ navigation }) {
         title="Join"
         onPress={async () => {
           const docSnap = await getRoom(findCode);
-          navigateToVideoRoom(
-            docSnap.data(),
-            navigation,
-            userState.name,
-            userState.avatarUri
-          );
+          navigation.navigate("NameScreen", {
+              room: docSnap.data(),
+              fromVideoScreen: false
+            });
         }}
       />
     </BackgroundView>

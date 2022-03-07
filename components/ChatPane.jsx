@@ -12,7 +12,14 @@ import { uploadComment } from "../FirebaseCalls";
 import FadePressable from "./FadePressable";
 import { ImagesContext, getImage } from "../state/ImagesContext.js";
 
-export default function ChatPane({ room, userState, comments, setShowChat }) {
+export default function ChatPane({
+  room,
+  userState,
+  comments,
+  setShowChat,
+  muted,
+  toggleMute,
+}) {
   const Images = useContext(ImagesContext);
   const [comment, onChangeComment] = useState("");
   return (
@@ -27,9 +34,21 @@ export default function ChatPane({ room, userState, comments, setShowChat }) {
           ))}
       </ScrollView>
       <View style={styles.newComment}>
+        <FadePressable onPress={() => toggleMute()} style={styles.muteCircle}>
+          <Image
+            style={styles.mic}
+            source={
+              Images[
+                muted ? getImage("black_muted") : getImage("black_unmuted")
+              ]
+            }
+          />
+        </FadePressable>
+
         <TextInput
+          placeholderTextColor="#757575"
           style={styles.commentInput}
-          placeholder="Tap here to chat"
+          placeholder="Tap here to chat..."
           onChangeText={onChangeComment}
           value={comment}
         />
@@ -58,7 +77,7 @@ export default function ChatPane({ room, userState, comments, setShowChat }) {
 const styles = StyleSheet.create({
   container: {
     width: "50%",
-    height: "85%",
+    height: "88%",
     marginLeft: "auto",
     backgroundColor: "#191919ff",
     display: "flex",
@@ -66,12 +85,17 @@ const styles = StyleSheet.create({
   newComment: {
     flexDirection: "row",
     width: "100%",
-    height: "10%",
+    height: 65,
   },
   commentInput: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#191919ff",
     fontSize: 30,
+    color: "white",
+    borderColor: "white",
+    borderWidth: 2,
+    borderRadius: 100,
+    padding: 8,
   },
   scroll: {
     flex: 1,
@@ -82,5 +106,19 @@ const styles = StyleSheet.create({
     height: "100%",
     margin: "auto",
     marginRight: "2%",
+  },
+  muteCircle: {
+    backgroundColor: "white",
+    width: "10%",
+    height: "80%",
+    borderRadius: 40,
+    marginTop: "auto",
+    marginBottom: "auto",
+    marginLeft: "1%",
+    marginRight: "1%",
+  },
+  mic: {
+    width: "100%",
+    height: "100%",
   },
 });

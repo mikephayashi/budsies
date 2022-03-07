@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import FadePressable from "../components/FadePressable";
-import { navigateToVideoRoom } from "../FirebaseCalls";
 import { ImagesContext, getImage } from "../state/ImagesContext";
 
 export default function RoomButton({ navigation, room, userState }) {
@@ -16,12 +15,10 @@ export default function RoomButton({ navigation, room, userState }) {
       <FadePressable
         onPress={async () => {
           if (room.numBuds < room.maxBuds) {
-            navigateToVideoRoom(
-              room,
-              navigation,
-              userState.name,
-              userState.avatarUri
-            );
+            navigation.navigate("NameScreen", {
+              room: room,
+              fromVideoScreen: false,
+            });
           }
         }}
         style={styles.fade}
@@ -51,7 +48,7 @@ const styles = StyleSheet.create({
     height: "80%",
     resizeMode: "contain",
     padding: "auto",
-    flex:1, 
+    flex: 1,
   },
   block1: {
     backgroundColor: "#ffffffff",
@@ -79,7 +76,7 @@ const styles = StyleSheet.create({
     fontFamily: "BalsamiqSans_400Regular",
     paddingHorizontal: 0,
     paddingVertical: 0,
-    flex:1, 
+    flex: 1,
   },
   block2: {
     backgroundColor: "#e2c3aeff",
@@ -99,7 +96,7 @@ const styles = StyleSheet.create({
   },
   block2_layout: {
     width: "100%",
-    right: 10
+    right: 10,
   },
   small_text_body: {
     color: "#ffffffff",
@@ -113,7 +110,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingVertical: 0,
     marginTop: "auto",
-    marginBottom: "auto"
+    marginBottom: "auto",
   },
   fade: {
     width: "20%",

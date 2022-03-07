@@ -57,6 +57,8 @@ export default Images = [
   require("./icons/Blue_Sweater_Icon.png"),
   require("./icons/Grey_Sweater_Icon.png"),
   require("./icons/Pink_Sweater_Icon.png"),
+  require("./video_icons/black_unmuted.png"),
+  require("./video_icons/black_muted.png"),
 ];
 
 for (let key in avatarImages) {

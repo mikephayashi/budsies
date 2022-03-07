@@ -1,7 +1,11 @@
 import React from "react";
 import { View, StyleSheet, Modal, TouchableOpacity } from "react-native";
 
-export default function CustomModal({ children, modalVisible, setModalVisible }) {
+export default function CustomModal({
+  children,
+  modalVisible,
+  setModalVisible,
+}) {
   return (
     <Modal visible={modalVisible} animationType="slide" transparent={true}>
       <TouchableOpacity
@@ -38,8 +42,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    minWidth: "30%",
+    maxWidth: "50%",
+    minHeight: "20%",
+    maxHeight: "40%",
   },
   touchable: {
     flex: 1,
-  }
+  },
 });

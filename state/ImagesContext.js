@@ -61,8 +61,10 @@ export function getImage(imageName){
         'Blue_Sweater_Icon': 53,
         'Grey_Sweater_Icon': 54,
         'Pink_Sweater_Icon': 55,
+        'black_unmuted': 56,
+        'black_muted': 57,
     };
-    let cur = 56
+    let cur = 58
     for(let key in avatarImages){
         images[key] = cur;
         cur++;

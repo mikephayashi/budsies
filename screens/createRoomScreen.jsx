@@ -8,7 +8,6 @@ import ScreenHeader from "../components/ScreenHeader";
 import WhiteInput from "../components/WhiteInput";
 import WhiteInterests from "../components/WhiteInterests";
 import WhiteNumBuds from "../components/WhiteNumBuds";
-import { navigateToVideoRoom } from "../FirebaseCalls";
 
 export default function CreateRoomScreen({ navigation }) {
   const [name, onChangeName] = useState("");
@@ -25,12 +24,10 @@ export default function CreateRoomScreen({ navigation }) {
           title="Create"
           callBack={async () => {
             const room = await createRoom(name, maxBuds, interests);
-            navigateToVideoRoom(
-              room,
-              navigation,
-              userState.name,
-              userState.avatarUri
-            );
+            navigation.navigate("NameScreen", {
+              room: room,
+              fromVideoScreen: false,
+            });
           }}
         />
         <ScreenHeader title="Create a Room" />

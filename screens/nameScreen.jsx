@@ -4,29 +4,25 @@ import { useCustomContext } from "../state/CustomContext";
 import BackgroundView from "../components/BackgroundView";
 import WhiteInput from "../components/WhiteInput";
 import NextButton from "../components/NextButton";
-import { navigateToVideoRoom } from "../FirebaseCalls";
 
 export default function NameScreen({ navigation, route }) {
-  const fromScreen = route.params.fromScreen;
+  const room = route.params.room;
+  const userId = route.params.userId;
+  const fromVideoScreen = route.params.fromVideoScreen;
   const { userState, usersDispatch } = useCustomContext();
   const [name, onChangeName] = useState(userState.name ?? "");
   return (
     <BackgroundView navigation={navigation}>
       <NextButton
-        title="Save"
+        title="Next"
         callBack={() => {
           usersDispatch({
             type: "TEST",
             name: name,
             avatarUri: userState.avatarUri,
+            avatarProps: userState.avatarProps,
           });
-          if (fromScreen === "VideoScreen") {
-            const room = route.params.room;
-            const docId = route.params.docId;
-            navigateToVideoRoom(room, navigation, name, userState.avatarUri, docId);
-          } else if (fromScreen === "StartScreen") {
-            navigation.navigate("HomeScreen");
-          }
+          navigation.navigate("AvatarScreen", { room: room, userId: userId, fromVideoScreen: fromVideoScreen });
         }}
       />
       <View style={styles.column}>
