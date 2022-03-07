@@ -7,53 +7,53 @@ import { ImagesContext, getImage } from "../state/ImagesContext";
 export default function RoomButton({ navigation, room, userState }) {
   const Images = useContext(ImagesContext);
   return (
-    <FadePressable
-      onPress={async () => {
-        if (room.numBuds < room.maxBuds) {
-          navigateToVideoRoom(
-            room,
-            navigation,
-            userState.name,
-            userState.avatarUri
-          );
-        }
-      }}
-    >
-      <View style={[styles.block1, styles.row]}>
-        <Image
-          style={styles.image}
-          source={Images[getImage("join_room_icon")]}
-        />
-        <Text style={styles.highlights}>{room.name}</Text>
-        <Text style={styles.highlights}>
-          {room.numBuds}/{room.maxBuds} Buds
-        </Text>
-        <Text style={styles.highlights}>{room.interests.toString()}</Text>
-      </View>
-    </FadePressable>
+    <View style={[styles.block1, styles.row]}>
+      <Image style={styles.image} source={Images[getImage("join_room_icon")]} />
+      <Text style={styles.highlights}>{room.name}</Text>
+      <Text style={styles.highlights}>
+        {room.numBuds}/{room.maxBuds} Buds
+      </Text>
+      <FadePressable
+        onPress={async () => {
+          if (room.numBuds < room.maxBuds) {
+            navigateToVideoRoom(
+              room,
+              navigation,
+              userState.name,
+              userState.avatarUri
+            );
+          }
+        }}
+        style={styles.fade}
+      >
+        <View style={[styles.block2, styles.block2_layout]}>
+          <Text style={styles.small_text_body} ellipsizeMode={"clip"}>
+            {"Join Room"}
+          </Text>
+        </View>
+      </FadePressable>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
-    height: "100%",
+    height: 80,
     width: "60%",
     marginLeft: "auto",
     marginRight: "auto",
-    justifyContent: "space-around",
     alignItems: "center",
     marginTop: "1%",
   },
   image: {
     width: "20%",
-    height: "100%",
+    height: "80%",
     resizeMode: "contain",
     padding: "auto",
+    flex:1, 
   },
   block1: {
-    width: "100%",
-    height: "20%",
     backgroundColor: "#ffffffff",
     borderRadius: 8,
     borderStyle: "solid",
@@ -79,5 +79,44 @@ const styles = StyleSheet.create({
     fontFamily: "BalsamiqSans_400Regular",
     paddingHorizontal: 0,
     paddingVertical: 0,
+    flex:1, 
+  },
+  block2: {
+    backgroundColor: "#e2c3aeff",
+    borderRadius: 14,
+    borderStyle: "solid",
+    borderColor: "#ffffffff",
+    borderWidth: 2,
+    elevation: 1,
+    shadowColor: "#000000",
+    shadowRadius: 10,
+    shadowOpacity: 0.2,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    flex: 1,
+  },
+  block2_layout: {
+    width: "100%",
+    right: 10
+  },
+  small_text_body: {
+    color: "#ffffffff",
+    textAlign: "center",
+    letterSpacing: 0,
+    lineHeight: 40,
+    fontSize: 20,
+    fontWeight: "700",
+    fontStyle: "normal",
+    fontFamily: "BalsamiqSans_400Regular" /* Balsamiq Sans */,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+    marginTop: "auto",
+    marginBottom: "auto"
+  },
+  fade: {
+    width: "20%",
+    height: "70%",
   },
 });

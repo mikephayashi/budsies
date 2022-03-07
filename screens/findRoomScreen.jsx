@@ -1,20 +1,13 @@
 import React, { useState } from "react";
 import {
-  Button,
-  ScrollView,
   StyleSheet,
-  Pressable,
-  Text,
-  TextInput,
 } from "react-native";
-import { filterRooms } from "../FirebaseCalls";
 import { useCustomContext } from "../state/CustomContext";
 import BackgroundView from "../components/BackgroundView";
 import { getRoom, navigateToVideoRoom } from "../FirebaseCalls";
 import WhiteButton from "../components/WhiteButton";
 import WhiteInput from "../components/WhiteInput";
-import RoomButton from "../components/RoomButton";
-import WhiteInterestsJoin from "../components/WhiteInterestsJoin";
+import ScreenHeader from "../components/ScreenHeader";
 
 export default function FindRoomScreen({ navigation }) {
   const { userState, usersDispatch } = useCustomContext();
@@ -22,6 +15,7 @@ export default function FindRoomScreen({ navigation }) {
 
   return (
     <BackgroundView navigation={navigation}>
+    <ScreenHeader title="Find a Room" />
       <WhiteInput
         label="Shareable Code"
         placeholder="Enter NaCodeme"

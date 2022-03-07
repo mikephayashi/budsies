@@ -36,6 +36,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     backgroundColor: "#ffffffff",
+    fontFamily: "BalsamiqSans_400Regular",
+    color: "#be8b81",
   },
   big_title: {
     color: "#f9d6bf",
