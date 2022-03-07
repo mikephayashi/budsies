@@ -64,8 +64,9 @@ export function getImage(imageName){
         'black_unmuted': 56,
         'black_muted': 57,
         'chat_bubble': 58,
+        'subtitles': 59,
     };
-    let cur = 59
+    let cur = 60;
     for (let i = 0; i < 15; i++){
         images["htp" + (i + 1)] = cur;
         cur++;

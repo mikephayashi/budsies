@@ -3,15 +3,21 @@ import { View, StyleSheet, Image } from "react-native";
 import FadePressable from "../components/FadePressable";
 import { ImagesContext, getImage } from "../state/ImagesContext";
 
-export default function GameShowIcons({muted, toggleMute, setShowChat}) {
+export default function GameShowIcons({ muted, toggleMute, setShowChat }) {
   const Images = useContext(ImagesContext);
   return (
     <View style={styles.iconRow}>
       <FadePressable
+        onPress={() => {}}
+        style={{ ...styles.fade, ...styles.left }}
+      >
+        <Image style={styles.icon} source={Images[getImage("subtitles")]} />
+      </FadePressable>
+      <FadePressable
         onPress={() => {
           toggleMute();
         }}
-        style={{ ...styles.fade, ...styles.mic }}
+        style={{ ...styles.fade, ...styles.right }}
       >
         <Image
           style={styles.icon}
@@ -20,7 +26,7 @@ export default function GameShowIcons({muted, toggleMute, setShowChat}) {
       </FadePressable>
       <FadePressable
         onPress={() => setShowChat(true)}
-        style={{ ...styles.fade, ...styles.chat }}
+        style={{ ...styles.fade, ...styles.right }}
       >
         <Image style={styles.icon} source={Images[getImage("chat")]} />
       </FadePressable>
@@ -29,10 +35,10 @@ export default function GameShowIcons({muted, toggleMute, setShowChat}) {
 }
 
 const styles = StyleSheet.create({
-  mic: {
+  left: {
     marginLeft: "auto",
   },
-  chat: {
+  right: {
     marginRight: 10,
   },
   icon: {

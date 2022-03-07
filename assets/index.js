@@ -60,6 +60,7 @@ export default Images = [
   require("./video_icons/black_unmuted.png"),
   require("./video_icons/black_muted.png"),
   require("./chat_bubble.png"),
+  require("./subtitles.png"),
   require("./htp/1.png"),
   require("./htp/2.png"),
   require("./htp/3.png"),
