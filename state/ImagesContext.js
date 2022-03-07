@@ -66,6 +66,10 @@ export function getImage(imageName){
         'chat_bubble': 58,
     };
     let cur = 59
+    for (let i = 0; i < 15; i++){
+        images["htp" + (i + 1)] = cur;
+        cur++;
+    }
     for(let key in avatarImages){
         images[key] = cur;
         cur++;

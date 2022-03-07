@@ -8,11 +8,9 @@ import FadePressable from "./FadePressable";
 
 export default function HTPButton({ navigation }) {
 
-
-
   return (
     <FadePressable
-      onPress={() => console.log("Switch")}
+      onPress={() => navigation.navigate("HTPScreen")}
     >
       <View style={[styles.block1, styles.block1_layout]}>
         <View style={[styles.hero_title_box]}>

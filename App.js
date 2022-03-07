@@ -24,6 +24,7 @@ import NameScreen from "./screens/nameScreen";
 import ShowScreen from "./screens/showScreen";
 import GameScreen from "./screens/gameScreen";
 import GameShowScreen from "./screens/gameShowScreen";
+import HTPScreen from "./screens/htpScreen";
 
 import testReducer from "./state/TestReducer";
 import CustomContext from "./state/CustomContext";
@@ -128,6 +129,11 @@ export default function App() {
             <Stack.Screen
               name="GameShowScreen"
               component={GameShowScreen}
+              options={{ headerShown: false }}
+            />
+                        <Stack.Screen
+              name="HTPScreen"
+              component={HTPScreen}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>

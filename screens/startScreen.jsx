@@ -14,7 +14,7 @@ export default function StartScreen({ navigation }) {
       backgroundImg={Images[getImage('home_background')]}
     >
       <StartButton navigation={navigation} />
-      <HTPButton />
+      <HTPButton navigation={navigation}/>
     </BackgroundView>
   );
 }

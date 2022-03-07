@@ -60,6 +60,21 @@ export default Images = [
   require("./video_icons/black_unmuted.png"),
   require("./video_icons/black_muted.png"),
   require("./chat_bubble.png"),
+  require("./htp/1.png"),
+  require("./htp/2.png"),
+  require("./htp/3.png"),
+  require("./htp/4.png"),
+  require("./htp/5.png"),
+  require("./htp/6.png"),
+  require("./htp/7.png"),
+  require("./htp/8.png"),
+  require("./htp/9.png"),
+  require("./htp/10.png"),
+  require("./htp/11.png"),
+  require("./htp/12.png"),
+  require("./htp/13.png"),
+  require("./htp/14.png"),
+  require("./htp/15.png"),
 ];
 
 for (let key in avatarImages) {
