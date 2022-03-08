@@ -49,7 +49,7 @@ export default function ShowScreen({ navigation, route }) {
 
   const ytTogglePlay = (isPlaying) => {
     playerRef.current?.getCurrentTime().then((currentTime) => {
-      togglePlay(isPlaying, currentTime, room, userState);
+      togglePlay(isPlaying, currentTime, room, userState.name);
     });
   };
 

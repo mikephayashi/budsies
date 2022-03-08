@@ -24,7 +24,7 @@ export async function getRoom(findCode) {
   return await getDoc(doc(db, ROOMS_COLLECTION, findCode));
 }
 
-export async function addPlayer(room, userState){
+export async function addPlayer(room, userState) {
   await updateDoc(doc(db, ROOMS_COLLECTION, room.id), {
     numBuds: increment(1),
   });
@@ -38,18 +38,24 @@ export async function addPlayer(room, userState){
   return userId;
 }
 
-export async function updatePlayer(room, userState, userId){
-  await updateDoc(doc(db, ROOMS_COLLECTION, room.id, PLAYERS_COLLECTION, userId), {
-    name: userState.name,
-    avatarUri: userState.avatarUri,
-  });
+export async function updatePlayer(room, userState, userId) {
+  await updateDoc(
+    doc(db, ROOMS_COLLECTION, room.id, PLAYERS_COLLECTION, userId),
+    {
+      name: userState.name,
+      avatarUri: userState.avatarUri,
+    }
+  );
   return userId;
 }
 
-export async function updateIsTalking(isTalking, roomId, docId){
-  await updateDoc(doc(db, ROOMS_COLLECTION, roomId, PLAYERS_COLLECTION, docId), {
-    isTalking: isTalking
-  });
+export async function updateIsTalking(isTalking, roomId, docId) {
+  await updateDoc(
+    doc(db, ROOMS_COLLECTION, roomId, PLAYERS_COLLECTION, docId),
+    {
+      isTalking: isTalking,
+    }
+  );
 }
 
 export async function removePlayer(toTop, roomId, navigation, docId) {
@@ -89,7 +95,13 @@ export async function createRoom(name, maxBuds, interests) {
   return room;
 }
 
-export async function uploadComment(roomId, comment, onChangeComment, name, avatarUri) {
+export async function uploadComment(
+  roomId,
+  comment,
+  onChangeComment,
+  name,
+  avatarUri
+) {
   const commentId = uuid.v4();
   await setDoc(
     doc(db, ROOMS_COLLECTION, roomId, COMMENTS_COLLECTION, commentId),
@@ -134,11 +146,13 @@ export function addYoutubeListener(
     doc(db, "rooms", roomId, YT_COLLECTION, YT_DOC),
     (doc) => {
       const yt = doc.data();
-      if (yt.name !== name || yt.name !== "") {
+      if (yt.name !== name) {
         setByOutsideCall(true);
-        setPlaying(yt.isPlaying);
-        seekTo(yt.currentTime);
-        setTimeout(() => setByOutsideCall(false), 1000);
+        setTimeout(() => {
+          setPlaying(yt.isPlaying);
+          seekTo(yt.currentTime);
+        }, 500);
+        setTimeout(() => setByOutsideCall(false), 1500);
       }
     }
   );
