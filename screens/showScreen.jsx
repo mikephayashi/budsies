@@ -130,8 +130,9 @@ const styles = StyleSheet.create({
   yt: {
     marginTop: "auto",
     marginBottom: "auto",
-    paddingTop: 50,
+    marginTop: 15,
     height: "90%",
+    backgroundColor: "red",
   },
   smallYt: {
     width: "50%",
