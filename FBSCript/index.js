@@ -12,6 +12,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+import random_name from 'node-random-name';
 
 import {
   doc,
@@ -51,6 +52,81 @@ const player3 = {
   avatarUri: "Tran_Hat-None_Shirt-Blue_Skin-Tan_Glasses-Brown",
 };
 
+// const uris = [
+//   "Tran_Hat-None_Shirt-Pink_Skin-Golden_Glasses-Brown",
+//   "Jasper_Hat-Grey_Shirt-White_Skin-Light_Glasses-None",
+//   "Tran_Hat-None_Shirt-Blue_Skin-Tan_Glasses-Brown",
+// ];
+
+const uris = [
+  // Hat
+  // Blue Shirt
+  "Jasper_Hat-Grey_Shirt-Blue_Skin-Golden_Glasses-Brown",
+  "Jasper_Hat-Grey_Shirt-Blue_Skin-Golden_Glasses-None",
+  "Jasper_Hat-Grey_Shirt-Blue_Skin-Light_Glasses-Brown",
+  "Jasper_Hat-Grey_Shirt-Blue_Skin-Light_Glasses-None",
+  "Jasper_Hat-Grey_Shirt-Blue_Skin-Tan_Glasses-Brown",
+  "Jasper_Hat-Grey_Shirt-Blue_Skin-Tan_Glasses-None",
+  //Purple shirt
+  "Jasper_Hat-Grey_Shirt-Purple_Skin-Golden_Glasses-Brown",
+  "Jasper_Hat-Grey_Shirt-Purple_Skin-Golden_Glasses-None",
+  "Jasper_Hat-Grey_Shirt-Purple_Skin-Light_Glasses-Brown",
+  "Jasper_Hat-Grey_Shirt-Purple_Skin-Light_Glasses-None",
+  "Jasper_Hat-Grey_Shirt-Purple_Skin-Tan_Glasses-Brown",
+  "Jasper_Hat-Grey_Shirt-Purple_Skin-Tan_Glasses-None",
+  // White shirt
+  "Jasper_Hat-Grey_Shirt-White_Skin-Golden_Glasses-Brown",
+  "Jasper_Hat-Grey_Shirt-White_Skin-Golden_Glasses-None",
+  "Jasper_Hat-Grey_Shirt-White_Skin-Light_Glasses-Brown",
+  "Jasper_Hat-Grey_Shirt-White_Skin-Light_Glasses-None",
+  "Jasper_Hat-Grey_Shirt-White_Skin-Tan_Glasses-Brown",
+  "Jasper_Hat-Grey_Shirt-White_Skin-Tan_Glasses-None",
+  // No Hat
+  // Blue Shirt
+  "Jasper_Hat-None_Shirt-Blue_Skin-Golden_Glasses-Brown",
+  "Jasper_Hat-None_Shirt-Blue_Skin-Golden_Glasses-None",
+  "Jasper_Hat-None_Shirt-Blue_Skin-Light_Glasses-Brown",
+  "Jasper_Hat-None_Shirt-Blue_Skin-Light_Glasses-None",
+  "Jasper_Hat-None_Shirt-Blue_Skin-Tan_Glasses-Brown",
+  "Jasper_Hat-None_Shirt-Blue_Skin-Tan_Glasses-None",
+  //Purple shirt
+  "Jasper_Hat-None_Shirt-Purple_Skin-Golden_Glasses-Brown",
+  "Jasper_Hat-None_Shirt-Purple_Skin-Golden_Glasses-None",
+  "Jasper_Hat-None_Shirt-Purple_Skin-Light_Glasses-Brown",
+  "Jasper_Hat-None_Shirt-Purple_Skin-Light_Glasses-None",
+  "Jasper_Hat-None_Shirt-Purple_Skin-Tan_Glasses-Brown",
+  "Jasper_Hat-None_Shirt-Purple_Skin-Tan_Glasses-None",
+  // White shirt
+  "Jasper_Hat-None_Shirt-White_Skin-Golden_Glasses-Brown",
+  "Jasper_Hat-None_Shirt-White_Skin-Golden_Glasses-None",
+  "Jasper_Hat-None_Shirt-White_Skin-Light_Glasses-Brown",
+  "Jasper_Hat-None_Shirt-White_Skin-Light_Glasses-None",
+  "Jasper_Hat-None_Shirt-White_Skin-Tan_Glasses-Brown",
+  "Jasper_Hat-None_Shirt-White_Skin-Tan_Glasses-None",
+  // No Hat
+  // Blue Shirt
+  "Tran_Hat-None_Shirt-Blue_Skin-Golden_Glasses-Brown",
+  "Tran_Hat-None_Shirt-Blue_Skin-Golden_Glasses-None",
+  "Tran_Hat-None_Shirt-Blue_Skin-Light_Glasses-Brown",
+  "Tran_Hat-None_Shirt-Blue_Skin-Light_Glasses-None",
+  "Tran_Hat-None_Shirt-Blue_Skin-Tan_Glasses-Brown",
+  "Tran_Hat-None_Shirt-Blue_Skin-Tan_Glasses-None",
+  //Grey shirt
+  "Tran_Hat-None_Shirt-Grey_Skin-Golden_Glasses-Brown",
+  "Tran_Hat-None_Shirt-Grey_Skin-Golden_Glasses-None",
+  "Tran_Hat-None_Shirt-Grey_Skin-Light_Glasses-Brown",
+  "Tran_Hat-None_Shirt-Grey_Skin-Light_Glasses-None",
+  "Tran_Hat-None_Shirt-Grey_Skin-Tan_Glasses-Brown",
+  "Tran_Hat-None_Shirt-Grey_Skin-Tan_Glasses-None",
+  // Pink shirt
+  "Tran_Hat-None_Shirt-Pink_Skin-Golden_Glasses-Brown",
+  "Tran_Hat-None_Shirt-Pink_Skin-Golden_Glasses-None",
+  "Tran_Hat-None_Shirt-Pink_Skin-Light_Glasses-Brown",
+  "Tran_Hat-None_Shirt-Pink_Skin-Light_Glasses-None",
+  "Tran_Hat-None_Shirt-Pink_Skin-Tan_Glasses-Brown",
+  "Tran_Hat-None_Shirt-Pink_Skin-Tan_Glasses-None",
+];
+
 async function addPlayer(roomId, player) {
   const playerId = uuidv4();
   await setDoc(
@@ -64,24 +140,39 @@ async function addPlayer(roomId, player) {
   );
 }
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+}
+
 async function createRoom(name, maxBuds, interests) {
-  const id = uuidv4();
+  const roomId = uuidv4();
+  const numBuds = maxBuds - 2;
   const room = {
-    id: id,
+    id: roomId,
     name: name,
     maxBuds: maxBuds,
-    numBuds: 2,
+    numBuds: numBuds,
     interests: interests,
   };
-  await setDoc(doc(db, ROOMS_COLLECTION, id), room);
-  await setDoc(doc(db, ROOMS_COLLECTION, id, YT_COLLECTION, YT_DOC), {
+  await setDoc(doc(db, ROOMS_COLLECTION, roomId), room);
+  await setDoc(doc(db, ROOMS_COLLECTION, roomId, YT_COLLECTION, YT_DOC), {
     isPlaying: false,
     currentTime: 0,
   });
-  await addPlayer(room.id, player1);
-  await addPlayer(room.id, player2);
 
-  console.log("roomId: ", id);
+  for (let i = 0; i < numBuds; i++){
+    const player = {
+      name: random_name({first:true}),
+      avatarUri: uris[getRandomInt(0,uris.length)]
+    }
+    addPlayer(roomId, player);
+  }
+  // await addPlayer(room.id, player1);
+  // await addPlayer(room.id, player2);
+
+  console.log("roomId: ", roomId);
   return room;
 }
 
@@ -99,18 +190,40 @@ async function uploadComment(roomId, comment, player) {
   );
 }
 
+
+function loadRooms(){
+  const shows = {category: ["Shows"], examples: ["Stranger Things", "Friends", "Toy Story"]};
+  const games = {category: ["Games"], examples: ["Checkers", "Tic Tac Toe", "Codenames"]};
+  const sports = {category: ["Sports"], examples: ["NBA", "Spikeball", "Ultimate Tag"]};
+  const music = {category: ["Music"], examples: ["Lo-Fi", "Doja Cat", "Country"]};
+  const news = {category: ["News"], examples: ["World", "Politics", "Tik Tok News"]};
+  const food = {category: ["Food"], examples: ["Hot Pot", "Baking", "Cake Boss"]};
+  const all = [shows, games, sports, music, news, food];
+  all.forEach((unit) => {
+    unit.examples.forEach((indiv) => {
+      createRoom(indiv, getRandomInt(2, 5), unit.category);
+    });
+  });
+  // for (let i = 0; i < 3; i++){
+  //   createRoom(shows[i], getRandomInt(2, 5), ["Shows"]);
+  // }
+}
+
+
 const run = 1;
 const roomId = "c57ba05f-770f-4c35-b6a4-c58c5fc2b557";
-
-if (run === 1) {
+if (run === 1){
+  loadRooms();
+}
+else if (run === 2) {
   const room = await createRoom("Codenames", 4, ["Shows", "Games"]);
   await uploadComment(room.id, "Hi everyone!", player1);
   await uploadComment(room.id, "I like spaghettios!!", player2);
   console.log("DONE 1");
-} else if (run === 2) {
+} else if (run === 3) {
   await addPlayer(roomId, player3);
   console.log("DONE 2");
-} else if (run == 3) {
+} else if (run == 4) {
   await uploadComment(roomId, "Excited to join the party!", player3);
   console.log("DONE 3");
 }
