@@ -132,7 +132,6 @@ const styles = StyleSheet.create({
     marginBottom: "auto",
     marginTop: 15,
     height: "90%",
-    backgroundColor: "red",
   },
   smallYt: {
     width: "50%",

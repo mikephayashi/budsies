@@ -26,7 +26,7 @@ export default function WhiteInterests({
         setOpen={setOpen}
         items={items}
         setItems={setItems}
-        multiple={true}
+        // multiple={true}
         renderBadgeItem={({ label }) => <Text style={styles.dropText}>{label}</Text>}
       />
     </View>

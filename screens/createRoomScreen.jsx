@@ -12,7 +12,7 @@ import WhiteNumBuds from "../components/WhiteNumBuds";
 export default function CreateRoomScreen({ navigation }) {
   const [name, onChangeName] = useState("");
   const [maxBuds, onChangeMaxBuds] = useState("4");
-  const [interests, setInterests] = useState([]);
+  const [interests, setInterests] = useState(null);
   const [open, setOpen] = useState(false);
 
   const { userState, usersDispatch } = useCustomContext();

@@ -85,7 +85,7 @@ export async function createRoom(name, maxBuds, interests) {
     name: name,
     maxBuds: maxBuds,
     numBuds: 0,
-    interests: interests,
+    interests: [interests],
   };
   await setDoc(doc(db, ROOMS_COLLECTION, id), room);
   await setDoc(doc(db, ROOMS_COLLECTION, id, YT_COLLECTION, YT_DOC), {

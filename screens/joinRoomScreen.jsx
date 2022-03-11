@@ -8,7 +8,7 @@ import WhiteInterestsJoin from "../components/WhiteInterestsJoin";
 import ScreenHeader from "../components/ScreenHeader";
 
 export default function JoinRoomScreen({ navigation }) {
-  const [interests, setInterests] = useState([]);
+  const [interests, setInterests] = useState(null);
   const [open, setOpen] = useState(false);
   const [rooms, setRooms] = useState([]);
   const { userState, usersDispatch } = useCustomContext();
@@ -24,7 +24,7 @@ export default function JoinRoomScreen({ navigation }) {
           setOpen={setOpen}
           onPress={() => {
             setOpen(false);
-            filterRooms(interests, (docs) => setRooms(docs));
+            filterRooms([interests], (docs) => setRooms(docs));
           }}
         />
         {rooms.length > 0 ? (
